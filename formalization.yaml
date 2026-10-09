@@ -1,0 +1,75 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+# formalization.yaml (v0.4): repo-root metadata for this formalization,
+# following https://github.com/mathlib-initiative/formalization.yaml
+
+version: "v0.4"
+
+project:
+  name: "local-class-field-theory"
+  description: >-
+    Planned Lean 4 / Mathlib formalization of local class field theory for finite extensions of ℚ_p:
+    inertia and the unramified quotient, arithmetic Frobenius, and the topological Artin reciprocity map
+    Kˣ → Gal(K^ab/K) with its characterising properties (units map isomorphically to inertia, uniformisers
+    map to arithmetic Frobenius modulo inertia, compatibility with norms for finite extensions).
+    The repository is currently an empty scaffold: no definitions or theorems yet.
+  authors:
+    - "Claude (Anthropic)"
+    - "LANA Project"
+  responsible_maintainers:
+    - "Christian Merten"
+  license: "Apache-2.0"
+
+sources:
+  - title: "Local Fields"
+    authors: ["Jean-Pierre Serre"]
+    type: "book"
+    location: "Chapters XIV-XV"
+    note: "Planned reference (README, Established sources); nothing is formalised yet."
+  - title: "Algebraic Number Theory"
+    authors: ["Jürgen Neukirch"]
+    type: "book"
+    location: "Chapter VI"
+    note: "Planned reference (README, Established sources); nothing is formalised yet."
+
+related_formalizations:
+  - id: "https://github.com/lana-agents/continuous-kummer-theory"
+    relationship: "other"
+    note: "Intended to build on it (also not started); not required yet."
+
+classification:
+  arxiv: ["math.NT"]
+  msc2020: ["11S31"]
+
+status:
+  scope: "not started (scaffold only)"
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: []
+  main_results: []
+
+automation:
+  methods:
+    - method: "agent"
+      models: ["claude-opus-5-5"]
+      framework: "Claude Code"
+      tool_setup: >-
+        orchestra for running the agents, taxis for project management, and Claude (Claude Code) as the
+        coding agent; Lean/Lake builds with `lake build --wfail`.
+      prompting_notes: >-
+        Human input consisted of high-level task descriptions and scope decisions.
+  notes: >-
+    Agents were run with orchestra; project management (issues, status) was done in taxis;
+    Claude was the coding agent.
+
+fidelity:
+  divergences: "None yet: nothing has been formalised."
+
+review:
+  status: "agent-reviewed"
+  reviewers: ["Claude (Anthropic)"]
+  notes: >-
+    The formalization has only been reviewed by Claude; it has not been reviewed by a human.
+    The repository is an empty scaffold (a placeholder module with no declarations), so there is
+    nothing to check yet.
+
+acknowledgements: "Built on Mathlib (Apache-2.0)."
