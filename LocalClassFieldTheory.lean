@@ -1,4 +1,6 @@
+import LocalClassFieldTheory.PadicField.Complete
 import LocalClassFieldTheory.PadicField.Extension
+import LocalClassFieldTheory.PadicField.FieldNorm
 import LocalClassFieldTheory.PadicField.Integers
 import LocalClassFieldTheory.PadicField.Norm
 import LocalClassFieldTheory.PadicField.Ramification
