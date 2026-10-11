@@ -1,6 +1,10 @@
+import LocalClassFieldTheory.Herbrand.Basic
+import LocalClassFieldTheory.Herbrand.Exact
+import LocalClassFieldTheory.Herbrand.Examples
 import LocalClassFieldTheory.PadicField.Complete
 import LocalClassFieldTheory.PadicField.Extension
 import LocalClassFieldTheory.PadicField.FieldNorm
+import LocalClassFieldTheory.PadicField.Galois
 import LocalClassFieldTheory.PadicField.Integers
 import LocalClassFieldTheory.PadicField.Norm
 import LocalClassFieldTheory.PadicField.Ramification

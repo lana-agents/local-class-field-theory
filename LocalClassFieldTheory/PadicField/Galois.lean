@@ -66,7 +66,8 @@ theorem mem_inertia_iff (σ : L ≃ₐ[K] L) :
     σ ∈ inertia p K L ↔ ∀ x : 𝒪 p L, σ • x - x ∈ maximalIdeal (𝒪 p L) := Iff.rfl
 
 /-- The map from `Gal(L/K)` into the stabiliser of `𝔪_L`, which is everything. -/
-noncomputable def toStabilizer : (L ≃ₐ[K] L) →* MulAction.stabilizer (L ≃ₐ[K] L) (maximalIdeal (𝒪 p L)) where
+noncomputable def toStabilizer :
+    (L ≃ₐ[K] L) →* MulAction.stabilizer (L ≃ₐ[K] L) (maximalIdeal (𝒪 p L)) where
   toFun σ := ⟨σ, Integers.smul_maximalIdeal σ⟩
   map_one' := rfl
   map_mul' _ _ := rfl
