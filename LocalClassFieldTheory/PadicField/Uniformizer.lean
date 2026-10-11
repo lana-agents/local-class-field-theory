@@ -219,6 +219,43 @@ instance isDiscreteValuationRing : IsDiscreteValuationRing (𝒪 p K) :=
   IsDiscreteValuationRing.ofHasUnitMulPowIrreducibleFactorization
     ⟨ϖ p K, irreducible_ϖ, fun hx ↦ ⟨_, associated_ϖ_pow hx⟩⟩
 
+theorem v_coe_nonneg (x : 𝒪 p K) : 0 ≤ v p (x : K) := by
+  by_cases hx : (x : K) = 0
+  · simp [hx, v, wval]
+  · exact (nrm_le_one_iff_v_nonneg hx).1 (nrm_coe_le_one x)
+
+theorem dvd_iff_v_le {a b : 𝒪 p K} (ha : a ≠ 0) :
+    a ∣ b ↔ b = 0 ∨ v p (a : K) ≤ v p (b : K) := by
+  have ha' : (a : K) ≠ 0 := fun h ↦ ha (coe_eq_zero_iff.1 h)
+  constructor
+  · rintro ⟨c, rfl⟩
+    by_cases hc : c = 0
+    · left; simp [hc]
+    · right
+      have hc' : (c : K) ≠ 0 := fun h ↦ hc (coe_eq_zero_iff.1 h)
+      rw [coe_mul, v_mul ha' hc']
+      linarith [v_coe_nonneg c]
+  · rintro (rfl | h)
+    · exact dvd_zero a
+    · by_cases hb : b = 0
+      · rw [hb]; exact dvd_zero a
+      have hb' : (b : K) ≠ 0 := fun h ↦ hb (coe_eq_zero_iff.1 h)
+      refine ⟨mk ((b : K) / a) ?_, ext ?_⟩
+      · rw [nrm_le_one_iff_v_nonneg (div_ne_zero hb' ha'), v_div hb' ha']; linarith
+      · simp [mul_div_cancel₀ _ ha']
+
+theorem maximalIdeal_eq_span : IsLocalRing.maximalIdeal (𝒪 p K) = Ideal.span {ϖ p K} :=
+  (IsDiscreteValuationRing.irreducible_iff_uniformizer _).1 irreducible_ϖ
+
+theorem v_ϖ : v p ((ϖ p K : 𝒪 p K) : K) = 1 := uniformizer_spec
+
+theorem mem_maximalIdeal_pow_iff {x : 𝒪 p K} (n : ℕ) :
+    x ∈ IsLocalRing.maximalIdeal (𝒪 p K) ^ n ↔ x = 0 ∨ (n : ℤ) ≤ v p (x : K) := by
+  have hϖ : (ϖ p K : 𝒪 p K) ≠ 0 := irreducible_ϖ.ne_zero
+  rw [maximalIdeal_eq_span, Ideal.span_singleton_pow, Ideal.mem_span_singleton,
+    dvd_iff_v_le (pow_ne_zero _ hϖ), coe_pow,
+    v_pow (fun h ↦ hϖ (coe_eq_zero_iff.1 h)), v_ϖ, mul_one]
+
 end Integers
 
 end PadicField

@@ -1,3 +1,5 @@
+import LocalClassFieldTheory.PadicField.Extension
 import LocalClassFieldTheory.PadicField.Integers
 import LocalClassFieldTheory.PadicField.Norm
+import LocalClassFieldTheory.PadicField.Ramification
 import LocalClassFieldTheory.PadicField.Uniformizer

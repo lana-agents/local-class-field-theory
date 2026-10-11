@@ -174,7 +174,11 @@ namespace Integers
 
 noncomputable instance : CommRing (𝒪 p K) := inferInstanceAs (CommRing (integers p K))
 instance : IsDomain (𝒪 p K) := inferInstanceAs (IsDomain (integers p K))
-noncomputable instance : Algebra (𝒪 p K) K := inferInstanceAs (Algebra (integers p K) K)
+noncomputable instance {L : Type*} [Ring L] [Algebra K L] : Algebra (𝒪 p K) L :=
+  inferInstanceAs (Algebra (integers p K) L)
+instance {L : Type*} [Ring L] [Algebra K L] : IsScalarTower (𝒪 p K) K L :=
+  inferInstanceAs (IsScalarTower (integers p K) K L)
+
 instance : IsFractionRing (𝒪 p K) K := inferInstanceAs (IsFractionRing (integers p K) K)
 instance : ValuationRing (𝒪 p K) := inferInstanceAs (ValuationRing (integers p K))
 instance : IsLocalRing (𝒪 p K) := inferInstanceAs (IsLocalRing (integers p K))
