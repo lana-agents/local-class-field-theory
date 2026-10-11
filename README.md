@@ -4,11 +4,26 @@ Local class field theory for mixed-characteristic local fields.
 
 ## Status
 
-**Not started.** The repository is the initial project scaffold (a single commit,
-2026-07-20). The library `LocalClassFieldTheory` contains only the placeholder module
-`LocalClassFieldTheory/Basic.lean`, which has no declarations: there are no definitions or theorems yet
-(and so no `sorry`, `axiom` or `admit`). Everything under *Goals* below is planned, not
-formalised.
+**In progress (foundations only).** No reciprocity map exists yet: the Artin map, local
+reciprocity, and the existence theorem are **not** formalised. What is proved (no `sorry`, no
+`axiom`), all in the concrete setting of fields `K` with `[Algebra ℚ_[p] K]
+[FiniteDimensional ℚ_[p] K]` (see `Blueprint.md` for the route and lemma-level status):
+
+* `LocalClassFieldTheory/PadicField/`: the absolute value `PadicField.nrm` (Mathlib's spectral
+  norm), the normalised valuation `PadicField.v`, the ring of integers `𝒪 p K` as a discrete
+  valuation ring with finite residue field, uniformisers, completeness and Hensel's lemma,
+  Teichmüller representatives; for extensions `L/K`: `𝒪 p L` is the integral closure of `𝒪 p K`,
+  `e * f = [L : K]`, `v_K (N_{L/K} x) = f * v_L x`; unramified extensions are Galois (splitting
+  field of `X^Q - X`); for Galois `L/K` the map `Gal(L/K) → Gal(𝓴 L/𝓴 K)` is surjective with
+  kernel the inertia group, an isomorphism for unramified `L/K`, and the arithmetic Frobenius
+  `PadicField.frob` generates `Gal(L/K)`.
+* `LocalClassFieldTheory/Herbrand/`: Tate groups `Ĥ⁰`, `Ĥ⁻¹` and Herbrand quotients for a group
+  with an automorphism of finite order: multiplicativity in short exact sequences, value `1` on
+  finite and induced modules, value `n` on `ℤ`.
+
+Not yet done: the maximal unramified extension and `Gal(K^ur/K)`, the class field axiom
+`[Kˣ : N Lˣ] = [L : K]` for cyclic `L/K`, the reciprocity map and its properties, the existence
+theorem.
 
 No lana-agents repository depends on this one: `iut` and its pinned lana-agents
 dependencies do not `require` it.
@@ -32,7 +47,7 @@ with its characterising properties: units map isomorphically to inertia, uniform
 
 ## Related repositories
 
-Intended to build on `continuous-kummer-theory` (also not started); it does not
+Intended to build on `continuous-kummer-theory` (for the existence theorem); it does not
 `require` it yet.
 
 ## Layout

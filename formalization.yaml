@@ -11,7 +11,8 @@ project:
     inertia and the unramified quotient, arithmetic Frobenius, and the topological Artin reciprocity map
     Kˣ → Gal(K^ab/K) with its characterising properties (units map isomorphically to inertia, uniformisers
     map to arithmetic Frobenius modulo inertia, compatibility with norms for finite extensions).
-    The repository is currently an empty scaffold: no definitions or theorems yet.
+    Current state: foundations only (valuation theory of finite extensions of ℚ_p, unramified
+    extensions and Frobenius, Herbrand quotients); no reciprocity map yet.
   authors:
     - "Claude (Anthropic)"
     - "LANA Project"
@@ -24,28 +25,33 @@ sources:
     authors: ["Jean-Pierre Serre"]
     type: "book"
     location: "Chapters XIV-XV"
-    note: "Planned reference (README, Established sources); nothing is formalised yet."
+    note: "Reference (README, Established sources)."
   - title: "Algebraic Number Theory"
     authors: ["Jürgen Neukirch"]
     type: "book"
     location: "Chapter VI"
-    note: "Planned reference (README, Established sources); nothing is formalised yet."
+    note: "Reference (README, Established sources)."
 
 related_formalizations:
   - id: "https://github.com/lana-agents/continuous-kummer-theory"
     relationship: "other"
-    note: "Intended to build on it (also not started); not required yet."
+    note: "Intended to build on it (existence theorem); not required yet."
 
 classification:
   arxiv: ["math.NT"]
   msc2020: ["11S31"]
 
 status:
-  scope: "not started (scaffold only)"
+  scope: "in progress: foundations (local fields over ℚ_p, unramified extensions, Frobenius, Herbrand quotients); reciprocity not yet formalised"
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: []
-  main_results: []
+  main_results:
+    - "PadicField.e_mul_f: e(L/K) * f(L/K) = [L : K]"
+    - "PadicField.v_norm: v_K (N_{L/K} x) = f(L/K) * v_L x"
+    - "PadicField.isGalois_of_isUnramified: unramified extensions are Galois"
+    - "PadicField.residueGalEquiv, PadicField.frob: Gal(L/K) ≃ Gal(residue fields), arithmetic Frobenius"
+    - "Herbrand.herbrand_eq_mul_of_ses: Herbrand quotients are multiplicative"
 
 automation:
   methods:
@@ -62,14 +68,15 @@ automation:
     Claude was the coding agent.
 
 fidelity:
-  divergences: "None yet: nothing has been formalised."
+  divergences: >-
+    Fields are finite extensions of ℚ_p with all structure derived from the ℚ_p-algebra structure
+    (absolute value = spectral norm), rather than Mathlib's IsNonarchimedeanLocalField.
 
 review:
   status: "agent-reviewed"
   reviewers: ["Claude (Anthropic)"]
   notes: >-
     The formalization has only been reviewed by Claude; it has not been reviewed by a human.
-    The repository is an empty scaffold (a placeholder module with no declarations), so there is
-    nothing to check yet.
+    Statements have not been human-reviewed.
 
 acknowledgements: "Built on Mathlib (Apache-2.0)."
