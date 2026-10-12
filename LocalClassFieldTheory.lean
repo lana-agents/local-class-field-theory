@@ -6,9 +6,11 @@ import LocalClassFieldTheory.ClassFieldAxiom.Hilbert90
 import LocalClassFieldTheory.ClassFieldAxiom.Lattice
 import LocalClassFieldTheory.ClassFieldAxiom.Units
 import LocalClassFieldTheory.ClassFieldAxiom.Vanishing
+import LocalClassFieldTheory.Galois.CosetNorm
 import LocalClassFieldTheory.Herbrand.Basic
 import LocalClassFieldTheory.Herbrand.Exact
 import LocalClassFieldTheory.Herbrand.Examples
+import LocalClassFieldTheory.PadicField.AbsoluteInertia
 import LocalClassFieldTheory.PadicField.Complete
 import LocalClassFieldTheory.PadicField.Extension
 import LocalClassFieldTheory.PadicField.FieldNorm
