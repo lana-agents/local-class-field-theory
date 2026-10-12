@@ -19,7 +19,7 @@ Let `F = M U` be a standard extension, `g ∈ Gal(F/U)`, `k ≥ 1` with `[M : K]
 
 set_option linter.unusedSectionVars false
 
-open IntermediateField
+open IntermediateField Polynomial
 
 namespace PadicField
 
@@ -242,6 +242,132 @@ theorem norm_U_galois_M (h : F ≃ₐ[M] F) (z : F) :
   haveI : IsGalois U F := IsGalois.tower_top_of_isGalois K U F
   rw [Algebra.norm_eq_prod_automorphisms, Algebra.norm_eq_prod_automorphisms, map_prod]
   exact Finset.prod_congr rfl fun g' _ ↦ std_comm hM hU hdeg g' h z
+
+
+section Unram
+
+omit hk hke [FiniteDimensional U F] [DecidableEq (F ≃ₐ[K] F)] in
+/-- Elements of `Gal(F/U)` act trivially on residues. -/
+theorem residue_U_smul (g : F ≃ₐ[U] F) (z : 𝒪 p F) :
+    IsLocalRing.residue _ (g • z) = IsLocalRing.residue _ z := by
+  haveI := finiteDimensional_tower (p := p) U F
+  haveI : IsGalois U F := IsGalois.tower_top_of_isGalois K U F
+  have hf : f p U F = 1 := by
+    have h1 := e_mul_f (p := p) (K := U) (L := F)
+    rw [std_e_U hM hU hdeg] at h1
+    exact (Nat.mul_eq_left Module.finrank_pos.ne').1 h1
+  have h1 : residueGal p U F g = 1 := by
+    have hc : Nat.card (𝓴 p F ≃ₐ[𝓴 p U] 𝓴 p F) = 1 := by rw [card_gal_residue, hf]
+    haveI := (Nat.card_eq_one_iff_unique.1 hc).1
+    exact Subsingleton.elim _ _
+  have h2 : g ∈ inertia p U F := by rw [← ker_residueGal]; exact h1
+  rw [eq_comm, ← sub_eq_zero, ← map_sub, IsLocalRing.residue_eq_zero_iff, ← neg_mem_iff,
+    neg_sub]
+  exact (mem_inertia_iff g).1 h2 z
+
+omit hk hke [FiniteDimensional U F] [DecidableEq (F ≃ₐ[K] F)] in
+/-- Powers of the Frobenius act on residues by `x ↦ x ^ (q ^ j)`. -/
+theorem residue_stdFrob_pow_smul (j : ℕ) (z : 𝒪 p F) :
+    IsLocalRing.residue _ ((stdFrob hM hU hdeg ^ j) • z) =
+      IsLocalRing.residue _ z ^ (q p K ^ j) := by
+  have hqM : q p M = q p K := by
+    have hf : f p K M = 1 := by
+      have h1 := e_mul_f (p := p) (K := K) (L := M)
+      rw [hM] at h1
+      haveI := finiteDimensional_tower (p := p) K M
+      exact (Nat.mul_eq_left Module.finrank_pos.ne').1 h1
+    rw [q_eq_pow_f (K := K) (L := M), hf, pow_one]
+  induction j with
+  | zero => simp
+  | succ j ih =>
+    rw [pow_succ', mul_smul]
+    have := frob_spec (std_isUnramified_top hM hU hdeg) ((stdFrob hM hU hdeg ^ j) • z)
+    rw [← IsLocalRing.residue_eq_zero_iff, map_sub, sub_eq_zero] at this
+    rw [show stdFrob hM hU hdeg = frob (std_isUnramified_top hM hU hdeg) from rfl] at ih this ⊢
+    rw [this, map_pow, ih, hqM, ← pow_mul, ← pow_succ]
+
+/-- The residue degree of the fixed field of `τ` is at most `k`. -/
+theorem f_fixedField_tau_le : f p K (fixedField (Subgroup.zpowers (tau hM hU hdeg g k))) ≤ k := by
+  classical
+  set Sig := fixedField (Subgroup.zpowers (tau hM hU hdeg g k))
+  set Q := q p K ^ k
+  have hq := one_lt_q p K
+  have hQ : 1 < Q := Nat.one_lt_pow hk.ne' hq
+  let ι : 𝓴 p Sig →+* 𝓴 p F := algebraMap _ _
+  have hroot : ∀ a : 𝓴 p Sig, ι a ^ Q = ι a := by
+    intro a
+    obtain ⟨x, rfl⟩ := IsLocalRing.residue_surjective a
+    set xF := algebraMap (𝒪 p Sig) (𝒪 p F) x
+    have hfix : (tau hM hU hdeg g k) (xF : F) = xF :=
+      (x : Sig).2 ⟨tau hM hU hdeg g k, Subgroup.mem_zpowers _⟩
+    have h1 : g • ((stdFrob hM hU hdeg ^ k) • xF) = xF := Integers.ext hfix
+    change IsLocalRing.residue _ xF ^ Q = IsLocalRing.residue _ xF
+    rw [← residue_stdFrob_pow_smul hM hU hdeg k xF, ← residue_U_smul hM hU hdeg g, h1]
+  -- count
+  haveI := Fintype.ofFinite (𝓴 p Sig)
+  have hcard : Nat.card (𝓴 p Sig) ≤ Q := by
+    set P : (𝓴 p F)[X] := X ^ Q - X
+    have hP : P ≠ 0 := FiniteField.X_pow_card_sub_X_ne_zero _ hQ
+    have hdeg' : P.natDegree = Q := FiniteField.X_pow_card_sub_X_natDegree_eq _ hQ
+    have hinj : Function.Injective ι := ι.injective
+    rw [Nat.card_eq_fintype_card, ← Finset.card_univ,
+      ← Finset.card_image_of_injective _ hinj]
+    calc (Finset.univ.image ι).card ≤ P.roots.toFinset.card := by
+          refine Finset.card_le_card fun z hz ↦ ?_
+          obtain ⟨a, -, rfl⟩ := Finset.mem_image.1 hz
+          rw [Multiset.mem_toFinset, Polynomial.mem_roots hP, Polynomial.IsRoot,
+            Polynomial.eval_sub, Polynomial.eval_pow, Polynomial.eval_X, hroot, sub_self]
+      _ ≤ P.roots.card := Multiset.toFinset_card_le _
+      _ ≤ Q := hdeg' ▸ Polynomial.card_roots' P
+  have hqS : q p Sig = q p K ^ f p K Sig := q_eq_pow_f
+  rw [q] at hqS
+  rw [hqS] at hcard
+  exact (Nat.pow_le_pow_iff_right hq).1 hcard
+
+/-- `F` is unramified over the fixed field of `τ`: there is `y ∈ Σ` with `v_F(y) = 1`. -/
+theorem exists_v_eq_one_tau :
+    ∃ y : fixedField (Subgroup.zpowers (tau hM hU hdeg g k)), v p (y : F) = 1 := by
+  set Sig := fixedField (Subgroup.zpowers (tau hM hU hdeg g k))
+  haveI := finiteDimensional_tower (p := p) K F
+  have hdegS : Module.finrank K Sig = Module.finrank K M * k := by
+    have h1 := Module.finrank_mul_finrank K Sig F
+    rw [IntermediateField.finrank_fixedField_eq_card, Nat.card_zpowers,
+      orderOf_tau hM hU hdeg g k hk hke, hdeg] at h1
+    have hkt : k ∣ Module.finrank K U := (Dvd.intro_left _ rfl).trans hke
+    obtain ⟨c, hc⟩ := hkt
+    have hc0 : 0 < c := by
+      haveI := finiteDimensional_tower (p := p) K U
+      have : 0 < Module.finrank K U := Module.finrank_pos
+      rw [hc] at this
+      exact Nat.pos_of_mul_pos_left this
+    rw [hc, Nat.mul_div_cancel_left _ hk] at h1
+    have : Module.finrank K M * (k * c) = (Module.finrank K M * k) * c := by ring
+    rw [this] at h1
+    exact Nat.eq_of_mul_eq_mul_right hc0 h1
+  have hf : f p K Sig ≤ k := f_fixedField_tau_le hM hU hdeg g k hk hke
+  have heS : e p K Sig ∣ Module.finrank K M := by
+    rw [← (std_e hM hU hdeg).1]
+    exact ⟨_, (e_mul_e (p := p) (K := K) (E := Sig) (L := F)).symm⟩
+  have hef := e_mul_f (p := p) (K := K) (L := Sig)
+  rw [hdegS] at hef
+  have he : e p K Sig = Module.finrank K M := by
+    have hle := Nat.le_of_dvd (by haveI := finiteDimensional_tower (p := p) K M
+                                  exact Module.finrank_pos) heS
+    by_contra hne
+    have hlt := lt_of_le_of_ne hle hne
+    have h2 := Nat.mul_lt_mul_of_lt_of_le hlt hf hk
+    omega
+  have heF : e p Sig F = 1 := by
+    have h3 := e_mul_e (p := p) (K := K) (E := Sig) (L := F)
+    rw [he, (std_e hM hU hdeg).1] at h3
+    haveI := finiteDimensional_tower (p := p) K M
+    exact (Nat.mul_eq_left Module.finrank_pos.ne').1 h3
+  refine ⟨uniformizer p Sig, ?_⟩
+  have := v_algebraMap (p := p) (K := Sig) (L := F) (uniformizer p Sig)
+  rw [heF, uniformizer_spec] at this
+  simpa using this
+
+end Unram
 
 variable (s : M ≃ₐ[K] M) (hs : ∀ g, g ∈ Subgroup.zpowers s)
   (he : Module.finrank K M ∣ Module.finrank K U)
