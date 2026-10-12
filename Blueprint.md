@@ -351,5 +351,12 @@ Absolute Brauer group (`Brauer/Absolute.lean`, `Brauer/Unramified.lean`), `Ω/K`
 * H14 **done** (`Brauer/KummerCompat.lean`): functoriality of cyclotomic rigidity:
   `PadicField.h2MuEquiv_h2MuIncl` (`μ_n ⊆ μ_m` ↔ `k ↦ (m/n)k`), `PadicField.h2MuEquiv_h2MuPow`
   (`ζ ↦ ζ^{m/n}` ↔ reduction `ℤ/m → ℤ/n`), `PadicField.h2MuEquiv_resMu` (restriction ↔ `[K':K]·`).
-* Not done: corestriction `Br(L) → Br(K)` and `inv ∘ cor = inv` (not needed for the above); duality for
-  general finite Galois modules; Euler characteristic formula; `H²(K, ℤ/n)`.
+* H15 **done** corestriction. Generic (`Brauer/Corestriction.lean`): `ContH2.kappa`
+  (`κ(c, g) = (c.out)⁻¹ g (g⁻¹•c).out`), `ContH2.corFun` (`(cor f)(g,h) = ∏_c c.out • f(κ(c,g), κ(g⁻¹•c,h))`),
+  `ContH2.isMulCocycle₂_corFun` (factorwise after reindexing), `ContH2.corFun_dx`, `ContH2.cor_res_aux`
+  (three cocycle identities), `ContH2.corFun_res` (`cor res E = E^{[G:H]} · dq`), **`ContH2.cor`**,
+  **`ContH2.cor_res`**. Brauer groups (`Brauer/CorBr.lean`): `Brauer.brFixingEquiv`
+  (`Br(K') ≃ H²(Gal(Ω/K)_{K'}, Ωˣ)`), **`Brauer.corBr`**, **`Brauer.corBr_res`** (`cor ∘ res = [K':K]`),
+  `PadicField.res_surjective`, **`PadicField.invEquiv_corBr`** (`inv_K ∘ cor = inv_{K'}`).
+* Not done: duality for general finite Galois modules; Euler characteristic formula; `H²(K, ℤ/n)`;
+  the Tate–Nakayama isomorphism in all degrees.

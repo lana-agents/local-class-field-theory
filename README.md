@@ -108,7 +108,9 @@ the Artin map**: `⟨χ, a⟩ = χ(artin a)` (`PadicField.pairing_eq_artinChar`)
 `PadicField.pairingH1_kummer`) it is perfect (`PadicField.eq_one_of_forall_pairingH1_eq_zero`,
 `PadicField.eq_one_of_forall_pairingH1_eq_zero'`). The isomorphisms `H²(K, μ_n) ≃ ℤ/n` are compatible
 with `μ_n ⊆ μ_m`, `ζ ↦ ζ^{m/n}` and restriction (`PadicField.h2MuEquiv_h2MuIncl`,
-`PadicField.h2MuEquiv_h2MuPow`, `PadicField.h2MuEquiv_resMu`).
+`PadicField.h2MuEquiv_h2MuPow`, `PadicField.h2MuEquiv_resMu`). Corestriction `ContH2.cor`
+(`cor ∘ res = [G:H]`, `ContH2.cor_res`) and `Brauer.corBr : Br(K') → Br(K)` with
+`inv_K ∘ cor = inv_{K'}` (`PadicField.invEquiv_corBr`).
 
 Not done (outside the scope of this repository's goals, possible future work): the explicit
 decomposition `Gal(K^ab/K) ≅ 𝒪ˣ × Ẑ` (needs the profinite completion of `𝒪ˣ × ℤ` and

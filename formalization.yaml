@@ -96,6 +96,7 @@ status:
     - "Brauer.toBr_mk_cupKummer, Brauer.carryClass_eq_one_iff: χ ∪ κ(a) is the carry class of L_χ; trivial iff a is a norm from L_χ"
     - "PadicField.pairing, PadicField.eq_one_of_forall_pairing_eq_zero, PadicField.exists_pairing_ne_zero_of_not_mem_pow: perfect local duality pairing H^1(K, Z/n) × K^x/(K^x)^n → Z/n"
     - "PadicField.pairing_eq_artinChar: the cup product pairing computes the Artin map, <χ, a> = χ(artin a)"
+    - "ContH2.cor, ContH2.cor_res, Brauer.corBr, Brauer.corBr_res, PadicField.invEquiv_corBr: corestriction, cor ∘ res = [K':K], inv ∘ cor = inv"
     - "Brauer.cupH1, PadicField.pairingH1, PadicField.pairingH1_kummer, PadicField.eq_one_of_forall_pairingH1_eq_zero: perfect cup product pairing H^1(K, Z/n) × H^1(K, μ_n) → H^2(K, μ_n) ≃ Z/n"
 
 automation:
