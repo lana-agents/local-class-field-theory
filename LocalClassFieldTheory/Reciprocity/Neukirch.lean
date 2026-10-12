@@ -91,7 +91,7 @@ omit hk hke in
 noncomputable def tauRep (gj : (F ≃ₐ[U] F) × ℕ) : F ≃ₐ[K] F :=
   stdProd hM hU hdeg (gj.1, stdFrob hM hU hdeg ^ gj.2)
 
-variable [FiniteDimensional U F] [DecidableEq (F ≃ₐ[K] F)]
+variable [FiniteDimensional U F]
 
 theorem tauRep_injOn :
     Set.InjOn (tauRep hM hU hdeg)
@@ -109,7 +109,7 @@ theorem tauRep_injOn :
     (by rw [Set.mem_Iio, orderOf_stdFrob]; omega) (by rw [Set.mem_Iio, orderOf_stdFrob]; omega) hj
   rw [this]
 
-theorem tauRep_injOn_quotient :
+theorem tauRep_injOn_quotient [DecidableEq (F ≃ₐ[K] F)] :
     Set.InjOn (QuotientGroup.mk : (F ≃ₐ[K] F) → _ ⧸ Subgroup.zpowers (tau hM hU hdeg g k))
       ((Finset.univ ×ˢ Finset.range k).image (tauRep hM hU hdeg) :
         Finset (F ≃ₐ[K] F)) := by
@@ -183,6 +183,7 @@ theorem tauRep_injOn_quotient :
 theorem algebraMap_norm_tau (y : fixedField (Subgroup.zpowers (tau hM hU hdeg g k))) :
     algebraMap K F (Algebra.norm K y) = ∏ j ∈ Finset.range k,
       (stdFrob hM hU hdeg ^ j) (algebraMap U F (Algebra.norm U (y : F))) := by
+  classical
   haveI := finiteDimensional_tower (p := p) K F
   haveI : IsGalois U F := IsGalois.tower_top_of_isGalois K U F
   have hinjOn : Set.InjOn (tauRep hM hU hdeg)
@@ -204,7 +205,7 @@ theorem algebraMap_norm_tau (y : fixedField (Subgroup.zpowers (tau hM hU hdeg g 
   rw [std_comm hM hU hdeg]
 
 
-omit hk hke [FiniteDimensional U F] [DecidableEq (F ≃ₐ[K] F)] hM hU hdeg in
+omit hk hke [FiniteDimensional U F] hM hU hdeg in
 /-- Telescoping: `a(∏_{j<k} a^j ξ) / ∏_{j<k} a^j ξ = a^k ξ / ξ`. -/
 theorem uMap_prod_pow_div {R : Type*} [Field R] [Algebra R F] (a : F ≃ₐ[R] F) (ξ : Fˣ)
     (n : ℕ) : uMap a (∏ j ∈ Finset.range n, uMap (a ^ j) ξ) / ∏ j ∈ Finset.range n,
@@ -217,7 +218,7 @@ theorem uMap_prod_pow_div {R : Type*} [Field R] [Algebra R F] (a : F ≃ₐ[R] F
   congr 1
 
 
-omit hk hke [FiniteDimensional U F] [DecidableEq (F ≃ₐ[K] F)] hM hU hdeg in
+omit hk hke [FiniteDimensional U F] hM hU hdeg in
 theorem v_galois {R : Type*} [Field R] [Algebra ℚ_[p] R] [Algebra R F]
     [IsScalarTower ℚ_[p] R F] (a : F ≃ₐ[R] F) (x : F) : v p (a x) = v p x := by
   by_cases hx : x = 0
@@ -225,7 +226,7 @@ theorem v_galois {R : Type*} [Field R] [Algebra ℚ_[p] R] [Algebra R F]
   exact (nrm_eq_iff_v_eq ((map_ne_zero_iff _ a.injective).2 hx) hx).1
     (nrm_algEquiv_tower (p := p) R F a x)
 
-omit hk hke [FiniteDimensional U F] [DecidableEq (F ≃ₐ[K] F)] hM hU hdeg in
+omit hk hke [FiniteDimensional U F] hM hU hdeg in
 theorem v_prod {ι : Type*} (t : Finset ι) (f : ι → F) (hf : ∀ i, f i ≠ 0) :
     v p (∏ i ∈ t, f i) = ∑ i ∈ t, v p (f i) := by
   classical
@@ -235,7 +236,7 @@ theorem v_prod {ι : Type*} (t : Finset ι) (f : ι → F) (hf : ∀ i, f i ≠ 
     rw [Finset.prod_insert ha, Finset.sum_insert ha,
       v_mul (hf a) (Finset.prod_ne_zero_iff.2 fun i _ ↦ hf i), ih]
 
-omit hk hke [FiniteDimensional U F] [DecidableEq (F ≃ₐ[K] F)] in
+omit hk hke [FiniteDimensional U F] in
 theorem norm_U_galois_M (h : F ≃ₐ[M] F) (z : F) :
     algebraMap U F (Algebra.norm U (h z)) = h (algebraMap U F (Algebra.norm U z)) := by
   haveI := finiteDimensional_tower (p := p) U F
@@ -246,7 +247,7 @@ theorem norm_U_galois_M (h : F ≃ₐ[M] F) (z : F) :
 
 section Unram
 
-omit hk hke [FiniteDimensional U F] [DecidableEq (F ≃ₐ[K] F)] in
+omit hk hke [FiniteDimensional U F] in
 /-- Elements of `Gal(F/U)` act trivially on residues. -/
 theorem residue_U_smul (g : F ≃ₐ[U] F) (z : 𝒪 p F) :
     IsLocalRing.residue _ (g • z) = IsLocalRing.residue _ z := by
@@ -265,7 +266,7 @@ theorem residue_U_smul (g : F ≃ₐ[U] F) (z : 𝒪 p F) :
     neg_sub]
   exact (mem_inertia_iff g).1 h2 z
 
-omit hk hke [FiniteDimensional U F] [DecidableEq (F ≃ₐ[K] F)] in
+omit hk hke [FiniteDimensional U F] in
 /-- Powers of the Frobenius act on residues by `x ↦ x ^ (q ^ j)`. -/
 theorem residue_stdFrob_pow_smul (j : ℕ) (z : 𝒪 p F) :
     IsLocalRing.residue _ ((stdFrob hM hU hdeg ^ j) • z) =
