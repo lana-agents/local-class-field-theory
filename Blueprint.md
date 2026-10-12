@@ -84,9 +84,13 @@ the last stage.
 * C2 **done** (`Herbrand/Exact.lean`, `Herbrand/Examples.lean`: `herbrand_eq_mul_of_ses`,
   `herbrand_eq_one_of_finite`, `herbrand_int`, `herbrand_induced`,
   `herbrand_eq_of_finite_quotient`) `h` multiplicative in short exact sequences; `h(finite) = 1`; `h(ℤ, trivial) = n`.
-* C3 **planned** successive approximation: an open, complete filtered `G`-submodule of `𝒪ˣ_L` with
+* C3 **done** (`ClassFieldAxiom/{Approximation,Coordinates,Lattice,Units,Vanishing}.lean`:
+  `exists_eq_of_approx`, `exists_repr_bound`, `exists_integral_normalBasis`, `lat`, `filt`,
+  `exists_normUnits_eq`, `exists_galUnits_div_eq`) successive approximation: an open, complete filtered `G`-submodule of `𝒪ˣ_L` with
   induced graded pieces has trivial `Ĥ⁰`, `Ĥ⁻¹` (normal basis + filtration argument).
-* C4 **planned** `h(𝒪ˣ_L) = 1`, `h(Lˣ) = [L:K]` for cyclic `L/K`; Hilbert 90 ⇒
+* C4 **done** (`ClassFieldAxiom/{HerbrandUnits,Hilbert90,Axiom}.lean`: `herbrand_σU`,
+  `herbrand_σL`, `exists_div_of_prod_eq_one` (cyclic Hilbert 90 in all universes),
+  `index_normGroup_of_isCyclic : (normGroup K L).index = Module.finrank K L`) `h(𝒪ˣ_L) = 1`, `h(Lˣ) = [L:K]` for cyclic `L/K`; Hilbert 90 ⇒
   `[Kˣ : N_{L/K} Lˣ] = [L:K]` (class field axiom).
 * C5 **planned** consequences: unramified `L/K` ⇒ `N_{L/K} Lˣ = ⟨π^n⟩ × 𝒪ˣ_K`, in particular
   `N(𝒪ˣ_L) = 𝒪ˣ_K`; second inequality `[Kˣ : N Lˣ] ≤ [L:K]` for abelian (solvable) `L/K`.

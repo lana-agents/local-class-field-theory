@@ -11,8 +11,9 @@ project:
     inertia and the unramified quotient, arithmetic Frobenius, and the topological Artin reciprocity map
     Kˣ → Gal(K^ab/K) with its characterising properties (units map isomorphically to inertia, uniformisers
     map to arithmetic Frobenius modulo inertia, compatibility with norms for finite extensions).
-    Current state: foundations only (valuation theory of finite extensions of ℚ_p, unramified
-    extensions and Frobenius, Herbrand quotients); no reciprocity map yet.
+    Current state: foundations (valuation theory of finite extensions of ℚ_p, unramified
+    extensions and Frobenius, Herbrand quotients) and the class field axiom for cyclic
+    extensions; no reciprocity map yet.
   authors:
     - "Claude (Anthropic)"
     - "LANA Project"
@@ -42,7 +43,7 @@ classification:
   msc2020: ["11S31"]
 
 status:
-  scope: "in progress: foundations (local fields over ℚ_p, unramified extensions, Frobenius, Herbrand quotients); reciprocity not yet formalised"
+  scope: "in progress: foundations, unramified extensions, Frobenius, Herbrand quotients, class field axiom for cyclic extensions; reciprocity map not yet formalised"
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: []
@@ -52,6 +53,7 @@ status:
     - "PadicField.isGalois_of_isUnramified: unramified extensions are Galois"
     - "PadicField.residueGalEquiv, PadicField.frob: Gal(L/K) ≃ Gal(residue fields), arithmetic Frobenius"
     - "Herbrand.herbrand_eq_mul_of_ses: Herbrand quotients are multiplicative"
+    - "PadicField.index_normGroup_of_isCyclic: [K^x : N_{L/K} L^x] = [L : K] for cyclic L/K"
 
 automation:
   methods:

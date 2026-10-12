@@ -4,7 +4,7 @@ Local class field theory for mixed-characteristic local fields.
 
 ## Status
 
-**In progress (foundations only).** No reciprocity map exists yet: the Artin map, local
+**In progress.** No reciprocity map exists yet: the Artin map, local
 reciprocity, and the existence theorem are **not** formalised. What is proved (no `sorry`, no
 `axiom`), all in the concrete setting of fields `K` with `[Algebra ℚ_[p] K]
 [FiniteDimensional ℚ_[p] K]` (see `Blueprint.md` for the route and lemma-level status):
@@ -17,13 +17,16 @@ reciprocity, and the existence theorem are **not** formalised. What is proved (n
   field of `X^Q - X`); for Galois `L/K` the map `Gal(L/K) → Gal(𝓴 L/𝓴 K)` is surjective with
   kernel the inertia group, an isomorphism for unramified `L/K`, and the arithmetic Frobenius
   `PadicField.frob` generates `Gal(L/K)`.
+* `LocalClassFieldTheory/ClassFieldAxiom/`: the **class field axiom** for cyclic extensions,
+  `PadicField.index_normGroup_of_isCyclic : (normGroup K L).index = Module.finrank K L`, i.e.
+  `[Kˣ : N_{L/K} Lˣ] = [L : K]`, via `h(𝒪ˣ_L) = 1` (normal-basis lattice and successive
+  approximation), `h(Lˣ) = [L : K]`, and Hilbert 90.
 * `LocalClassFieldTheory/Herbrand/`: Tate groups `Ĥ⁰`, `Ĥ⁻¹` and Herbrand quotients for a group
   with an automorphism of finite order: multiplicativity in short exact sequences, value `1` on
   finite and induced modules, value `n` on `ℤ`.
 
-Not yet done: the maximal unramified extension and `Gal(K^ur/K)`, the class field axiom
-`[Kˣ : N Lˣ] = [L : K]` for cyclic `L/K`, the reciprocity map and its properties, the existence
-theorem.
+Not yet done: the maximal unramified extension and `Gal(K^ur/K)`, the reciprocity map and its
+properties, the existence theorem.
 
 No lana-agents repository depends on this one: `iut` and its pinned lana-agents
 dependencies do not `require` it.
