@@ -256,12 +256,15 @@ theorem cycRec_baseChange (x : K'ˣ) :
   have hK'D : K' ≤ D := hDdef ▸ le_sup_left.trans le_sup_right
   have hED : E ≤ D := hDdef ▸ le_sup_left
   haveI : FiniteDimensional K (extendScalars hK'D) := (inferInstance : FiniteDimensional K D)
-  haveI : FiniteDimensional K' (extendScalars hK'D) := FiniteDimensional.right K K' (extendScalars hK'D)
+  haveI : FiniteDimensional K' (extendScalars hK'D) :=
+    FiniteDimensional.right K K' (extendScalars hK'D)
   haveI : IsGalois K (extendScalars hK'D) := (inferInstance : IsGalois K D)
-  haveI : IsGalois K' (extendScalars hK'D) := IsGalois.tower_top_of_isGalois K K' (extendScalars hK'D)
+  haveI : IsGalois K' (extendScalars hK'D) :=
+    IsGalois.tower_top_of_isGalois K K' (extendScalars hK'D)
   obtain ⟨s, hsdef⟩ : ∃ s, s = f p K' (extendScalars hK'D) := ⟨_, rfl⟩
   have hs : 0 < s := hsdef ▸ f_pos
-  have hKs : unramifiedOfDegree p K' Ω s ≤ (extendScalars hK'D) := unramifiedOfDegree_le_of_f_eq (extendScalars hK'D) hsdef.symm
+  have hKs : unramifiedOfDegree p K' Ω s ≤ extendScalars hK'D :=
+    unramifiedOfDegree_le_of_f_eq (extendScalars hK'D) hsdef.symm
   have hs₀s : s₀ ∣ s := by
     have h1 : unramifiedOfDegree p K' Ω s₀ ≤ (extendScalars hK'D) := by
       intro y hy
@@ -277,7 +280,8 @@ theorem cycRec_baseChange (x : K'ˣ) :
     (sup_le hED hK'D : E ⊔ K' ≤ D) ((mem_baseChange K' E).1 hy)
   have hKfsD : unramifiedOfDegree p K Ω (f' * s) ≤ D := fun y hy ↦
     hKs (unramifiedOfDegree_le_baseChange K' hs hy)
-  have key : ∀ τ₁ : (extendScalars hK'D) ≃ₐ[K'] (extendScalars hK'D), resHom hKs τ₁ = frobT p K' Ω s →
+  have key : ∀ τ₁ : extendScalars hK'D ≃ₐ[K'] extendScalars hK'D,
+      resHom hKs τ₁ = frobT p K' Ω s →
       ∃ y : K'ˣ, cycRec p (baseChange K' E) y = resHom hE₁D₁ τ₁ ∧ ψ y = φ y := by
     intro τ₁ hτ₁
     obtain ⟨y, h1, h2⟩ := exists_norm_frobLift_baseChange K' E hK'D hED inferInstance
