@@ -73,6 +73,7 @@ status:
     - "PadicField.exists_abFin_normGroup_eq_pow: (K^x)^n is a norm group when μ_n ⊆ K (Kummer case)"
     - "PadicField.exists_abFin_le_norm: norm limitation step for cyclic K'/K"
     - "PadicField.existence: every finite-index subgroup of K^x is the norm group of a finite abelian extension"
+    - "PadicField.existsUnique_normGroup_eq, PadicField.le_iff_normGroup_le: L ↦ N_{L/K} L^x is an order-reversing bijection onto finite-index subgroups"
     - "PadicField.artin_injective, PadicField.denseRange_artin: the Artin map is injective with dense image"
     - "PadicField.unitsInertiaEquiv: units of O_K ≃* Gal(K^ab/K^ur) via the Artin map"
     - "PadicField.absInertia_eq, PadicField.unramifiedQuotientEquiv, PadicField.arithFrob: inertia, unramified quotient, Frobenius"

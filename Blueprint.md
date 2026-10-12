@@ -202,7 +202,8 @@ Notation: `Ω` an algebraic closure of `K`, `K_t ⊆ Ω` the unramified extensio
   `[A, A]`), `exists_abFin_pow_of_cyclic` (descent along cyclic `K₁/K`), `cycField` (`K(μ_n)`,
   abelian via `autToPow`), `exists_abFin_pow_of_forall_cyclic`, `existence_pow_aux` (induction on
   `[F(μ_n) : F]` over base types in the universe of `Ω`), `exists_abFin_normGroup_le_pow'`,
-  **`existence`**.
+  **`existence`**; `index_normGroup_eq_finrank`, `le_iff_normGroup_le`,
+  `existsUnique_normGroup_eq` (classification of finite abelian extensions by norm groups).
 * F3 **done** (`ArtinInertia.lean`): see E1/E2.
 
 ## G. Possible further work

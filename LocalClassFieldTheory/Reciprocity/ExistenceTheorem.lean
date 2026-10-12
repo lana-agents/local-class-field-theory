@@ -12,7 +12,10 @@ import LocalClassFieldTheory.Reciprocity.Kummer
 * `PadicField.exists_abelian_closure`: for finite Galois `K₁/K` and finite abelian `E/K₁`, there
   is a finite abelian `L ⊇ E` over `K₁` which is Galois over `K`;
 * `PadicField.exists_abFin_pow_of_cyclic`: if `K₁/K` is cyclic and `(K₁ˣ)ⁿ` contains a norm
-  group, then so does `(Kˣ)ⁿ` (norm limitation, `PadicField.exists_abFin_le_norm`).
+  group, then so does `(Kˣ)ⁿ` (norm limitation, `PadicField.exists_abFin_le_norm`);
+* `PadicField.existence`: every subgroup of finite index of `Kˣ` is a norm group;
+* `PadicField.le_iff_normGroup_le`, `PadicField.existsUnique_normGroup_eq`: `L ↦ N_{L/K} Lˣ` is an
+  order-reversing bijection onto the subgroups of finite index.
 -/
 
 set_option linter.unusedSectionVars false
@@ -277,6 +280,39 @@ include hp in
 theorem existence (N : Subgroup Kˣ) (hN : N.index ≠ 0) :
     ∃ L : AbFin K Ω, normGroup K L.1 = N :=
   existence_of_pow (p := p) (fun _ hn ↦ exists_abFin_normGroup_le_pow' (p := p) hn) N hN
+
+include hp in
+/-- `[Kˣ : N_{L/K} Lˣ] = [L : K]` for finite abelian `L ⊆ Ω`. -/
+theorem index_normGroup_eq_finrank (L : IntermediateField K Ω) [FiniteDimensional K L]
+    [IsAbelianGalois K L] : (normGroup K L).index = Module.finrank K L := by
+  rw [Subgroup.index, Nat.card_congr (abRecEquiv p L).toEquiv, IsGalois.card_aut_eq_finrank]
+
+include hp in
+/-- **Norm groups determine the extension**: `L₁ ⊆ L₂ ↔ N_{L₂} ⊆ N_{L₁}`. -/
+theorem le_iff_normGroup_le (L₁ L₂ : IntermediateField K Ω) [FiniteDimensional K L₁]
+    [IsAbelianGalois K L₁] [FiniteDimensional K L₂] [IsAbelianGalois K L₂] :
+    L₁ ≤ L₂ ↔ normGroup K L₂ ≤ normGroup K L₁ := by
+  constructor
+  · intro h
+    exact normGroup_le_of_algHom (inclusion h)
+  · intro h
+    haveI := isAbelianGalois_sup L₁ L₂
+    have h1 : normGroup K (L₁ ⊔ L₂ : IntermediateField K Ω) = normGroup K L₂ := by
+      rw [normGroup_sup (p := p), inf_eq_right.2 h]
+    have h2 : Module.finrank K L₂ = Module.finrank K (L₁ ⊔ L₂ : IntermediateField K Ω) := by
+      rw [← index_normGroup_eq_finrank (p := p), ← index_normGroup_eq_finrank (p := p), h1]
+    have h3 := IntermediateField.eq_of_le_of_finrank_eq (le_sup_right : L₂ ≤ L₁ ⊔ L₂) h2
+    exact le_sup_left.trans_eq h3.symm
+
+include hp in
+/-- **Main theorem of local class field theory**: `L ↦ N_{L/K} Lˣ` is a bijection from finite
+abelian extensions `L ⊆ Ω` of `K` onto the subgroups of finite index of `Kˣ`. -/
+theorem existsUnique_normGroup_eq (N : Subgroup Kˣ) (hN : N.index ≠ 0) :
+    ∃! L : AbFin K Ω, normGroup K L.1 = N := by
+  obtain ⟨L, hL⟩ := existence (p := p) (Ω := Ω) N hN
+  refine ⟨L, hL, fun L' hL' ↦ Subtype.ext (le_antisymm ?_ ?_)⟩
+  · exact (le_iff_normGroup_le (p := p) L'.1 L.1).2 (hL.trans hL'.symm).le
+  · exact (le_iff_normGroup_le (p := p) L.1 L'.1).2 (hL'.trans hL.symm).le
 
 end Main
 

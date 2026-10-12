@@ -11,7 +11,9 @@ uniformisers to the arithmetic Frobenius modulo inertia, maps the units isomorph
 inertia group `Gal(K^ab/K^ur)` (`PadicField.unitsInertiaEquiv`), is compatible with norms for every
 finite `K'/K` (`PadicField.artin_baseChange`), and satisfies conjugation functoriality
 (`PadicField.abRec_conj`). The **existence theorem** holds: every subgroup of finite index of `Kˣ`
-is the norm group of a finite abelian extension (`PadicField.existence`).
+is the norm group of a finite abelian extension (`PadicField.existence`), and `L ↦ N_{L/K} Lˣ` is
+an order-reversing bijection onto the subgroups of finite index
+(`PadicField.le_iff_normGroup_le`, `PadicField.existsUnique_normGroup_eq`).
 
 What is proved (no `sorry`, no `axiom`), all in the concrete setting of fields `K` with `[Algebra ℚ_[p] K]
 [FiniteDimensional ℚ_[p] K]` (see `Blueprint.md` for the route and lemma-level status):
