@@ -3,6 +3,7 @@ import LocalClassFieldTheory.Brauer.ArtinPairing
 import LocalClassFieldTheory.Brauer.ContH2
 import LocalClassFieldTheory.Brauer.Cyclic
 import LocalClassFieldTheory.Brauer.Duality
+import LocalClassFieldTheory.Brauer.DualityH1
 import LocalClassFieldTheory.Brauer.InfRes
 import LocalClassFieldTheory.Brauer.Invariant
 import LocalClassFieldTheory.Brauer.KummerH2
