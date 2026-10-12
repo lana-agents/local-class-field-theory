@@ -172,9 +172,9 @@ theorem phiFun_dx (x : G → M) : phiFun σ (dx G M x) = normMap G M (x σ) := b
     exact prod_range_shift (fun i => x (σ ^ i)) _ (by simp [pow_orderOf_eq_one])
   rw [h1, div_mul_cancel]
 
-omit [TopologicalSpace G] in
+omit [Fintype G] [TopologicalSpace G] in
 include hσ in
-theorem phiFun_mem_fixedSubgroup {f : G × G → M} (hf : IsMulCocycle₂ f) :
+theorem phiFun_mem_fixedSubgroup [Finite G] {f : G × G → M} (hf : IsMulCocycle₂ f) :
     phiFun σ f ∈ fixedSubgroup G M := by
   have hσfix : σ • phiFun σ f = phiFun σ f := by
     -- `σ • f(σ^i, σ) = f(σ^{i+1}, σ) * f(σ, σ^i) / f(σ, σ^{i+1})`
@@ -224,10 +224,11 @@ theorem cyclicHom_mk (f : cocycles G M) :
     cyclicHom σ hσ (mk f) =
       QuotientGroup.mk ⟨phiFun σ f, phiFun_mem_fixedSubgroup σ hσ (isMulCocycle₂ f)⟩ := rfl
 
-omit [TopologicalSpace G] in
+omit [Fintype G] [TopologicalSpace G] in
 include hσ in
 /-- A 2-cocycle of a cyclic group is determined by `f (1, 1)` and the values `f (g, σ)`. -/
-theorem eq_of_isMulCocycle₂ {f f' : G × G → M} (hf : IsMulCocycle₂ f) (hf' : IsMulCocycle₂ f')
+theorem eq_of_isMulCocycle₂ [Finite G] {f f' : G × G → M} (hf : IsMulCocycle₂ f)
+    (hf' : IsMulCocycle₂ f')
     (h1 : f (1, 1) = f' (1, 1)) (hs : ∀ g, f (g, σ) = f' (g, σ)) : f = f' := by
   have hk : ∀ k : ℕ, ∀ g, f (g, σ ^ k) = f' (g, σ ^ k) := by
     intro k
@@ -316,8 +317,8 @@ theorem isMulCocycle₂_cupFun {a : M} (ha : a ∈ fixedSubgroup G M) :
   rw [carry_add hn, add_assoc, Nat.add_comm (idx σ hσ g) (idx σ hσ h + idx σ hσ j),
     ← carry_add hn _ (idx σ hσ g), Nat.add_comm (_ % _) (idx σ hσ g), Nat.add_comm]
 
-omit [TopologicalSpace G] in
-theorem idx_self (hn2 : 1 < orderOf σ) : idx σ hσ σ = 1 := by
+omit [Fintype G] [TopologicalSpace G] in
+theorem idx_self [Finite G] (hn2 : 1 < orderOf σ) : idx σ hσ σ = 1 := by
   have := idx_pow σ hσ hn2
   rwa [pow_one] at this
 

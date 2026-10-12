@@ -28,8 +28,6 @@ topology), and for a finite Galois `L ⊆ Ω` we define the inflation map
 
 open ContH2 IntermediateField groupCohomology
 
--- The instances `SMul Gal(L/K) Lˣ` for intermediate fields `L` are slow to synthesize.
-set_option synthInstance.maxHeartbeats 200000
 
 /-- A function on a topological group which is invariant under right translation by an open
 subgroup is locally constant. -/
@@ -114,6 +112,8 @@ section Infl
 
 variable (L : IntermediateField K Ω) [Normal K L]
 
+set_option synthInstance.maxHeartbeats 200000 in
+-- `SMul Gal(L/K) Lˣ` for intermediate fields `L` is slow to synthesize.
 theorem units_map_restrictNormalHom_smul (g : Ω ≃ₐ[K] Ω) (u : Lˣ) :
     Units.map (algebraMap L Ω : L →* Ω) (AlgEquiv.restrictNormalHom L g • u) =
       g • Units.map (algebraMap L Ω : L →* Ω) u := by
@@ -123,11 +123,15 @@ theorem units_map_restrictNormalHom_smul (g : Ω ≃ₐ[K] Ω) (u : Lˣ) :
 
 variable [FiniteDimensional K L]
 
+set_option synthInstance.maxHeartbeats 200000 in
+-- `SMul Gal(L/K) Lˣ` for intermediate fields `L` is slow to synthesize.
 /-- Inflation `Br(L/K) = H²(Gal(L/K), Lˣ) → H²(Gal(Ω/K), Ωˣ)`. -/
 noncomputable def infl : RelBr K L →* Br K Ω :=
   ContH2.map (AlgEquiv.restrictNormalHom L) (InfiniteGalois.restrictNormalHom_continuous L)
     (Units.map (algebraMap L Ω : L →* Ω)) (units_map_restrictNormalHom_smul L)
 
+set_option synthInstance.maxHeartbeats 200000 in
+-- `SMul Gal(L/K) Lˣ` for intermediate fields `L` is slow to synthesize.
 omit [FiniteDimensional K L] in
 theorem infl_mk (f : cocycles (L ≃ₐ[K] L) Lˣ) :
     infl L (mk f) = mk (cocyclesMap (AlgEquiv.restrictNormalHom L)
@@ -140,6 +144,8 @@ section Hilbert90
 
 variable [IsGalois K Ω]
 
+set_option synthInstance.maxHeartbeats 200000 in
+-- `SMul Gal(L/K) Lˣ` for intermediate fields `L` is slow to synthesize.
 /-- Continuous Hilbert 90 for the kernel `Gal(Ω/L)` of `Gal(Ω/K) → Gal(L/K)`. -/
 theorem isMulCoboundary₁_ker (L : IntermediateField K Ω) [Normal K L]
     (c : (AlgEquiv.restrictNormalHom (F := K) (K₁ := Ω) L).ker → Ωˣ) (hc : IsLocallyConstant c)
@@ -205,6 +211,8 @@ theorem isMulCoboundary₁_ker (L : IntermediateField K Ω) [Normal K L]
   rw [hι_smul]
   exact hm τ
 
+set_option synthInstance.maxHeartbeats 200000 in
+-- `SMul Gal(L/K) Lˣ` for intermediate fields `L` is slow to synthesize.
 /-- Inflation `Br(L/K) → Br(K)` is injective. -/
 theorem infl_injective (L : IntermediateField K Ω) [FiniteDimensional K L] [IsGalois K L] :
     Function.Injective (infl (Ω := Ω) L) := by
@@ -228,6 +236,8 @@ section InflRel
 
 variable {E E' : IntermediateField K Ω} [Normal K E] (h : E ≤ E')
 
+set_option synthInstance.maxHeartbeats 200000 in
+-- `SMul Gal(L/K) Lˣ` for intermediate fields `L` is slow to synthesize.
 theorem units_map_inclusion_resHom_smul (g : E' ≃ₐ[K] E') (u : Eˣ) :
     Units.map (inclusion h : E →* E') (PadicField.resHom h g • u) =
       g • Units.map (inclusion h : E →* E') u := by
@@ -237,11 +247,15 @@ theorem units_map_inclusion_resHom_smul (g : E' ≃ₐ[K] E') (u : Eˣ) :
 
 variable [FiniteDimensional K E] [FiniteDimensional K E']
 
+set_option synthInstance.maxHeartbeats 200000 in
+-- `SMul Gal(L/K) Lˣ` for intermediate fields `L` is slow to synthesize.
 /-- Inflation `Br(E/K) → Br(E'/K)` for `E ≤ E'` inside `Ω`. -/
 noncomputable def inflRel : RelBr K E →* RelBr K E' :=
   ContH2.map (PadicField.resHom h) continuous_of_discreteTopology
     (Units.map (inclusion h : E →* E')) (units_map_inclusion_resHom_smul h)
 
+set_option synthInstance.maxHeartbeats 200000 in
+-- `SMul Gal(L/K) Lˣ` for intermediate fields `L` is slow to synthesize.
 omit [FiniteDimensional K E] [FiniteDimensional K E'] in
 theorem resHom_restrictNormalHom [Normal K E'] (g : Ω ≃ₐ[K] Ω) :
     PadicField.resHom h (AlgEquiv.restrictNormalHom E' g) = AlgEquiv.restrictNormalHom E g := by
@@ -250,6 +264,8 @@ theorem resHom_restrictNormalHom [Normal K E'] (g : Ω ≃ₐ[K] Ω) :
   rw [AlgEquiv.restrictNormalHom_apply, AlgEquiv.restrictNormalHom_apply]
   rfl
 
+set_option synthInstance.maxHeartbeats 200000 in
+-- `SMul Gal(L/K) Lˣ` for intermediate fields `L` is slow to synthesize.
 omit [FiniteDimensional K E] in
 theorem infl_inflRel [Normal K E'] (α : RelBr K E) : infl E' (inflRel h α) = infl E α := by
   induction α using ContH2.induction_on with | h f => ?_
@@ -259,6 +275,8 @@ theorem infl_inflRel [Normal K E'] (α : RelBr K E) : infl E' (inflRel h α) = i
   simp only [cocyclesMap_apply, resHom_restrictNormalHom]
   rfl
 
+set_option synthInstance.maxHeartbeats 200000 in
+-- `SMul Gal(L/K) Lˣ` for intermediate fields `L` is slow to synthesize.
 theorem inflRel_injective [IsGalois K Ω] [IsGalois K E] [IsGalois K E'] :
     Function.Injective (inflRel (Ω := Ω) h) := by
   intro α β hαβ
@@ -271,6 +289,8 @@ section Exhaustion
 
 variable [IsGalois K Ω]
 
+set_option synthInstance.maxHeartbeats 200000 in
+-- `SMul Gal(L/K) Lˣ` for intermediate fields `L` is slow to synthesize.
 theorem exists_fixingSubgroup_invariant (f : (Ω ≃ₐ[K] Ω) × (Ω ≃ₐ[K] Ω) → Ωˣ)
     (hf : IsLocallyConstant f) :
     ∃ E : IntermediateField K Ω, FiniteDimensional K E ∧
@@ -282,6 +302,8 @@ theorem exists_fixingSubgroup_invariant (f : (Ω ≃ₐ[K] Ω) × (Ω ≃ₐ[K] 
   obtain ⟨E, hE, hEU⟩ := (krullTopology_mem_nhds_one_iff K Ω U).1 (hUo.mem_nhds U.one_mem)
   exact ⟨E, hE, fun g h u hu u' hu' => hU g h u (hEU hu) u' (hEU hu')⟩
 
+set_option synthInstance.maxHeartbeats 200000 in
+-- `SMul Gal(L/K) Lˣ` for intermediate fields `L` is slow to synthesize.
 /-- **`Br(K)` is the union of the relative Brauer groups**: every class of `H²(Gal(Ω/K), Ωˣ)`
 is inflated from `Br(L/K)` for some finite Galois `L ⊆ Ω`. -/
 theorem exists_infl_eq (α : Br K Ω) :
