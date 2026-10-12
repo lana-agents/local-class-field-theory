@@ -29,6 +29,7 @@ import LocalClassFieldTheory.Reciprocity.Abelian
 import LocalClassFieldTheory.Reciprocity.Artin
 import LocalClassFieldTheory.Reciprocity.ArtinContinuous
 import LocalClassFieldTheory.Reciprocity.ArtinInertia
+import LocalClassFieldTheory.Reciprocity.ArtinUnique
 import LocalClassFieldTheory.Reciprocity.BaseChange
 import LocalClassFieldTheory.Reciprocity.Conjugation
 import LocalClassFieldTheory.Reciprocity.CyclicLevel
@@ -44,9 +45,12 @@ import LocalClassFieldTheory.Reciprocity.LevelNeukirch
 import LocalClassFieldTheory.Reciprocity.Neukirch
 import LocalClassFieldTheory.Reciprocity.NormCompat
 import LocalClassFieldTheory.Reciprocity.NormLimitation
+import LocalClassFieldTheory.Reciprocity.OmegaIndependence
 import LocalClassFieldTheory.Reciprocity.OmegaLevel
+import LocalClassFieldTheory.Reciprocity.ProfiniteCompletion
 import LocalClassFieldTheory.Reciprocity.SecondInequality
 import LocalClassFieldTheory.Reciprocity.Standard
 import LocalClassFieldTheory.Reciprocity.Tools
+import LocalClassFieldTheory.Reciprocity.UnitFiltration
 import LocalClassFieldTheory.Reciprocity.UnitIndex
 import LocalClassFieldTheory.Reciprocity.UnitMap

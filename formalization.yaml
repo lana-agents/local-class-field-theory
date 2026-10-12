@@ -17,7 +17,8 @@ project:
     algebraic closure; the Artin map Kˣ → Gal(K^ab/K) (continuous, injective, dense image,
     uniformisers to Frobenius modulo inertia, units isomorphically onto inertia), norm compatibility
     for all finite K'/K, conjugation functoriality, and the existence theorem (every finite-index
-    subgroup of Kˣ is a norm group).
+    subgroup of Kˣ is a norm group); Gal(K^ab/K) as the profinite completion of Kˣ, uniqueness of
+    the Artin map, independence of the algebraic closure, unit filtration and conductors.
   authors:
     - "Claude (Anthropic)"
     - "LANA Project"
@@ -47,7 +48,7 @@ classification:
   msc2020: ["11S31"]
 
 status:
-  scope: "foundations, unramified extensions, Frobenius, Herbrand quotients, class field axiom, local reciprocity for finite abelian extensions inside Ω; Artin map K^x -> Gal(K^ab/K) (continuous, injective, dense image, Frobenius and inertia properties, units ≅ inertia); norm compatibility for finite K'/K; conjugation functoriality; existence theorem"
+  scope: "foundations, unramified extensions, Frobenius, Herbrand quotients, class field axiom, local reciprocity for finite abelian extensions inside Ω; Artin map K^x -> Gal(K^ab/K) (continuous, injective, dense image, Frobenius and inertia properties, units ≅ inertia); norm compatibility for finite K'/K; conjugation functoriality; existence theorem; profinite completion; uniqueness; independence of Ω; conductors"
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: []
@@ -76,6 +77,10 @@ status:
     - "PadicField.existsUnique_normGroup_eq, PadicField.le_iff_normGroup_le: L ↦ N_{L/K} L^x is an order-reversing bijection onto finite-index subgroups"
     - "PadicField.artin_injective, PadicField.denseRange_artin: the Artin map is injective with dense image"
     - "PadicField.unitsInertiaEquiv: units of O_K ≃* Gal(K^ab/K^ur) via the Artin map"
+    - "PadicField.artinCompletionEquiv: profinite completion of K^x ≃ₜ* Gal(K^ab/K), extending the Artin map"
+    - "PadicField.eq_artin_of_forall, PadicField.eq_artin_iff: the Artin map is the unique homomorphism with the Frobenius and norm properties"
+    - "PadicField.galMaxAbelianEquiv_artin, PadicField.abRec_map: independence of the algebraic closure Ω"
+    - "PadicField.unitFiltration, PadicField.exists_unitFiltration_le_normGroup: unit filtration and existence of conductors"
     - "PadicField.absInertia_eq, PadicField.unramifiedQuotientEquiv, PadicField.arithFrob: inertia, unramified quotient, Frobenius"
 
 automation:

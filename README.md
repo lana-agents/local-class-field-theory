@@ -13,7 +13,11 @@ finite `K'/K` (`PadicField.artin_baseChange`), and satisfies conjugation functor
 (`PadicField.abRec_conj`). The **existence theorem** holds: every subgroup of finite index of `Kˣ`
 is the norm group of a finite abelian extension (`PadicField.existence`), and `L ↦ N_{L/K} Lˣ` is
 an order-reversing bijection onto the subgroups of finite index
-(`PadicField.le_iff_normGroup_le`, `PadicField.existsUnique_normGroup_eq`).
+(`PadicField.le_iff_normGroup_le`, `PadicField.existsUnique_normGroup_eq`). The Artin map extends
+to an isomorphism of topological groups from the **profinite completion of `Kˣ`** onto
+`Gal(K^ab/K)` (`PadicField.artinCompletionEquiv`), it is **characterised** by the Frobenius and
+norm properties (`PadicField.eq_artin_of_forall`), and it does **not depend on `Ω`**: it is
+transported along any `K`-isomorphism `Ω ≃ Ω'` (`PadicField.galMaxAbelianEquiv_artin`).
 
 What is proved (no `sorry`, no `axiom`), all in the concrete setting of fields `K` with `[Algebra ℚ_[p] K]
 [FiniteDimensional ℚ_[p] K]` (see `Blueprint.md` for the route and lemma-level status):
@@ -71,8 +75,20 @@ What is proved (no `sorry`, no `axiom`), all in the concrete setting of fields `
   `PadicField.artin_injective`, `PadicField.exists_unit_artin_eq` (compactness of the unit
   sphere), `PadicField.unitsInertiaEquiv`, `PadicField.denseRange_artin`.
 
-Not yet done: the identification of `Gal(K^ab/K)` with the profinite completion of `Kˣ` as a
-topological isomorphism, Lubin–Tate theory, local class field theory in positive characteristic.
+* `Reciprocity/{ProfiniteCompletion,ArtinUnique,OmegaIndependence,UnitFiltration}.lean`:
+  `PadicField.artinCompletionEquiv : ProfiniteGrp.ProfiniteCompletion.completion (GrpCat.of Kˣ)
+  ≃ₜ* Gal(K^ab/K)` with `PadicField.artinCompletionEquiv_eta` (`K`, `Ω` in one universe);
+  uniqueness `PadicField.eq_of_frob_of_norm`, `PadicField.eq_artin_of_forall`,
+  `PadicField.eq_artin_iff`; independence of `Ω`: `PadicField.maxAbelianEquiv`,
+  `PadicField.galMaxAbelianEquiv`, `PadicField.galMaxAbelianEquiv_artin`, `PadicField.abRec_map`;
+  the unit filtration `PadicField.unitFiltration` (`U^(0) = 𝒪ˣ`, antitone, trivial intersection)
+  and the existence of conductors `PadicField.exists_unitFiltration_le_normGroup`.
+
+Not done (outside the scope of this repository's goals, possible future work): the explicit
+decomposition `Gal(K^ab/K) ≅ 𝒪ˣ × Ẑ` (needs the profinite completion of `𝒪ˣ × ℤ` and
+`Gal(K^ur/K) ≅ Ẑ`), higher ramification groups (upper numbering) and the conductor–ramification
+correspondence, Lubin–Tate theory (explicit `K^ab = K^ur · K_π`), local class field theory in
+positive characteristic.
 
 No lana-agents repository depends on this one: `iut` and its pinned lana-agents
 dependencies do not `require` it.

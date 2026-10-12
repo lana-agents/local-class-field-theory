@@ -49,7 +49,8 @@ the last stage.
   `𝒪 p K` as the closed unit ball (a `ValuationSubring`), `Integers.isDiscreteValuationRing`,
   `finite_residue`, `q`). Originally planned as `𝒪 K = integralClosure ℤ_[p] K`; `x ∈ 𝒪 K ↔ ‖x‖ ≤ 1`; `𝒪 K` local, DVR, finite
   residue field `𝓴 K` of cardinality `q_K`; value group discrete.
-* A3 **done** except the unit filtration (`Uniformizer.lean`: `PadicField.v`, `v_mul`,
+* A3 **done** (unit filtration in `Reciprocity/UnitFiltration.lean`: `unitFiltration`,
+  `unitFiltration_zero`, `unitFiltration_antitone`, `iInf_unitFiltration`; `Uniformizer.lean`: `PadicField.v`, `v_mul`,
   `IsUniformizer`, `exists_uniformizer`, `eq_zpow_mul_unit`, `mem_maximalIdeal_pow_iff`)
   normalised valuation `v_K : Kˣ →* Multiplicative ℤ` (or `→+ ℤ` on `Additive`),
   uniformisers, `𝒪ˣ = ker v`, unit filtration `U^(n)`.
@@ -93,7 +94,8 @@ the last stage.
   `herbrand_σL`, `exists_div_of_prod_eq_one` (cyclic Hilbert 90 in all universes),
   `index_normGroup_of_isCyclic : (normGroup K L).index = Module.finrank K L`) `h(𝒪ˣ_L) = 1`, `h(Lˣ) = [L:K]` for cyclic `L/K`; Hilbert 90 ⇒
   `[Kˣ : N_{L/K} Lˣ] = [L:K]` (class field axiom).
-* C5 **planned** consequences: unramified `L/K` ⇒ `N_{L/K} Lˣ = ⟨π^n⟩ × 𝒪ˣ_K`, in particular
+* C5 **done** (as D1 `index_normGroup_le` and D2 `normGroup_of_isUnramified`,
+  `exists_norm_eq_of_isUnramified`) consequences: unramified `L/K` ⇒ `N_{L/K} Lˣ = ⟨π^n⟩ × 𝒪ˣ_K`, in particular
   `N(𝒪ˣ_L) = 𝒪ˣ_K`; second inequality `[Kˣ : N Lˣ] ≤ [L:K]` for abelian (solvable) `L/K`.
 
 ## D. Reciprocity for finite abelian extensions
@@ -182,6 +184,30 @@ Notation: `Ω` an algebraic closure of `K`, `K_t ⊆ Ω` the unramified extensio
   (`conjAut`, `resHom_conjAut`, `fixedFieldConj`, `exists_conj_uniformizer` via
   `Algebra.norm_eq_of_equiv_equiv`).
 
+* E5 **done** (`Reciprocity/ProfiniteCompletion.lean`: `isOpen_setOf_fixes`, `galAb`,
+  `artinLift`, `artinCompletionHom`, `artinCompletionHom_eta`, `artinCompletionHom_injective`,
+  `artinCompletionHom_surjective`, **`artinCompletionEquiv`**, `artinCompletionEquiv_eta`)
+  `Gal(K^ab/K)` is the profinite completion of `Kˣ`: the universal property of Mathlib's
+  `ProfiniteGrp.ProfiniteCompletion` extends `artin` to a continuous `Ĝ → Gal(K^ab/K)`;
+  injective (for `c ↦ 1` and finite-index `H = N_L`, the open set `{c' | c'_H = c_H, c' ↦
+  Gal(K^ab/L)}` contains some `η(x)` by density, so `x ∈ N_L = H` and `c_H = 1`), surjective
+  (compact image containing the dense image of `artin`), hence a homeomorphism (compact to T2).
+  `K` and `Ω` are taken in one universe (the completion's universal property is single-universe).
+* E6 **done** (`Reciprocity/ArtinUnique.lean`: `mem_maxAbelian_of_pow_eq`, `artin_apply_of_pow_eq`,
+  `artin_apply_of_mem_normGroup`, `dvd_v_of_mem_normGroup_unramifiedOfDegree`,
+  `exists_abFin_uniformizer`, **`eq_of_frob_of_norm`**, **`eq_artin_of_forall`**, `eq_artin_iff`)
+  uniqueness: `artin` is the only homomorphism `Kˣ → Gal(K^ab/K)` sending uniformisers to
+  `y ↦ y^q` on roots of `X^(q^n) - X` and `N_L` into `Gal(K^ab/L)`. For a uniformiser `π` and `L`
+  of degree `m`, the existence theorem gives `E` with `N_E = ⟨π⟩ N_{L K_m}`; then `L ⊆ E K_m`
+  (`π^k b ∈ N_{K_m}` forces `m ∣ k`, and `π^m ∈ N_L`), and both maps agree on `E` and on `K_m`.
+* E7 **done** (`Reciprocity/OmegaIndependence.lean`: `AbFin.map`, `map_mem_maxAbelian`,
+  `maxAbelianEquiv`, `galMaxAbelianEquiv`, **`galMaxAbelianEquiv_artin`**, `abRec_map`)
+  independence of `Ω`: for `σ : Ω ≃ₐ[K] Ω'`, `σ artin_Ω(x) σ⁻¹ = artin_Ω'(x)` (the transported
+  map satisfies the characterisation E6), and `abRec_{σ L}(x) = σ abRec_L(x) σ⁻¹`.
+* E8 **done** (`Reciprocity/UnitFiltration.lean`: `exists_unitFiltration_le`,
+  `exists_unitFiltration_le_normGroup`, `exists_unitFiltration_artin`) conductors exist: every
+  finite-index subgroup (in particular every norm group) contains some `U^(n)`.
+
 ## F. Existence theorem (done)
 
 * F0 **done** (`Reciprocity/Existence.lean`: `exists_normGroup_eq_of_le`, `normGroup_sup`,
@@ -208,5 +234,10 @@ Notation: `Ω` an algebraic closure of `K`, `K_t ⊆ Ω` the unramified extensio
 
 ## G. Possible further work
 
-* `Gal(K^ab/K)` as the profinite completion of `Kˣ` (topological isomorphism); the Artin map on
-  `Ω`-independent terms (functoriality in `Ω`); Lubin–Tate theory; positive characteristic.
+* Done since: profinite completion (E5), uniqueness (E6), independence of `Ω` (E7), unit
+  filtration and conductors (E8).
+* Open (beyond the goals of this repository): `Gal(K^ab/K) ≅ 𝒪ˣ × Ẑ` after choosing a
+  uniformiser (needs `Gal(K^ur/K) ≅ Ẑ` and the profinite completion of `𝒪ˣ × ℤ`); higher
+  ramification groups in upper numbering and `artin(U^(n)) = G^n`; Lubin–Tate theory (optional
+  future work: explicit `K^ab = K^ur K_π`, not needed for the existence theorem); positive
+  characteristic.
