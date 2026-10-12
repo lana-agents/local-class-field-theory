@@ -18,6 +18,7 @@ import LocalClassFieldTheory.PadicField.Galois
 import LocalClassFieldTheory.PadicField.Integers
 import LocalClassFieldTheory.PadicField.MaxUnramified
 import LocalClassFieldTheory.PadicField.Norm
+import LocalClassFieldTheory.PadicField.Powers
 import LocalClassFieldTheory.PadicField.Ramification
 import LocalClassFieldTheory.PadicField.Teichmuller
 import LocalClassFieldTheory.PadicField.Tower
@@ -26,6 +27,7 @@ import LocalClassFieldTheory.PadicField.Unramified
 import LocalClassFieldTheory.PadicField.UnramifiedExistence
 import LocalClassFieldTheory.Reciprocity.Abelian
 import LocalClassFieldTheory.Reciprocity.Artin
+import LocalClassFieldTheory.Reciprocity.ArtinContinuous
 import LocalClassFieldTheory.Reciprocity.CyclicLevel
 import LocalClassFieldTheory.Reciprocity.CyclicRec
 import LocalClassFieldTheory.Reciprocity.Embedding
