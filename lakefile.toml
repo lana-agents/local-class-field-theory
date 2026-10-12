@@ -14,5 +14,10 @@ name = "mathlib"
 scope = "leanprover-community"
 rev = "v4.32.0"
 
+[[require]]
+name = "continuous-kummer-theory"
+git = "https://github.com/lana-agents/continuous-kummer-theory"
+rev = "98b67dfe9c82415aa17caa633d93960b6829af2e"
+
 [[lean_lib]]
 name = "LocalClassFieldTheory"
