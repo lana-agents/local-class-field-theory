@@ -152,37 +152,60 @@ Notation: `Ω` an algebraic closure of `K`, `K_t ⊆ Ω` the unramified extensio
   `exists_pow_eq_of_nrm_sub_one_lt`) `K^ab = ⨆` finite abelian `L ⊆ Ω`; `artin : Kˣ →* Gal(K^ab/K)`
   glued from `abRec` (`Subalgebra.iSupLift`); `artin x` fixes `L` iff `x ∈ N Lˣ`; norm groups
   contain `{‖u - 1‖ < ‖n² p‖}` (`n`-th powers), hence `artin` is continuous (Krull topology).
-  Dense image: **planned** (follows from surjectivity of every `abRec L`).
+  **done** (`Reciprocity/ArtinInertia.lean`): dense image `denseRange_artin` (surjectivity of every
+  `abRec L`), injectivity `artin_injective` (kernel ⊆ every `(Kˣ)ⁿ` by existence, and
+  `eq_one_of_forall_pow`: `⋂ (Kˣ)ⁿ = 1` via `(1 + 𝔪)^(p^k) ⊆ 1 + 𝔪^(k+1)`, `y^(Q-1) ∈ 1 + 𝔪` and
+  Krull's intersection theorem).
 * E2 **done** (`Artin.lean`: `cycRec_unramified`, `artin_apply_unramified`,
   `artin_apply_maxUnramified_of_v_eq_one`, `mk_eq_arithFrob_of_artin`,
   `mem_absInertia_of_artin`, `exists_unit_abRec_eq`) `artin x` acts on `K_n` as `Frob^{v(x)}`;
   uniformisers ↦ `arithFrob` modulo inertia; units ↦ inertia, onto the inertia group at every
-  finite abelian level. **planned**: `artin(𝒪ˣ) = Gal(K^ab/K^ur)` (needs compactness of `𝒪ˣ`).
-* E3 **done for finite Galois `K'/K`** (`Reciprocity/FrobLiftPow.lean`:
+  finite abelian level. **done** (`ArtinInertia.lean`: `abInertia`, `exists_unit_artin_eq`,
+  `unitsInertiaEquiv : unitGroup p K ≃* abInertia p K Ω`): `artin(𝒪ˣ) = Gal(K^ab/K^ur)` by
+  compactness of the unit sphere of `K` (`FiniteDimensional.proper` for the spectral norm): the
+  closed sets `{x : ‖x‖ = 1, abRec_L x = σ|_L}` are nonempty and directed.
+* E3 **done for every finite `K'/K`** (`Reciprocity/FrobLiftPow.lean`:
   `StdLevel.rho_norm_frobLift_pow`, `cycRec_norm_frobLift_pow`; `Reciprocity/BaseChange.lean`:
-  `restrictScalars_unramifiedOfDegree`, `resHom_frob_baseChange`, `autRestrict`;
-  `Reciprocity/NormCompat.lean`: `baseChange`, `resBaseChange`, `cycRec_baseChange`,
-  `abRec_baseChange`, `artin_baseChange`) `artin_{K'}(x)|_{K^ab} = artin_K(N_{K'/K} x)`:
-  Neukirch values `N_{Σ/K'} π` of Frobenius lifts over `K'` are Frobenius lifts of degree
-  `f(K'/K)` over `K` with the same fixed field; both sides are trivial on `N_{E K'/K'}` and these
-  values generate. **planned**: non-Galois `K'/K` (pass to a Galois closure).
+  `restrictScalars_unramifiedOfDegree`, `resHom_frob_baseChange`, `autRestrict`,
+  `exists_isGalois_le` (Galois closures inside `Ω`); `Reciprocity/NormCompat.lean`: `baseChange`,
+  `baseChange_isGalois` (`E K'/K'` Galois for any finite `K'`), `resBaseChange`,
+  `cycRec_baseChange`, `abRec_baseChange`, `artin_baseChange`)
+  `artin_{K'}(x)|_{K^ab} = artin_K(N_{K'/K} x)`: Neukirch values `N_{Σ/K'} π` of Frobenius lifts
+  over `K'` are Frobenius lifts of degree `f(K'/K)` over `K` with the same fixed field; both sides
+  are trivial on `N_{E K'/K'}` and these values generate (the auxiliary field `D` contains a Galois
+  closure of `K'`).
+* E4 **done** (`Reciprocity/Conjugation.lean`) conjugation functoriality: for finite Galois `K'/K`,
+  finite abelian `L/K'` with `L/K` Galois, `g ∈ Gal(L/K)`: `abRec_L(g x) = g abRec_L(x) g⁻¹`
+  (`abRec_conj`). Proof: Neukirch's formula for `abRec` (`abRec_norm_frobLift`, `abDeg`), a
+  uniqueness principle (`abRec_ext`: homomorphisms agreeing on norm groups and on Neukirch values
+  of Frobenius lifts agree), and transport of Frobenius lifts `τ ↦ ĝ τ ĝ⁻¹`
+  (`conjAut`, `resHom_conjAut`, `fixedFieldConj`, `exists_conj_uniformizer` via
+  `Algebra.norm_eq_of_equiv_equiv`).
 
-## F. Existence theorem
+## F. Existence theorem (done)
 
 * F0 **done** (`Reciprocity/Existence.lean`: `exists_normGroup_eq_of_le`, `normGroup_sup`,
-  `pow_mem_of_index_ne_zero`, `exists_nrm_sub_one_lt_mem`, `existence_of_pow`) norm groups of finite abelian `L ⊆ Ω` are upward closed (`N ⊇ N_L` ⇒
-  `N = N_{L'}`, `L'` the fixed field of `abRec_L(N)`) and closed under `∩` (`N_{L₁L₂}`); finite
-  index subgroups contain `(Kˣ)^n` and are open (`exists_pow_eq_of_nrm_sub_one_lt`). So
-  existence ⟺ every `(Kˣ)^n` contains a norm group.
-* F1 **planned** `μ_n ⊆ K`: Kummer `L_n = K((Kˣ)^{1/n})` is finite abelian of exponent `n`
-  (`Kˣ/(Kˣ)^n` finite: `U^(m) ⊆ (Kˣ)^n`, `𝒪/𝔪^m` finite), `N_{L_n} ⊇ (Kˣ)^n` (exponent `n`), and
-  `[L_n : K] ≥ [Kˣ : (Kˣ)^n]` (Kummer pairing, `|Hom(G, μ_n)| ≤ |G|` via
-  `CommGroup.monoidHom_mulEquiv_self_of_hasEnoughRootsOfUnity`), hence `N_{L_n} = (Kˣ)^n`.
-* F2 **planned** general `K`: `K' = K(μ_n)`; `N_{L'/K} = N_{K'/K}((K'ˣ)^n) ⊆ (Kˣ)^n` for the
-  Kummer `L'/K'`, `L'/K` Galois but not abelian. Needs the norm limitation theorem
-  `N_{L'/K} = N_{M/K}`, `M = L' ∩ K^ab`; via E3 and conjugation functoriality
-  `artin_{K'}(σx) = σ artin_{K'}(x) σ⁻¹` this reduces (for `Gal(K'/K)` cyclic, then by a cyclic
-  tower) to `[G,G] = [G,H]`. Alternative route: Lubin–Tate extensions `K_{π,m}` with
-  `N = ⟨π⟩ × U^(m)`.
-* F3 **planned** injectivity of `artin` on `𝒪ˣ` and `𝒪ˣ ≃ I(K^ab/K)` (needs F and compactness of
-  `𝒪ˣ`).
+  `pow_mem_of_index_ne_zero`, `exists_nrm_sub_one_lt_mem`, `existence_of_pow`) norm groups of
+  finite abelian `L ⊆ Ω` are upward closed and closed under `∩`; finite index subgroups contain
+  `(Kˣ)^n` and are open. So existence ⟺ every `(Kˣ)^n` contains a norm group.
+* F1 **done** (`Reciprocity/Kummer.lean`: `normGroup_eq_pow_of_kummer`,
+  `exists_abFin_normGroup_eq_pow`, `exists_abFin_normGroup_le_pow`) `μ_n ⊆ K`: the Kummer field
+  `L = K(roots of ∏ (Xⁿ - c))` (`c` over representatives of the finite group `Kˣ/(Kˣ)ⁿ`, finiteness
+  from `continuous-kummer-theory`) is abelian of exponent `n`, `(Kˣ)ⁿ ⊆ N_L`, and the Kummer map
+  `Kˣ/(Kˣ)ⁿ ↪ Hom(Gal(L/K), μ_n)` gives `[Kˣ : (Kˣ)ⁿ] ≤ [L : K] = [Kˣ : N_L]`.
+* F2 **done** (`Reciprocity/NormLimitation.lean`, `Reciprocity/ExistenceTheorem.lean`):
+  norm limitation step `exists_abFin_le_norm`: for cyclic `K'/K` and finite abelian `L/K'` with
+  `L/K` Galois, the image `B ⊆ G = Gal(L/K)` of the norm-one elements of `K'ˣ` under `abRec_L` is
+  normal and contains `[G, Gal(L/K')]` (conjugation functoriality), hence `[G, G]` as `G/Gal(L/K')`
+  is cyclic; `M = L^B` is abelian over `K` with `N_{M/K} ⊆ N_{K'/K}(N_{L/K'})`.
+  `exists_abelian_closure` (abelian-over-`K₁` closure Galois over `K`, via the fixed field of
+  `[A, A]`), `exists_abFin_pow_of_cyclic` (descent along cyclic `K₁/K`), `cycField` (`K(μ_n)`,
+  abelian via `autToPow`), `exists_abFin_pow_of_forall_cyclic`, `existence_pow_aux` (induction on
+  `[F(μ_n) : F]` over base types in the universe of `Ω`), `exists_abFin_normGroup_le_pow'`,
+  **`existence`**.
+* F3 **done** (`ArtinInertia.lean`): see E1/E2.
+
+## G. Possible further work
+
+* `Gal(K^ab/K)` as the profinite completion of `Kˣ` (topological isomorphism); the Artin map on
+  `Ω`-independent terms (functoriality in `Ω`); Lubin–Tate theory; positive characteristic.

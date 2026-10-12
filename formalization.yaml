@@ -7,14 +7,17 @@ version: "v0.4"
 project:
   name: "local-class-field-theory"
   description: >-
-    Planned Lean 4 / Mathlib formalization of local class field theory for finite extensions of ℚ_p:
+    Lean 4 / Mathlib formalization of local class field theory for finite extensions of ℚ_p:
     inertia and the unramified quotient, arithmetic Frobenius, and the topological Artin reciprocity map
     Kˣ → Gal(K^ab/K) with its characterising properties (units map isomorphically to inertia, uniformisers
     map to arithmetic Frobenius modulo inertia, compatibility with norms for finite extensions).
     Current state: foundations (valuation theory of finite extensions of ℚ_p, unramified
     extensions and Frobenius, Herbrand quotients) and the class field axiom for cyclic
     extensions, and local reciprocity Kˣ/N Lˣ ≃ Gal(L/K) for every finite abelian L inside an
-    algebraic closure; the Artin map to Gal(K^ab/K) is constructed (continuous, Frobenius/inertia properties); norm compatibility (Galois K'/K) done; the existence theorem is not yet done.
+    algebraic closure; the Artin map Kˣ → Gal(K^ab/K) (continuous, injective, dense image,
+    uniformisers to Frobenius modulo inertia, units isomorphically onto inertia), norm compatibility
+    for all finite K'/K, conjugation functoriality, and the existence theorem (every finite-index
+    subgroup of Kˣ is a norm group).
   authors:
     - "Claude (Anthropic)"
     - "LANA Project"
@@ -36,15 +39,15 @@ sources:
 
 related_formalizations:
   - id: "https://github.com/lana-agents/continuous-kummer-theory"
-    relationship: "other"
-    note: "Intended to build on it (existence theorem); not required yet."
+    relationship: "builds-on"
+    note: "Required (pinned 98b67df) for the finiteness of Kˣ/(Kˣ)ⁿ in the Kummer case of the existence theorem."
 
 classification:
   arxiv: ["math.NT"]
   msc2020: ["11S31"]
 
 status:
-  scope: "in progress: foundations, unramified extensions, Frobenius, Herbrand quotients, class field axiom, local reciprocity for finite abelian extensions inside Ω; Artin map K^x -> Gal(K^ab/K) (continuous, Frobenius and inertia properties); norm compatibility and existence theorem not yet formalised"
+  scope: "foundations, unramified extensions, Frobenius, Herbrand quotients, class field axiom, local reciprocity for finite abelian extensions inside Ω; Artin map K^x -> Gal(K^ab/K) (continuous, injective, dense image, Frobenius and inertia properties, units ≅ inertia); norm compatibility for finite K'/K; conjugation functoriality; existence theorem"
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: []
@@ -65,7 +68,13 @@ status:
     - "PadicField.resHom_abRec_of_le: compatibility of abRec with restriction"
     - "PadicField.artin, PadicField.artin_apply, PadicField.continuous_artin: the Artin map K^x -> Gal(K^ab/K), continuous"
     - "PadicField.mk_eq_arithFrob_of_artin, PadicField.mem_absInertia_of_artin: uniformisers map to Frobenius mod inertia, units into inertia"
-    - "PadicField.artin_baseChange: artin_{K'}(x) restricted to K^ab equals artin_K(N_{K'/K} x) for finite Galois K'/K"
+    - "PadicField.artin_baseChange: artin_{K'}(x) restricted to K^ab equals artin_K(N_{K'/K} x) for every finite K'/K"
+    - "PadicField.abRec_conj: conjugation functoriality abRec_L(g x) = g abRec_L(x) g^-1"
+    - "PadicField.exists_abFin_normGroup_eq_pow: (K^x)^n is a norm group when μ_n ⊆ K (Kummer case)"
+    - "PadicField.exists_abFin_le_norm: norm limitation step for cyclic K'/K"
+    - "PadicField.existence: every finite-index subgroup of K^x is the norm group of a finite abelian extension"
+    - "PadicField.artin_injective, PadicField.denseRange_artin: the Artin map is injective with dense image"
+    - "PadicField.unitsInertiaEquiv: units of O_K ≃* Gal(K^ab/K^ur) via the Artin map"
     - "PadicField.absInertia_eq, PadicField.unramifiedQuotientEquiv, PadicField.arithFrob: inertia, unramified quotient, Frobenius"
 
 automation:

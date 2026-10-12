@@ -4,13 +4,16 @@ Local class field theory for mixed-characteristic local fields.
 
 ## Status
 
-**In progress.** Local reciprocity `Kˣ/N_{L/K} Lˣ ≃ Gal(L/K)` is formalised for every finite
-abelian `L` inside a fixed algebraic closure `Ω`; the global Artin map `Kˣ → Gal(K^ab/K)` and the
-existence theorem are **not** formalised yet. The Artin map `PadicField.artin : Kˣ →* Gal(K^ab/K)`
-is constructed, continuous, sends uniformisers to the arithmetic Frobenius modulo inertia and units
-into inertia (onto inertia at every finite level), and is compatible with norms for finite
-Galois `K'/K` (`PadicField.artin_baseChange`); the existence theorem is open. What is proved (no `sorry`, no
-`axiom`), all in the concrete setting of fields `K` with `[Algebra ℚ_[p] K]
+**Main results done.** Local reciprocity `Kˣ/N_{L/K} Lˣ ≃ Gal(L/K)` is formalised for every
+finite abelian `L` inside a fixed algebraic closure `Ω`, together with the Artin map
+`PadicField.artin : Kˣ →* Gal(K^ab/K)`: it is continuous, injective with dense image, sends
+uniformisers to the arithmetic Frobenius modulo inertia, maps the units isomorphically onto the
+inertia group `Gal(K^ab/K^ur)` (`PadicField.unitsInertiaEquiv`), is compatible with norms for every
+finite `K'/K` (`PadicField.artin_baseChange`), and satisfies conjugation functoriality
+(`PadicField.abRec_conj`). The **existence theorem** holds: every subgroup of finite index of `Kˣ`
+is the norm group of a finite abelian extension (`PadicField.existence`).
+
+What is proved (no `sorry`, no `axiom`), all in the concrete setting of fields `K` with `[Algebra ℚ_[p] K]
 [FiniteDimensional ℚ_[p] K]` (see `Blueprint.md` for the route and lemma-level status):
 
 * `LocalClassFieldTheory/PadicField/`: the absolute value `PadicField.nrm` (Mathlib's spectral
@@ -54,13 +57,20 @@ Galois `K'/K` (`PadicField.artin_baseChange`); the existence theorem is open. Wh
   `PadicField.continuous_artin`, `PadicField.mk_eq_arithFrob_of_artin`,
   `PadicField.mem_absInertia_of_artin`, `PadicField.exists_unit_abRec_eq`; norm compatibility
   (`Reciprocity/{FrobLiftPow,BaseChange,NormCompat}.lean`): `PadicField.cycRec_baseChange`,
-  `PadicField.abRec_baseChange`, `PadicField.artin_baseChange` (finite Galois `K'/K`).
-* Towards existence (`Reciprocity/Existence.lean`): norm groups are upward closed and closed under
-  intersections, finite-index subgroups are open, and existence reduces to `(Kˣ)^n`
-  (`PadicField.existence_of_pow`).
+  `PadicField.abRec_baseChange`, `PadicField.artin_baseChange` (every finite `K'/K`).
+* The existence theorem (`Reciprocity/{Existence,Kummer,Conjugation,NormLimitation,
+  ExistenceTheorem}.lean`): norm groups are upward closed and closed under intersections, and
+  existence reduces to `(Kˣ)^n` (`PadicField.existence_of_pow`); Kummer case `μ_n ⊆ K`:
+  `N(K((Kˣ)^{1/n})) = (Kˣ)^n` (`PadicField.exists_abFin_normGroup_eq_pow`); conjugation
+  functoriality `PadicField.abRec_conj`; a norm limitation step for cyclic `K'/K`
+  (`PadicField.exists_abFin_le_norm`); descent along cyclic steps of `K(μ_n)/K`
+  (`PadicField.exists_abFin_normGroup_le_pow'`); `PadicField.existence`.
+* `Reciprocity/ArtinInertia.lean`: `PadicField.eq_one_of_forall_pow` (`⋂ (Kˣ)ⁿ = 1`),
+  `PadicField.artin_injective`, `PadicField.exists_unit_artin_eq` (compactness of the unit
+  sphere), `PadicField.unitsInertiaEquiv`, `PadicField.denseRange_artin`.
 
-Not yet done: norm compatibility for non-Galois `K'/K`, units *onto* the full
-inertia group of `Gal(K^ab/K)` (needs compactness of `𝒪ˣ`), and the existence theorem.
+Not yet done: the identification of `Gal(K^ab/K)` with the profinite completion of `Kˣ` as a
+topological isomorphism, Lubin–Tate theory, local class field theory in positive characteristic.
 
 No lana-agents repository depends on this one: `iut` and its pinned lana-agents
 dependencies do not `require` it.
@@ -84,13 +94,14 @@ with its characterising properties: units map isomorphically to inertia, uniform
 
 ## Related repositories
 
-Intended to build on `continuous-kummer-theory` (for the existence theorem); it does not
-`require` it yet.
+Requires `continuous-kummer-theory` (pinned at `98b67df`) for the finiteness of `Kˣ/(Kˣ)ⁿ`
+(`KummerTheory.finiteKummerQuotients_of_isDiscreteValuationRing`), used in the Kummer case of the
+existence theorem.
 
 ## Layout
 
 Lean 4 project pinned to `leanprover/lean4:v4.32.0` with Mathlib at `v4.32.0`
-(commit `81a5d25`), its only direct dependency.
+(commit `81a5d25`) and `continuous-kummer-theory` (`98b67df`, same Mathlib) as dependencies.
 Library sources live under `LocalClassFieldTheory/`, and every file must be imported from
 the root module `LocalClassFieldTheory.lean`.
 
