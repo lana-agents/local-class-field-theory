@@ -27,7 +27,8 @@ variable {K M : Type*} [Field K] [Field M] [Algebra ℚ_[p] K] [Algebra ℚ_[p] 
   [FiniteDimensional ℚ_[p] M]
 
 /-- The norm group of a totally ramified extension contains a uniformiser. -/
-theorem exists_uniformizer_mem_normGroup [FiniteDimensional K M] (hM : e p K M = Module.finrank K M) :
+theorem exists_uniformizer_mem_normGroup [FiniteDimensional K M]
+    (hM : e p K M = Module.finrank K M) :
     ∃ ϖ : Kˣ, v p (ϖ : K) = 1 ∧ ϖ ∈ normGroup K M := by
   have hπ := uniformizer_spec (p := p) (K := M)
   set π : Mˣ := Units.mk0 _ hπ.ne_zero
