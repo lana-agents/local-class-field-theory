@@ -247,7 +247,8 @@ theorem resCyc_abRec (x : Kˣ) : resCyc L (abRec p L x) = recCyc p L x := by
   exact congrArg Subtype.val this
 
 /-- `abRec L` restricts to the cyclic reciprocity maps. -/
-theorem resHom_abRec (E : IntermediateField K Ω) [FiniteDimensional K E] [IsGalois K E] [IsCyclic (E ≃ₐ[K] E)]
+theorem resHom_abRec (E : IntermediateField K Ω) [FiniteDimensional K E] [IsGalois K E]
+    [IsCyclic (E ≃ₐ[K] E)]
     (hE : E ≤ L) (x : Kˣ) : resHom hE (abRec p L x) = cycRec p E x :=
   congrFun (resCyc_abRec L x) ⟨E, hE, inferInstance, inferInstance⟩
 
