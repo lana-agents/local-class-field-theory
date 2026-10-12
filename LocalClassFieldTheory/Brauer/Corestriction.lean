@@ -41,7 +41,8 @@ theorem out_inv_mul_mem (c : G ⧸ H) (g : G) : (c.out)⁻¹ * g * (g⁻¹ • c
   simpa [mul_inv_rev, mul_assoc] using this
 
 /-- `κ(c, g) = (c.out)⁻¹ g (g⁻¹ • c).out ∈ H`. -/
-noncomputable def kappa (c : G ⧸ H) (g : G) : H := ⟨(c.out)⁻¹ * g * (g⁻¹ • c).out, out_inv_mul_mem H c g⟩
+noncomputable def kappa (c : G ⧸ H) (g : G) : H :=
+  ⟨(c.out)⁻¹ * g * (g⁻¹ • c).out, out_inv_mul_mem H c g⟩
 
 omit [TopologicalSpace G] in
 theorem coe_kappa (c : G ⧸ H) (g : G) : (kappa H c g : G) = (c.out)⁻¹ * g * (g⁻¹ • c).out := rfl
@@ -160,6 +161,7 @@ section Topology
 
 variable [IsTopologicalGroup G] {H}
 
+omit [Fintype (G ⧸ H)] in
 theorem isLocallyConstant_smul_quot (hH : IsOpen (H : Set G)) (c : G ⧸ H) :
     IsLocallyConstant fun g : G => g⁻¹ • c := by
   haveI := QuotientGroup.discreteTopology hH
@@ -171,14 +173,17 @@ theorem isLocallyConstant_smul_quot (hH : IsOpen (H : Set G)) (c : G ⧸ H) :
   rw [this, IsLocallyConstant.iff_continuous]
   exact QuotientGroup.continuous_mk.comp (continuous_inv.mul continuous_const)
 
+omit [Fintype (G ⧸ H)] in
 theorem continuous_out_smul (hH : IsOpen (H : Set G)) (c : G ⧸ H) :
     Continuous fun g : G => (g⁻¹ • c).out :=
   ((isLocallyConstant_smul_quot hH c).comp _).continuous
 
+omit [Fintype (G ⧸ H)] in
 theorem continuous_kappa (hH : IsOpen (H : Set G)) (c : G ⧸ H) :
     Continuous (kappa H c) :=
   ((continuous_const.mul continuous_id).mul (continuous_out_smul hH c)).subtype_mk _
 
+omit [Fintype (G ⧸ H)] in
 theorem continuous_kappa₂ (hH : IsOpen (H : Set G)) (c : G ⧸ H) :
     Continuous fun gh : G × G => kappa H (gh.1⁻¹ • c) gh.2 := by
   refine Continuous.subtype_mk ?_ _
@@ -193,6 +198,7 @@ theorem continuous_kappa₂ (hH : IsOpen (H : Set G)) (c : G ⧸ H) :
     exact (continuous_out_smul hH c).comp (continuous_fst.mul continuous_snd)
   exact (h1.inv.mul continuous_snd).mul h2
 
+omit [Fintype (G ⧸ H)] in
 theorem isLocallyConstant_prod {X N : Type*} [TopologicalSpace X] [CommMonoid N] {ι : Type*}
     (s : Finset ι) (F : ι → X → N) (hF : ∀ i ∈ s, IsLocallyConstant (F i)) :
     IsLocallyConstant fun x => ∏ i ∈ s, F i x := by
