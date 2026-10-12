@@ -48,7 +48,7 @@ classification:
   msc2020: ["11S31"]
 
 status:
-  scope: "foundations, unramified extensions, Frobenius, Herbrand quotients, class field axiom, local reciprocity for finite abelian extensions inside Ω; Artin map K^x -> Gal(K^ab/K) (continuous, injective, dense image, Frobenius and inertia properties, units ≅ inertia); norm compatibility for finite K'/K; conjugation functoriality; existence theorem; profinite completion; uniqueness; independence of Ω; conductors"
+  scope: "foundations, unramified extensions, Frobenius, Herbrand quotients, class field axiom, local reciprocity for finite abelian extensions inside Ω; Artin map K^x -> Gal(K^ab/K) (continuous, injective, dense image, Frobenius and inertia properties, units ≅ inertia); norm compatibility for finite K'/K; conjugation functoriality; existence theorem; profinite completion; uniqueness; independence of Ω; conductors; Brauer groups: H^2 with locally constant cochains, cyclic periodicity, inflation-restriction, |Br(L/K)| = [L:K], invariant map Br(K) ≃ Q/Z, fundamental class"
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: []
@@ -82,6 +82,16 @@ status:
     - "PadicField.galMaxAbelianEquiv_artin, PadicField.abRec_map: independence of the algebraic closure Ω"
     - "PadicField.unitFiltration, PadicField.exists_unitFiltration_le_normGroup: unit filtration and existence of conductors"
     - "PadicField.absInertia_eq, PadicField.unramifiedQuotientEquiv, PadicField.arithFrob: inertia, unramified quotient, Frobenius"
+    - "ContH2.cyclicEquiv: H^2(G, M) ≃ M^G / N_G M for finite cyclic G (periodicity)"
+    - "ContH2.map_injective, ContH2.exists_map_eq_of_res: inflation-restriction in degree two"
+    - "Brauer.relCyclicEquiv, PadicField.card_rel_of_isCyclic: Br(L/K) ≃ K^x / N L^x, |Br(L/K)| = [L:K] for cyclic L/K"
+    - "Brauer.infl_injective, Brauer.exists_infl_eq: Br(K) = H^2(Gal(Ω/K), Ω^x) is the union of the Br(L/K)"
+    - "PadicField.isCyclic_or_exists_normal: Galois groups of local fields are solvable (tame character, wild inertia is a p-group)"
+    - "PadicField.card_contH2_le, PadicField.card_relBr_le: |H^2(H, L^x)| ≤ |H|"
+    - "PadicField.invUrEquiv: Br(K^ur/K) ≃ Q/Z"
+    - "PadicField.invEquiv, PadicField.brUr_eq_top, PadicField.card_relBr_eq: the invariant map Br(K) ≃ Q/Z, |Br(L/K)| = [L:K]"
+    - "PadicField.invEquiv_res: inv_{K'} ∘ res = [K':K] · inv_K"
+    - "PadicField.fundClass, PadicField.invEquiv_infl_fundClass, PadicField.zpowers_fundClass: the fundamental class u_{L/K}"
 
 automation:
   methods:

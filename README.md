@@ -84,6 +84,19 @@ What is proved (no `sorry`, no `axiom`), all in the concrete setting of fields `
   the unit filtration `PadicField.unitFiltration` (`U^(0) = 𝒪ˣ`, antitone, trivial intersection)
   and the existence of conductors `PadicField.exists_unitFiltration_le_normGroup`.
 
+
+**Brauer groups (work package P9, `LocalClassFieldTheory/Brauer/`).** Second cohomology with
+locally constant cochains `ContH2 G M` (multiplicative model), inflation injectivity and
+inflation–restriction in degree two, periodicity `H²(G, M) ≃ Ĥ⁰(G, M)` for cyclic `G`
+(`ContH2.cyclicEquiv`); relative Brauer groups `Brauer.RelBr K L = H²(Gal(L/K), Lˣ)` with
+`Br(L/K) ≃ Kˣ/N Lˣ` for cyclic `L/K`; the Brauer group `Brauer.Br K Ω = H²(Gal(Ω/K), Ωˣ)` as the
+union of the `Br(L/K)` (`Brauer.exists_infl_eq`, `Brauer.infl_injective`); the solvability input
+(`PadicField.isCyclic_or_exists_normal`: tame character, wild inertia is a `p`-group) and the bound
+`|H²(H, Lˣ)| ≤ |H|`; **the invariant map `PadicField.invEquiv : Br(K) ≃* ℚ/ℤ`** with
+`|Br(L/K)| = [L:K]` (`PadicField.card_relBr_eq`), `Br(L/K) = Br(K_{[L:K]}/K)` inside `Br(K)`
+(`PadicField.range_infl_eq`), `inv_{K'} ∘ res = [K':K] · inv_K` (`PadicField.invEquiv_res`) and the
+fundamental class `PadicField.fundClass` (`inv = 1/[L:K]`, generating `Br(L/K)`).
+
 Not done (outside the scope of this repository's goals, possible future work): the explicit
 decomposition `Gal(K^ab/K) ≅ 𝒪ˣ × Ẑ` (needs the profinite completion of `𝒪ˣ × ℤ` and
 `Gal(K^ur/K) ≅ Ẑ`), higher ramification groups (upper numbering) and the conductor–ramification
