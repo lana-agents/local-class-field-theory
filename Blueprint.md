@@ -348,5 +348,8 @@ Absolute Brauer group (`Brauer/Absolute.lean`, `Brauer/Unramified.lean`), `Ω/K`
   `PadicField.pairingH1`, `PadicField.cupH1_kummer`, **`PadicField.pairingH1_kummer`**
   (`⟨χ, κ(a)⟩ = χ(artin a)`), perfectness **`PadicField.eq_one_of_forall_pairingH1_eq_zero`**,
   **`PadicField.eq_one_of_forall_pairingH1_eq_zero'`** (with `KummerTheory.kummer_surjective`, `ker_kummer`).
+* H14 **done** (`Brauer/KummerCompat.lean`): functoriality of cyclotomic rigidity:
+  `PadicField.h2MuEquiv_h2MuIncl` (`μ_n ⊆ μ_m` ↔ `k ↦ (m/n)k`), `PadicField.h2MuEquiv_h2MuPow`
+  (`ζ ↦ ζ^{m/n}` ↔ reduction `ℤ/m → ℤ/n`), `PadicField.h2MuEquiv_resMu` (restriction ↔ `[K':K]·`).
 * Not done: corestriction `Br(L) → Br(K)` and `inv ∘ cor = inv` (not needed for the above); duality for
   general finite Galois modules; Euler characteristic formula; `H²(K, ℤ/n)`.
