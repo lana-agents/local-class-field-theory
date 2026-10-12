@@ -90,8 +90,8 @@ theorem continuous_artin :
       (Nat.mul_pos Module.finrank_pos (Nat.mul_pos Module.finrank_pos hp.out.pos)).ne')
   have hopen : IsOpen ((Units.val : Kˣ → K) ⁻¹' Metric.ball 1 r) :=
     Units.continuous_val.isOpen_preimage _ Metric.isOpen_ball
-  refine Filter.mem_map.2 (Filter.mem_of_superset (hopen.mem_nhds (show (1 : Kˣ) ∈ (Units.val ⁻¹' Metric.ball (1 : K) r)
-    by simpa using hr)) fun u hu ↦ ?_)
+  have h1 : (1 : Kˣ) ∈ (Units.val ⁻¹' Metric.ball (1 : K) r) := by simpa using hr
+  refine Filter.mem_map.2 (Filter.mem_of_superset (hopen.mem_nhds h1) fun u hu ↦ ?_)
   have hu' : nrm p K ((u : K) - 1) < r := by
     have h := hu
     simp only [Set.mem_preimage, Metric.mem_ball, dist_eq_norm] at h
