@@ -17,6 +17,7 @@ import LocalClassFieldTheory.Brauer.MathlibBridge
 import LocalClassFieldTheory.Brauer.OrderBound
 import LocalClassFieldTheory.Brauer.Relative
 import LocalClassFieldTheory.Brauer.Restriction
+import LocalClassFieldTheory.Brauer.TateNakayama
 import LocalClassFieldTheory.Brauer.Unramified
 import LocalClassFieldTheory.ClassFieldAxiom.Approximation
 import LocalClassFieldTheory.ClassFieldAxiom.Axiom

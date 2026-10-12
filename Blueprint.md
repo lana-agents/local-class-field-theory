@@ -367,5 +367,28 @@ Absolute Brauer group (`Brauer/Absolute.lean`, `Brauer/Unramified.lean`), `Ω/K`
   `PadicField.cupClass_eq_fundClass`, **`PadicField.relCyclicEquiv_fundClass`**
   (`relCyclicEquiv σ u_{L/K} = (abRecEquiv L)⁻¹ σ`: the fundamental class inverts reciprocity — the
   degree `-2 → 0` Tate–Nakayama statement for cyclic `L/K`).
+* H18 **done** (`Brauer/H2ZHat.lean`): `Brauer.ZHat = lim_n ℤ/n` (compatible families in
+  `∏_{n : ℕ+} ℤ/n`), `Brauer.intToZHat_injective`; **`Brauer.H2ZHatOne K Ω = lim_n H²(K, μ_n)`**
+  along `ζ ↦ ζ^{m/n}` (the convention of `KummerTheory.H1Limit`; indexed by `ℕ+`, which is
+  `KummerIndex K` in characteristic zero, so that the index set does not depend on the base field),
+  **`PadicField.h2ZHatOneEquiv : H²(K, Ẑ(1)) ≃* Ẑ`** (limit of `h2MuEquiv`, compatible by
+  `h2MuEquiv_h2MuPow`), `Brauer.resZHatOne`, **`PadicField.h2ZHatOneEquiv_res`** (restriction is
+  `[K':K]·`). Not done: comparison with continuous-cochain cohomology of the profinite `Ẑ(1)`.
+* H19 **done** (`Brauer/TateNakayama.lean`): the explicit cup product with `g ∈ G`,
+  `ContH2.nakFun g f = ∏_τ f(τ, g)` (`ContH2.nakFun_mem_fixedSubgroup`, `ContH2.nakFun_dx`),
+  `ContH2.nakHom g : H²(G, M) →* Ĥ⁰(G, M)`, `ContH2.nakHom_eq_cyclicHom` (= periodicity for a
+  generator), coset decomposition `ContH2.nakFun_eq_prod_quotient`; `Brauer.relNak g : Br(L/K) →*
+  Kˣ/N Lˣ`, `Brauer.relNak_eq_relCyclicEquiv`. Restriction to `L K'/K'`: `PadicField.resBC`,
+  `PadicField.infl_resBC`, `PadicField.resBC_fundClass` (`res u_{L/K} = u_{L/K'}` for `K' ⊆ L`).
+  For `M = L^{⟨g⟩}` (`PadicField.fixG`): `PadicField.genBC` (`g` as generator of `Gal(L/M)`,
+  `PadicField.mem_zpowers_genBC`), `PadicField.ker_resHom_fixG`, `PadicField.quotEquivFixG`
+  (`G/⟨g⟩ ≃ Gal(M/K)`). **`PadicField.abRec_nakUnits`** / **`PadicField.relNak_fundClass`**:
+  for finite abelian `L/K`, `relNak g u_{L/K} = (abRecEquiv L)⁻¹ g` (proof: `∏_G u(τ,g) =
+  N_{M/K} ∏_{⟨g⟩} u(h, g)`, cyclic case over `M`, `PadicField.abRec_baseChange`).
+  This is Tate–Nakayama in degree `-2` for abelian `G` *with the explicit cocycle formula* for the
+  cup product with `Ĥ⁻²(G, ℤ) ≅ G^ab`; the identification `Ĥ⁻²(G, ℤ) ≅ G^ab` and a general cup
+  product are not formalised.
+* H16 note: `ContH2.addEquivH2` is only for `G M : Type` because Mathlib's `groupCohomology` needs
+  `Rep.{u,u,u} k G` and `k = ℤ : Type` (documented in `Brauer/MathlibBridge.lean`).
 * Not done: duality for general finite Galois modules; Euler characteristic formula; `H²(K, ℤ/n)`;
-  the Tate–Nakayama isomorphism in all degrees.
+  the Tate–Nakayama isomorphism in all degrees (and for non-abelian `G`).

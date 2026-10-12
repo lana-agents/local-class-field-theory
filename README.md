@@ -114,7 +114,15 @@ with `μ_n ⊆ μ_m`, `ζ ↦ ζ^{m/n}` and restriction (`PadicField.h2MuEquiv_h
 Mathlib's `groupCohomology.H2` (`ContH2.addEquivH2`). For cyclic `L/K` with generator `σ`,
 `inv(infl cup_σ(a)) = k/[L:K]` when `abRec_L(a) = σ^k` (`PadicField.invEquiv_infl_cupClass`), and the
 fundamental class inverts the reciprocity map: `relCyclicEquiv σ u_{L/K} = (abRecEquiv L)⁻¹ σ`
-(`PadicField.relCyclicEquiv_fundClass`).
+(`PadicField.relCyclicEquiv_fundClass`). More generally, for **finite abelian** `L/K` and every
+`g ∈ Gal(L/K)`, `[∏_τ u(τ, g)] = (abRecEquiv L)⁻¹ g` in `Kˣ/N Lˣ` for any cocycle `u` representing
+`u_{L/K}` (`PadicField.relNak_fundClass`; `∏_τ u(τ, g)` is the explicit formula for the cup product
+`Ĥ⁻²(G, ℤ) ≅ G → Ĥ⁰(G, Lˣ)` with `u_{L/K}`, `ContH2.nakHom`; the identification of `Ĥ⁻²` itself is not
+formalised), proved by reduction to the cyclic extension `L/L^{⟨g⟩}`. `H²(K, Ẑ(1))`, defined as
+`lim_n H²(K, μ_n)` (`Brauer.H2ZHatOne`), is isomorphic to `Ẑ = lim_n ℤ/n`
+(`PadicField.h2ZHatOneEquiv`), with restriction acting as multiplication by `[K':K]`
+(`PadicField.h2ZHatOneEquiv_res`). The comparison with Mathlib's `groupCohomology.H2` is stated for
+`G M : Type` because Mathlib's group cohomology requires the ring, group and module in one universe.
 
 Not done (outside the scope of this repository's goals, possible future work): the explicit
 decomposition `Gal(K^ab/K) ≅ 𝒪ˣ × Ẑ` (needs the profinite completion of `𝒪ˣ × ℤ` and
