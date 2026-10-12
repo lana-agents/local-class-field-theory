@@ -27,6 +27,28 @@ variable {p : ℕ} [hp : Fact p.Prime]
 variable {K : Type*} [Field K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
 variable {Ω : Type*} [Field Ω] [Algebra K Ω] [Algebra ℚ_[p] Ω] [IsScalarTower ℚ_[p] K Ω]
   [IsAlgClosed Ω]
+include hp in
+/-- Every finite `E ⊆ Ω` lies in a finite Galois extension `D ⊆ Ω` of `K`. -/
+theorem exists_isGalois_le (E : IntermediateField K Ω) [FiniteDimensional K E] :
+    ∃ D : IntermediateField K Ω, FiniteDimensional K D ∧ IsGalois K D ∧ E ≤ D := by
+  classical
+  haveI : CharZero K := charZero_of_injective_algebraMap (algebraMap ℚ_[p] K).injective
+  let b := Module.finBasis K E
+  have hint : ∀ i, IsIntegral K (b i : Ω) := fun i ↦ (IsIntegral.of_finite K (b i)).map E.val
+  set P : K[X] := ∏ i, minpoly K (b i : Ω)
+  have hP : P ≠ 0 := Finset.prod_ne_zero_iff.2 fun i _ ↦ minpoly.ne_zero (hint i)
+  set D := adjoin K (P.rootSet Ω)
+  haveI : IsSplittingField K D P := adjoin_rootSet_isSplittingField (IsAlgClosed.splits _)
+  haveI : FiniteDimensional K D := IsSplittingField.finiteDimensional D P
+  haveI : Normal K D := Normal.of_isSplittingField P
+  have hb : ∀ i, (b i : Ω) ∈ D := fun i ↦ subset_adjoin _ _ ((mem_rootSet_of_ne hP).2 (by
+    rw [map_prod]; exact Finset.prod_eq_zero (Finset.mem_univ i) (minpoly.aeval K _)))
+  refine ⟨D, inferInstance, ⟨⟩, fun y hy ↦ ?_⟩
+  have h2 := congrArg (fun z : E ↦ (z : Ω)) (b.sum_repr ⟨y, hy⟩)
+  simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul] at h2
+  rw [← h2]
+  exact D.sum_mem fun i _ ↦ D.smul_mem (hb i)
+
 variable (K' : IntermediateField K Ω) [FiniteDimensional K K']
 
 theorem q_baseChange : q p K' = q p K ^ f p K K' := q_eq_pow_f

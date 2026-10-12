@@ -8,8 +8,8 @@ import LocalClassFieldTheory.Reciprocity.BaseChange
 /-!
 # Compatibility of reciprocity with norms
 
-Let `K' ⊆ Ω` be a finite Galois extension of `K`. For a cyclic `E/K`, the compositum
-`E K'` is cyclic over `K'` (`PadicField.baseChange`), and for `x ∈ K'ˣ`
+Let `K' ⊆ Ω` be a finite (not necessarily Galois) extension of `K`. For a cyclic `E/K`, the
+compositum `E K'` is cyclic over `K'` (`PadicField.baseChange`), and for `x ∈ K'ˣ`
 `cycRec_{K'} (E K') x |_E = cycRec_K E (N_{K'/K} x)` (`PadicField.cycRec_baseChange`).
 
 Proof: both sides are homomorphisms `K'ˣ → Gal(E/K)` trivial on `N_{E K'/K'}`; they agree on the
@@ -63,17 +63,52 @@ instance baseChange_finiteDimensional_K : FiniteDimensional K (baseChange K' E) 
 instance baseChange_finiteDimensional : FiniteDimensional K' (baseChange K' E) :=
   FiniteDimensional.right K K' (baseChange K' E)
 
-variable [IsGalois K E] [IsGalois K K']
+variable [IsGalois K E]
+
+/-- `E K' / K'` is Galois (for any finite `K'/K`). -/
+instance baseChange_isGalois : IsGalois K' (baseChange K' E) := by
+  obtain ⟨P, hP⟩ := Normal.exists_isSplittingField K E
+  have halg : ∀ x ∈ P.rootSet Ω, IsAlgebraic K x := fun x hx ↦ by
+    obtain ⟨h1, h2⟩ := Polynomial.mem_rootSet'.1 hx
+    exact ⟨P, fun h ↦ h1 (by simp [h]), h2⟩
+  have hE : adjoin K (P.rootSet Ω) = E := by
+    apply IntermediateField.toSubalgebra_injective
+    rw [adjoin_toSubalgebra_of_isAlgebraic halg,
+      Polynomial.IsSplittingField.adjoin_rootSet_eq_range E P E.val, IntermediateField.range_val]
+  have h1 : (baseChange K' E).restrictScalars K =
+      (adjoin K' (P.rootSet Ω)).restrictScalars K := by
+    rw [restrictScalars_baseChange, restrictScalars_adjoin_eq_sup, hE, sup_comm]
+  have h2 : baseChange K' E = adjoin K' (P.rootSet Ω) := restrictScalars_injective K h1
+  have h3 : P.rootSet Ω = (P.map (algebraMap K K')).rootSet Ω := by
+    ext x
+    rw [Polynomial.mem_rootSet', Polynomial.mem_rootSet', Polynomial.map_map,
+      ← IsScalarTower.algebraMap_eq, Polynomial.aeval_map_algebraMap]
+  haveI : Polynomial.IsSplittingField K' (adjoin K' (P.rootSet Ω)) (P.map (algebraMap K K')) := by
+    rw [h3]
+    exact adjoin_rootSet_isSplittingField (IsAlgClosed.splits _)
+  haveI : Normal K' (adjoin K' (P.rootSet Ω)) :=
+    Normal.of_isSplittingField (P.map (algebraMap K K'))
+  haveI : Algebra.IsSeparable K' (adjoin K' (P.rootSet Ω)) := by
+    rw [isSeparable_adjoin_iff_isSeparable]
+    intro x hx
+    have hxE : x ∈ E := hE ▸ subset_adjoin K _ hx
+    exact (IsSeparable.map E.val E.val.injective
+      (Algebra.IsSeparable.isSeparable K (⟨x, hxE⟩ : E))).tower_top K'
+  rw [h2]
+  exact ⟨⟩
+
+section Galois
+
+variable [IsGalois K K']
 
 instance baseChange_isGalois_K : IsGalois K (baseChange K' E) := by
   rw [baseChange_def]
   exact (inferInstance : IsGalois K (E ⊔ K' : IntermediateField K Ω))
 
-instance baseChange_isGalois : IsGalois K' (baseChange K' E) :=
-  IsGalois.tower_top_of_isGalois K K' (baseChange K' E)
-
 instance baseChange_normal_K : Normal K ((baseChange K' E).restrictScalars K) :=
   (inferInstance : Normal K (baseChange K' E))
+
+end Galois
 
 /-- Restriction `Gal(E K'/K') → Gal(E/K)`. -/
 noncomputable def resBaseChange :
@@ -91,13 +126,19 @@ theorem resBaseChange_apply (σ : baseChange K' E ≃ₐ[K'] baseChange K' E) (y
 theorem resBaseChange_injective : Function.Injective (resBaseChange K' E) := by
   rw [injective_iff_map_eq_one]
   intro σ hσ
-  have h := eq_one_of_resHom_eq_one (L := E) (U := K') (restrictScalars_baseChange K' E)
-    (le_baseChange K' E) (le_baseChange' K' E)
-    (σ.restrictScalars K : (baseChange K' E).restrictScalars K ≃ₐ[K] _) hσ (by
-      rw [resHom_eq_iff]
-      intro y
-      exact congrArg Subtype.val (σ.commutes y))
-  exact AlgEquiv.ext fun y ↦ DFunLike.congr_fun h y
+  set F := lift (fixedField (Subgroup.zpowers σ))
+  have hEF : E ≤ F.restrictScalars K := fun y hy ↦ by
+    change (⟨y, le_baseChange K' E hy⟩ : baseChange K' E).1 ∈ F
+    refine (mem_lift _).2 ?_
+    have h1 := resBaseChange_apply K' E σ ⟨y, hy⟩
+    rw [hσ, AlgEquiv.one_apply] at h1
+    rintro ⟨_, i, rfl⟩
+    exact zpow_apply_eq_of_apply_eq (Subtype.ext h1.symm) i
+  have hK'F : K' ≤ F.restrictScalars K := fun y hy ↦ F.algebraMap_mem ⟨y, hy⟩
+  ext a
+  have ha : (a : Ω) ∈ F := sup_le hEF hK'F ((mem_baseChange K' E).1 a.2)
+  rw [AlgEquiv.one_apply]
+  exact congrArg Subtype.val ((mem_lift a).1 ha ⟨σ, Subgroup.mem_zpowers σ⟩)
 
 instance baseChange_isCyclic [IsCyclic (E ≃ₐ[K] E)] :
     IsCyclic (baseChange K' E ≃ₐ[K'] baseChange K' E) :=
@@ -107,7 +148,7 @@ end BaseChange
 
 section Main
 
-variable [IsGalois K K'] (E : IntermediateField K Ω) [FiniteDimensional K E] [IsGalois K E]
+variable (E : IntermediateField K Ω) [FiniteDimensional K E] [IsGalois K E]
   [IsCyclic (E ≃ₐ[K] E)]
 
 /-- The fixed field of `τ` over `K'` agrees with the fixed field of `τ` over `K`. -/
@@ -252,10 +293,11 @@ theorem cycRec_baseChange (x : K'ˣ) :
   -- the Frobenius-lift data
   set s₀ := cycDeg p (baseChange K' E) * cycDegPow p E f' hf'
   have hs₀ : 0 < s₀ := Nat.mul_pos hcyc₁ (StdLevel.pos _)
-  obtain ⟨D, hDdef⟩ : ∃ D, D = E ⊔ (K' ⊔ unramifiedOfDegree p K Ω (f' * s₀)) := ⟨_, rfl⟩
+  obtain ⟨K'', hK''fin, hK''gal, hK'K''⟩ := exists_isGalois_le (p := p) K'
+  obtain ⟨D, hDdef⟩ : ∃ D, D = E ⊔ (K'' ⊔ unramifiedOfDegree p K Ω (f' * s₀)) := ⟨_, rfl⟩
   haveI : FiniteDimensional K D := hDdef ▸ inferInstance
   haveI : IsGalois K D := hDdef ▸ inferInstance
-  have hK'D : K' ≤ D := hDdef ▸ le_sup_left.trans le_sup_right
+  have hK'D : K' ≤ D := hK'K''.trans (hDdef ▸ le_sup_left.trans le_sup_right)
   have hED : E ≤ D := hDdef ▸ le_sup_left
   haveI : FiniteDimensional K (extendScalars hK'D) := (inferInstance : FiniteDimensional K D)
   haveI : FiniteDimensional K' (extendScalars hK'D) :=
@@ -274,7 +316,8 @@ theorem cycRec_baseChange (x : K'ˣ) :
       rw [restrictScalars_unramifiedOfDegree K' hs₀] at this
       change y ∈ D
       rw [hDdef]
-      exact (le_sup_right : K' ⊔ unramifiedOfDegree p K Ω (f' * s₀) ≤ _) this
+      exact (sup_le_sup_right hK'K'' _ |>.trans
+        (le_sup_right : K'' ⊔ unramifiedOfDegree p K Ω (f' * s₀) ≤ _)) this
     have := f_dvd_f_of_le (p := p) h1
     rwa [(isUnramified_unramifiedOfDegree p K' Ω s₀).f_eq,
       finrank_unramifiedOfDegree p K' Ω hs₀, ← hsdef] at this
@@ -332,7 +375,7 @@ end Main
 
 section Abelian
 
-variable [IsGalois K K'] (L : IntermediateField K Ω) [FiniteDimensional K L]
+variable (L : IntermediateField K Ω) [FiniteDimensional K L]
   [IsAbelianGalois K L]
 
 instance baseChange_isAbelianGalois : IsAbelianGalois K' (baseChange K' L) where
@@ -362,15 +405,13 @@ end Abelian
 
 section Artin
 
-variable [IsGalois K K']
-
 theorem maxAbelian_le_baseChange : maxAbelian K Ω ≤ (maxAbelian K' Ω).restrictScalars K := by
   intro y hy
   obtain ⟨L, hyL⟩ := mem_maxAbelian_iff.1 hy
   exact le_maxAbelian ⟨baseChange K' L.1, inferInstance, inferInstance⟩
     (le_baseChange K' L.1 hyL)
 
-/-- **Norm compatibility of the Artin map** for a finite Galois `K'/K`:
+/-- **Norm compatibility of the Artin map** for a finite `K'/K`:
 `artin_{K'}(x)|_{K^ab} = artin_K(N_{K'/K} x)`. -/
 theorem artin_baseChange (x : K'ˣ) (y : maxAbelian K Ω) :
     (artin p K' Ω x ⟨y, maxAbelian_le_baseChange K' y.2⟩ : Ω) =
