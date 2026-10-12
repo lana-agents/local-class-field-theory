@@ -1,5 +1,8 @@
 import LocalClassFieldTheory.ClassFieldAxiom.Approximation
+import LocalClassFieldTheory.ClassFieldAxiom.Axiom
 import LocalClassFieldTheory.ClassFieldAxiom.Coordinates
+import LocalClassFieldTheory.ClassFieldAxiom.HerbrandUnits
+import LocalClassFieldTheory.ClassFieldAxiom.Hilbert90
 import LocalClassFieldTheory.ClassFieldAxiom.Lattice
 import LocalClassFieldTheory.ClassFieldAxiom.Units
 import LocalClassFieldTheory.ClassFieldAxiom.Vanishing
