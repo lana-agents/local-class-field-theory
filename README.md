@@ -95,7 +95,14 @@ union of the `Br(L/K)` (`Brauer.exists_infl_eq`, `Brauer.infl_injective`); the s
 `|H²(H, Lˣ)| ≤ |H|`; **the invariant map `PadicField.invEquiv : Br(K) ≃* ℚ/ℤ`** with
 `|Br(L/K)| = [L:K]` (`PadicField.card_relBr_eq`), `Br(L/K) = Br(K_{[L:K]}/K)` inside `Br(K)`
 (`PadicField.range_infl_eq`), `inv_{K'} ∘ res = [K':K] · inv_K` (`PadicField.invEquiv_res`) and the
-fundamental class `PadicField.fundClass` (`inv = 1/[L:K]`, generating `Br(L/K)`).
+fundamental class `PadicField.fundClass` (`inv = 1/[L:K]`, generating `Br(L/K)`). Kummer sequence in
+degree two and **cyclotomic rigidity** `PadicField.h2MuEquiv : H²(Gal(Ω/K), μ_n) ≃* ℤ/n`
+(`H²(K, μ_n) ≃ Br(K)[n]`, `Brauer.toBr_injective`, `Brauer.mem_range_toBr_iff`); the **local duality
+pairing** `PadicField.pairing : H¹(K, ℤ/n) × Kˣ → ℤ/n`, `(χ, a) ↦ χ ∪ κ(a)`, bilinear and perfect
+modulo `(Kˣ)ⁿ` (`PadicField.eq_one_of_forall_pairing_eq_zero`,
+`PadicField.exists_pairing_ne_zero_of_not_mem_pow`), with `⟨χ, a⟩ = 0 ⟺ a ∈ N_{L_χ}`
+(`PadicField.pairing_eq_zero_iff`; the cup product with a Kummer class is the carry class of the
+cyclic field `L_χ`, `Brauer.toBr_mk_cupKummer`, `Brauer.carryClass_eq_infl`).
 
 Not done (outside the scope of this repository's goals, possible future work): the explicit
 decomposition `Gal(K^ab/K) ≅ 𝒪ˣ × Ẑ` (needs the profinite completion of `𝒪ˣ × ℤ` and

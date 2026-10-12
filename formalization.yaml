@@ -48,7 +48,7 @@ classification:
   msc2020: ["11S31"]
 
 status:
-  scope: "foundations, unramified extensions, Frobenius, Herbrand quotients, class field axiom, local reciprocity for finite abelian extensions inside Ω; Artin map K^x -> Gal(K^ab/K) (continuous, injective, dense image, Frobenius and inertia properties, units ≅ inertia); norm compatibility for finite K'/K; conjugation functoriality; existence theorem; profinite completion; uniqueness; independence of Ω; conductors; Brauer groups: H^2 with locally constant cochains, cyclic periodicity, inflation-restriction, |Br(L/K)| = [L:K], invariant map Br(K) ≃ Q/Z, fundamental class"
+  scope: "foundations, unramified extensions, Frobenius, Herbrand quotients, class field axiom, local reciprocity for finite abelian extensions inside Ω; Artin map K^x -> Gal(K^ab/K) (continuous, injective, dense image, Frobenius and inertia properties, units ≅ inertia); norm compatibility for finite K'/K; conjugation functoriality; existence theorem; profinite completion; uniqueness; independence of Ω; conductors; Brauer groups: H^2 with locally constant cochains, cyclic periodicity, inflation-restriction, |Br(L/K)| = [L:K], invariant map Br(K) ≃ Q/Z, fundamental class; H^2(K, μ_n) ≃ Z/n; local duality for μ_n and Z/n"
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: []
@@ -92,6 +92,9 @@ status:
     - "PadicField.invEquiv, PadicField.brUr_eq_top, PadicField.card_relBr_eq: the invariant map Br(K) ≃ Q/Z, |Br(L/K)| = [L:K]"
     - "PadicField.invEquiv_res: inv_{K'} ∘ res = [K':K] · inv_K"
     - "PadicField.fundClass, PadicField.invEquiv_infl_fundClass, PadicField.zpowers_fundClass: the fundamental class u_{L/K}"
+    - "Brauer.toBr_injective, Brauer.mem_range_toBr_iff, PadicField.h2MuEquiv: H^2(K, μ_n) ≃ Br(K)[n] ≃ Z/n (cyclotomic rigidity)"
+    - "Brauer.toBr_mk_cupKummer, Brauer.carryClass_eq_one_iff: χ ∪ κ(a) is the carry class of L_χ; trivial iff a is a norm from L_χ"
+    - "PadicField.pairing, PadicField.eq_one_of_forall_pairing_eq_zero, PadicField.exists_pairing_ne_zero_of_not_mem_pow: perfect local duality pairing H^1(K, Z/n) × K^x/(K^x)^n → Z/n"
 
 automation:
   methods:
