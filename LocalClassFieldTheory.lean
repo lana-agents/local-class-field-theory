@@ -1,6 +1,7 @@
 import LocalClassFieldTheory.Brauer.Absolute
 import LocalClassFieldTheory.Brauer.ContH2
 import LocalClassFieldTheory.Brauer.Cyclic
+import LocalClassFieldTheory.Brauer.InfRes
 import LocalClassFieldTheory.Brauer.Relative
 import LocalClassFieldTheory.Brauer.Restriction
 import LocalClassFieldTheory.Brauer.Unramified
