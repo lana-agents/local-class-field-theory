@@ -241,3 +241,73 @@ Notation: `Ω` an algebraic closure of `K`, `K_t ⊆ Ω` the unramified extensio
   ramification groups in upper numbering and `artin(U^(n)) = G^n`; Lubin–Tate theory (optional
   future work: explicit `K^ab = K^ur K_π`, not needed for the existence theorem); positive
   characteristic.
+
+## H. Brauer groups, the invariant map, local Tate duality (work package P9)
+
+Route. Concrete multiplicative cochains, no derived functors: `ContH2 G M` = locally constant
+2-cocycles `G × G → M` modulo coboundaries of locally constant 1-cochains (`G` topological, `M`
+an abstract commutative group). For a finite (discrete) `G` this is `H²(G, M)`; for
+`G = Gal(Ω/K)` and `M = Ωˣ` it is `Br(K)`. Inflation injectivity, periodicity and all
+compatibilities are proved with explicit cocycle formulas; the cyclic case is reduced to P8's class
+field axiom `[Kˣ : N Lˣ] = [L:K]` and `normGroup_of_isUnramified`. References: Serre, *Local
+Fields*, VII–IX, XII–XIII; Milne, *Class Field Theory*, II–III; Neukirch, *ANT*, V.
+
+Generic cohomology (`Brauer/ContH2.lean`, `Brauer/Cyclic.lean`):
+
+* H1 **done** `ContH2.cocycles`, `ContH2.coboundaries`, `ContH2`, `ContH2.mk`,
+  `ContH2.mk_eq_one_iff`, functoriality `ContH2.map` (pull back along `φ : G' →* G`, push along
+  compatible `ψ : M →* M'`), `ContH2.map_mk`.
+* H2 **done** inflation injectivity `ContH2.map_injective`: for `φ : G ↠ Q` (`Q` discrete),
+  `ψ : A ↪ M` onto `M^{ker φ}`, smooth action and `H¹(ker φ, M) = 0`, the map
+  `H²(Q, A) → H²(G, M)` is injective (normalise `x` on `ker φ` by Hilbert 90, show the corrected
+  cochain is `ker φ`-invariant and constant on fibres, descend).
+* H3 **done** periodicity for a finite cyclic `G = ⟨σ⟩` of order `n`: `ContH2.Hhat0`
+  (`M^G / N_G M`), `ContH2.phiFun σ f = ∏_{i<n} f(σ^i, σ)`, `ContH2.phiFun_dx`
+  (coboundaries ↦ norms), `ContH2.phiFun_mem_fixedSubgroup`, `ContH2.eq_of_isMulCocycle₂`
+  (a cocycle is determined by `f(1,1)` and `f(·, σ)`), `ContH2.cyclicHom_injective` (explicit
+  primitive), `ContH2.cupFun` (carry cocycle `a^{⌊(i+j)/n⌋}`), `ContH2.cyclicHom_surjective`,
+  **`ContH2.cyclicEquiv : H²(G, M) ≃* Ĥ⁰(G, M)`**; compatibility with inflation
+  `ContH2.phiFun_mapFun` (invariant raised to the power `[G' : G]`).
+
+Relative Brauer groups (`Brauer/Relative.lean`):
+
+* H4 **done** `Brauer.RelBr K L = H²(Gal(L/K), Lˣ)`; `Brauer.fixedUnitsEquiv : Kˣ ≃* (Lˣ)^G`,
+  `Brauer.coe_normMap` (`∏_σ σ u = N_{L/K} u`, `Algebra.norm_eq_prod_automorphisms`),
+  `Brauer.hhat0Equiv : Ĥ⁰(G, Lˣ) ≃* Kˣ ⧸ N Lˣ`, **`Brauer.relCyclicEquiv`**
+  (`Br(L/K) ≃* Kˣ/N Lˣ` for cyclic `L/K`, explicit on cocycles: `Brauer.relCyclicEquiv_mk`,
+  `Brauer.phiUnits`), **`PadicField.card_rel_of_isCyclic : |Br(L/K)| = [L:K]`**.
+* H5 **done** unramified invariant: `PadicField.vQZ` (`x ↦ v(x)/n ∈ ℚ/ℤ`, `Brauer.QZ =
+  AddCircle (1 : ℚ)`), `PadicField.invUnr h : Br(L/K) →* ℚ/ℤ` for unramified `L/K`
+  (`[f] ↦ v(∏ f(Frob^i, Frob))/n`), `PadicField.invUnr_injective`, `PadicField.unrClass`,
+  `PadicField.invUnr_unrClass`.
+
+Absolute Brauer group (`Brauer/Absolute.lean`, `Brauer/Unramified.lean`), `Ω/K` Galois
+(an algebraic closure):
+
+* H6 **done** `Brauer.Br K Ω = H²(Gal(Ω/K), Ωˣ)`, `Brauer.isLocallyConstant_smul_units`,
+  `Brauer.infl L : Br(L/K) →* Br(K)`, continuous Hilbert 90 for `Gal(Ω/L)`
+  (`Brauer.isMulCoboundary₁_ker`, via `continuous-kummer-theory`), **`Brauer.infl_injective`**,
+  inflation between finite levels `Brauer.inflRel`, `Brauer.infl_inflRel`,
+  `Brauer.inflRel_injective`, and **`Brauer.exists_infl_eq`**: every class of `Br(K)` comes from a
+  finite Galois `L ⊆ Ω` (compactness: `exists_openSubgroup_prod_invariant`), i.e.
+  `Br(K) = colim_L Br(L/K)` with injective transition maps.
+* H7 **done** unramified part: `PadicField.card_relBr_unramifiedOfDegree` (`|Br(K_n/K)| = n`),
+  `PadicField.invUnr_inflRel` (invariants compatible with `K_n ⊆ K_{n'}`), the subgroup
+  `PadicField.brUr p K Ω = ⋃_n infl Br(K_n/K)`, `PadicField.invUr`, `PadicField.invUr_infl`,
+  **`PadicField.invUrEquiv : Br(K^ur/K) ≃* ℚ/ℤ`**.
+* H8 **planned** restriction `Brauer.res : Br(K) → Br(L)` for finite `L ⊆ Ω`, and on unramified
+  classes `inv_L ∘ res = [L:K] · inv_K` (restriction of the periodicity element to the subgroup
+  `⟨Frob^f⟩`, `v_L = e · v_K`).
+* H9 **planned** order bound `|Br(L/K)| ≤ [L:K]` for every finite Galois `L/K`: exactness of
+  `0 → H²(G/N, (L^N)ˣ) → H²(G, Lˣ) → H²(N, Lˣ)` (Hilbert 90 for `N`), and every `Gal(L/K)` of a
+  local field is cyclic or has a proper non-trivial normal subgroup (inertia; tame character
+  `σ ↦ σπ/π mod 𝔪` on the inertia group; wild inertia is a `p`-group).
+* H10 **planned** `Br(K) = Br(K^ur/K)` (`Br(K_n/K) ⊆ Br(L/K)` for `n = [L:K]` by H8, equality by
+  H9), hence `inv : Br(K) ≃ ℚ/ℤ`, `Br(L/K) = (1/[L:K])ℤ/ℤ`, the fundamental class
+  `u_{L/K}` with `inv = 1/[L:K]`.
+* H11 **planned** Kummer sequence in degree 2: `H²(K, μ_n) ≃ Br(K)[n] ≃ ℤ/n` (cyclotomic
+  rigidity: canonical, no choice of a root of unity).
+* H12 **planned** duality for `μ_n` and `ℤ/n`: `H¹(K, μ_n) ≃ Kˣ/(Kˣ)ⁿ` (Kummer, continuous-kummer-
+  theory), `Hom(Gal(K^ab/K), ℤ/n) ≃ Hom(Kˣ/(Kˣ)ⁿ, ℤ/n)` (`artinCompletionEquiv`), perfect pairing
+  `(χ, a) ↦ χ(artin a)`; identification with the cup product `inv(χ ∪ δa) = χ(artin a)`
+  (Tate–Nakayama compatibility in degree 0/2) as far as reachable; corestriction.
