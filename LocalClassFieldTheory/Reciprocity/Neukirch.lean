@@ -1,0 +1,206 @@
+/-
+Copyright (c) 2026 LANA Project. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: LANA Project
+-/
+import LocalClassFieldTheory.Reciprocity.LevelMap
+import LocalClassFieldTheory.Galois.CosetNorm
+
+/-!
+# Neukirch's formula at a standard level
+
+Let `F = M U` be a standard extension, `g ∈ Gal(F/U)`, `k ≥ 1` with `[M : K] k ∣ [U : K]`, and
+`τ = (g, φ^k) ∈ Gal(F/K)` (a "Frobenius lift"). Let `Σ` be the fixed field of `τ`.
+
+* `PadicField.orderOf_tau`: `τ` has order `[U : K] / k`;
+* `PadicField.algebraMap_norm_tau`: for `y ∈ Σ`,
+  `N_{Σ/K}(y) = ∏_{j<k} φ^j (N_{F/U} y)` (coset representatives `(g', φ^j)`, `j < k`).
+-/
+
+set_option linter.unusedSectionVars false
+
+open IntermediateField
+
+namespace PadicField
+
+variable {p : ℕ} [hp : Fact p.Prime]
+
+variable {K M U F : Type*} [Field K] [Field M] [Field U] [Field F]
+  [Algebra ℚ_[p] K] [Algebra ℚ_[p] M] [Algebra ℚ_[p] U] [Algebra ℚ_[p] F]
+  [Algebra K M] [Algebra K U] [Algebra K F] [Algebra M F] [Algebra U F]
+  [IsScalarTower ℚ_[p] K M] [IsScalarTower ℚ_[p] K U] [IsScalarTower ℚ_[p] K F]
+  [IsScalarTower ℚ_[p] M F] [IsScalarTower ℚ_[p] U F]
+  [IsScalarTower K M F] [IsScalarTower K U F]
+  [FiniteDimensional ℚ_[p] K] [FiniteDimensional ℚ_[p] M] [FiniteDimensional ℚ_[p] U]
+  [FiniteDimensional ℚ_[p] F] [IsGalois K F] [IsGalois K M] [IsCyclic (M ≃ₐ[K] M)]
+
+variable (hM : e p K M = Module.finrank K M) (hU : IsUnramified p K U)
+  (hdeg : Module.finrank K F = Module.finrank K M * Module.finrank K U)
+include hM hU hdeg
+
+theorem orderOf_stdFrob : orderOf (stdFrob hM hU hdeg) = Module.finrank K U := by
+  rw [stdFrob, orderOf_frob, std_finrank_M hM hU hdeg]
+
+theorem orderOf_dvd_of_U (g : F ≃ₐ[U] F) : orderOf g ∣ Module.finrank K M := by
+  haveI := finiteDimensional_tower (p := p) U F
+  haveI : IsGalois U F := IsGalois.tower_top_of_isGalois K U F
+  rw [← std_finrank_U hM hU hdeg, ← IsGalois.card_aut_eq_finrank]
+  exact orderOf_dvd_natCard g
+
+variable (g : F ≃ₐ[U] F) (k : ℕ) (hk : 0 < k)
+  (hke : Module.finrank K M * k ∣ Module.finrank K U)
+
+omit hk hke in
+/-- The Frobenius lift `τ = (g, φ^k)`. -/
+noncomputable def tau : F ≃ₐ[K] F := stdProd hM hU hdeg (g, stdFrob hM hU hdeg ^ k)
+
+include hk hke
+
+theorem orderOf_tau :
+    orderOf (tau hM hU hdeg g k) = Module.finrank K U / k := by
+  have hkt : k ∣ Module.finrank K U := (Dvd.intro_left _ rfl).trans hke
+  rw [tau, MulEquiv.orderOf_eq, Prod.orderOf_mk,
+    orderOf_pow_of_dvd hk.ne' (by rw [orderOf_stdFrob]; exact hkt), orderOf_stdFrob]
+  apply Nat.lcm_eq_right
+  refine (orderOf_dvd_of_U hM hU hdeg g).trans ?_
+  obtain ⟨c, hc⟩ := hke
+  rw [hc, mul_comm (Module.finrank K M) k, mul_assoc, Nat.mul_div_cancel_left _ hk]
+  exact Dvd.intro _ rfl
+
+
+theorem index_zpowers_tau :
+    (Subgroup.zpowers (tau hM hU hdeg g k)).index = Module.finrank K M * k := by
+  haveI := finiteDimensional_tower (p := p) K F
+  have h1 := Subgroup.index_mul_card (Subgroup.zpowers (tau hM hU hdeg g k))
+  rw [Nat.card_zpowers, orderOf_tau hM hU hdeg g k hk hke, IsGalois.card_aut_eq_finrank,
+    hdeg] at h1
+  have hkt : k ∣ Module.finrank K U := (Dvd.intro_left _ rfl).trans hke
+  obtain ⟨c, hc⟩ := hkt
+  have hc0 : 0 < c := by
+    haveI := finiteDimensional_tower (p := p) K U
+    have : 0 < Module.finrank K U := Module.finrank_pos
+    rw [hc] at this
+    exact Nat.pos_of_mul_pos_left this
+  rw [hc, Nat.mul_div_cancel_left _ hk] at h1
+  have : Module.finrank K M * (k * c) = (Module.finrank K M * k) * c := by ring
+  rw [this] at h1
+  exact Nat.eq_of_mul_eq_mul_right hc0 h1
+
+omit hk hke in
+/-- The parametrisation `(g', j) ↦ (g', φ^j)` of the coset representatives. -/
+noncomputable def tauRep (gj : (F ≃ₐ[U] F) × ℕ) : F ≃ₐ[K] F :=
+  stdProd hM hU hdeg (gj.1, stdFrob hM hU hdeg ^ gj.2)
+
+variable [FiniteDimensional U F] [DecidableEq (F ≃ₐ[K] F)]
+
+theorem tauRep_injOn :
+    Set.InjOn (tauRep hM hU hdeg)
+      (Set.univ ×ˢ Set.Iio k : Set ((F ≃ₐ[U] F) × ℕ)) := by
+  rintro ⟨g₁, j₁⟩ h₁ ⟨g₂, j₂⟩ h₂ heq
+  simp only [Set.mem_prod, Set.mem_univ, Set.mem_Iio, true_and] at h₁ h₂
+  have := (stdProd hM hU hdeg).injective heq
+  simp only [Prod.mk.injEq] at this
+  obtain ⟨rfl, hj⟩ := this
+  have hkt : k ≤ Module.finrank K U :=
+    Nat.le_of_dvd (by
+      haveI := finiteDimensional_tower (p := p) K U
+      exact Module.finrank_pos) ((Dvd.intro_left _ rfl).trans hke)
+  have := pow_injOn_Iio_orderOf (x := stdFrob hM hU hdeg)
+    (by rw [Set.mem_Iio, orderOf_stdFrob]; omega) (by rw [Set.mem_Iio, orderOf_stdFrob]; omega) hj
+  rw [this]
+
+theorem tauRep_injOn_quotient :
+    Set.InjOn (QuotientGroup.mk : (F ≃ₐ[K] F) → _ ⧸ Subgroup.zpowers (tau hM hU hdeg g k))
+      ((Finset.univ ×ˢ Finset.range k).image (tauRep hM hU hdeg) :
+        Finset (F ≃ₐ[K] F)) := by
+  intro a ha b hb hab
+  simp only [Finset.coe_image, Set.mem_image, Finset.mem_coe, Finset.mem_product,
+    Finset.mem_univ, Finset.mem_range, true_and] at ha hb
+  obtain ⟨⟨g₁, j₁⟩, hj₁, rfl⟩ := ha
+  obtain ⟨⟨g₂, j₂⟩, hj₂, rfl⟩ := hb
+  rw [QuotientGroup.eq, Subgroup.mem_zpowers_iff] at hab
+  obtain ⟨i, hi⟩ := hab
+  simp only [tau, tauRep] at hi
+  rw [← map_zpow, ← map_inv, ← map_mul] at hi
+  have hi' := (stdProd hM hU hdeg).injective hi
+  have hg := congrArg (MonoidHom.fst _ _) hi'
+  have hφ := congrArg (MonoidHom.snd _ _) hi'
+  rw [map_zpow, map_mul, map_inv] at hg hφ
+  simp only [MonoidHom.coe_fst, MonoidHom.coe_snd] at hg hφ
+  -- the Frobenius components
+  replace hφ : stdFrob hM hU hdeg ^ ((k : ℤ) * i) = stdFrob hM hU hdeg ^ (-(j₁ : ℤ) + j₂) := by
+    rw [zpow_mul, zpow_natCast, hφ, zpow_add, zpow_natCast, zpow_neg, zpow_natCast]
+  rw [zpow_eq_zpow_iff_modEq, orderOf_stdFrob] at hφ
+  have hkt : (k : ℤ) ∣ (Module.finrank K U : ℤ) := by
+    exact_mod_cast (Dvd.intro_left _ rfl).trans hke
+  have hdk : (k : ℤ) ∣ (j₂ : ℤ) - j₁ := by
+    have h1 := (Int.ModEq.dvd hφ)
+    have h2 : (k : ℤ) ∣ (-(j₁ : ℤ) + j₂) - (k : ℤ) * i := hkt.trans h1
+    have h3 : (k : ℤ) ∣ (k : ℤ) * i := dvd_mul_right _ _
+    have := dvd_add h2 h3
+    rw [sub_add_cancel] at this
+    rwa [show -(j₁ : ℤ) + j₂ = (j₂ : ℤ) - j₁ by ring] at this
+  have hj : j₁ = j₂ := by
+    obtain ⟨c, hc⟩ := hdk
+    have hc0 : c = 0 := by
+      by_contra hne
+      have : (k : ℤ) ≤ |(k : ℤ) * c| := by
+        rw [abs_mul, abs_of_pos (by exact_mod_cast hk)]
+        exact le_mul_of_one_le_right (by positivity) (Int.one_le_abs hne)
+      rw [← hc] at this
+      have : |(j₂ : ℤ) - j₁| < k := by rw [abs_sub_lt_iff]; omega
+      omega
+    rw [hc0, mul_zero] at hc
+    omega
+  subst hj
+  -- now `g^i = g₁⁻¹ g₂` and `t ∣ k i`
+  have hti : (Module.finrank K U : ℤ) ∣ (k : ℤ) * i := by
+    have := Int.ModEq.dvd hφ
+    simpa using this
+  have hgi : g ^ i = 1 := by
+    obtain ⟨c, hc⟩ := hke
+    rw [orderOf_dvd_iff_zpow_eq_one.symm]
+    refine (Int.natCast_dvd_natCast.2 (orderOf_dvd_of_U hM hU hdeg g)).trans ?_
+    rw [hc] at hti
+    push_cast at hti
+    have : (Module.finrank K M : ℤ) * c ∣ i := by
+      have hk0 : (k : ℤ) ≠ 0 := by exact_mod_cast hk.ne'
+      obtain ⟨d, hd⟩ := hti
+      refine ⟨d, ?_⟩
+      have := hd
+      rw [show (Module.finrank K M : ℤ) * k * c * d = k * ((Module.finrank K M : ℤ) * c * d) by
+        ring] at this
+      exact mul_left_cancel₀ hk0 this
+    exact (dvd_mul_right _ _).trans this
+  rw [hgi] at hg
+  simp only [tauRep]
+  congr 2
+  exact (inv_mul_eq_one.1 hg.symm)
+
+
+/-- **Norm from the fixed field of a Frobenius lift**:
+`N_{Σ/K}(y) = ∏_{j<k} φ^j (N_{F/U} y)`. -/
+theorem algebraMap_norm_tau (y : fixedField (Subgroup.zpowers (tau hM hU hdeg g k))) :
+    algebraMap K F (Algebra.norm K y) = ∏ j ∈ Finset.range k,
+      (stdFrob hM hU hdeg ^ j) (algebraMap U F (Algebra.norm U (y : F))) := by
+  haveI := finiteDimensional_tower (p := p) K F
+  haveI : IsGalois U F := IsGalois.tower_top_of_isGalois K U F
+  have hinjOn : Set.InjOn (tauRep hM hU hdeg)
+      ((Finset.univ ×ˢ Finset.range k : Finset ((F ≃ₐ[U] F) × ℕ)) :
+        Set ((F ≃ₐ[U] F) × ℕ)) := by
+    have := tauRep_injOn hM hU hdeg k hk hke
+    simpa [Finset.coe_product] using this
+  have hcard : ((Finset.univ ×ˢ Finset.range k).image (tauRep hM hU hdeg)).card =
+      (Subgroup.zpowers (tau hM hU hdeg g k)).index := by
+    rw [Finset.card_image_of_injOn hinjOn, Finset.card_product, Finset.card_univ,
+      Finset.card_range, index_zpowers_tau hM hU hdeg g k hk hke, Fintype.card_eq_nat_card,
+      IsGalois.card_aut_eq_finrank, std_finrank_U hM hU hdeg]
+  rw [algebraMap_norm_eq_prod_of_injOn _ (tauRep_injOn_quotient hM hU hdeg g k hk hke) hcard y,
+    Finset.prod_image fun a ha b hb h ↦ hinjOn ha hb h, Finset.prod_product, Finset.prod_comm]
+  refine Finset.prod_congr rfl fun j _ ↦ ?_
+  rw [Algebra.norm_eq_prod_automorphisms, map_prod]
+  refine Finset.prod_congr rfl fun g' _ ↦ ?_
+  change g' ((stdFrob hM hU hdeg ^ j) (y : F)) = _
+  rw [std_comm hM hU hdeg]
+
+end PadicField
