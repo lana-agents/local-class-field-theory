@@ -6,6 +6,7 @@ import LocalClassFieldTheory.Brauer.Duality
 import LocalClassFieldTheory.Brauer.DualityH1
 import LocalClassFieldTheory.Brauer.InfRes
 import LocalClassFieldTheory.Brauer.Invariant
+import LocalClassFieldTheory.Brauer.KummerCompat
 import LocalClassFieldTheory.Brauer.KummerH2
 import LocalClassFieldTheory.Brauer.LocalGalois
 import LocalClassFieldTheory.Brauer.OrderBound
