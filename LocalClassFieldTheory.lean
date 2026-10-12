@@ -32,6 +32,7 @@ import LocalClassFieldTheory.Reciprocity.BaseChange
 import LocalClassFieldTheory.Reciprocity.CyclicLevel
 import LocalClassFieldTheory.Reciprocity.CyclicRec
 import LocalClassFieldTheory.Reciprocity.Embedding
+import LocalClassFieldTheory.Reciprocity.Existence
 import LocalClassFieldTheory.Reciprocity.FrobLiftPow
 import LocalClassFieldTheory.Reciprocity.LevelFrob
 import LocalClassFieldTheory.Reciprocity.LevelMap
