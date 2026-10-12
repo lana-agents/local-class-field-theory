@@ -10,8 +10,8 @@ import ContinuousKummerTheory.Kummer.Equiv
 # Local duality for `μ_n` and `ℤ/n` in terms of `H¹(K, μ_n)`
 
 The cup product `H¹(K, ℤ/n) × H¹(K, μ_n) → H²(K, μ_n) ≃ ℤ/n` (`Brauer.cupH1`,
-`PadicField.pairingH1`) on continuous cohomology classes (`ContH1`, from `continuous-kummer-theory`):
-cup products with coboundaries are coboundaries. Via the Kummer isomorphism
+`PadicField.pairingH1`) on continuous cohomology classes (`ContH1`, from
+`continuous-kummer-theory`): cup products with coboundaries are coboundaries. Via the Kummer isomorphism
 `KummerTheory.kummerEquiv : Kˣ/(Kˣ)ⁿ ≃ H¹(K, μ_n)` it is the pairing `PadicField.pairing`, hence
 (`PadicField.pairingH1_kummer`)
 
