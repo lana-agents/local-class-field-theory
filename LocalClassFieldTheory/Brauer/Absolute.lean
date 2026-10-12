@@ -310,7 +310,8 @@ theorem exists_infl_eq (α : Br K Ω) :
   set lift := Function.surjInv hsurj
   have hres : ∀ τ, AlgEquiv.restrictNormalHom L (lift τ) = τ := Function.surjInv_eq hsurj
   have hdep1 : ∀ g g' : Ω ≃ₐ[K] Ω,
-      AlgEquiv.restrictNormalHom L g = AlgEquiv.restrictNormalHom L g' → g⁻¹ * g' ∈ E.fixingSubgroup := by
+      AlgEquiv.restrictNormalHom L g = AlgEquiv.restrictNormalHom L g' →
+        g⁻¹ * g' ∈ E.fixingSubgroup := by
     intro g g' hgg'
     apply hfixL
     rw [← IntermediateField.restrictNormalHom_ker, MonoidHom.mem_ker, map_mul, map_inv, hgg',

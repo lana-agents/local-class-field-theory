@@ -246,7 +246,8 @@ theorem eq_of_isMulCocycle₂ {f f' : G × G → M} (hf : IsMulCocycle₂ f) (hf
   obtain ⟨k, -, rfl⟩ := exists_pow_eq_lt σ hσ h
   exact hk k g
 
-theorem cyclicHom_injective [DiscreteTopology G] : Function.Injective (cyclicHom (M := M) σ hσ) := by
+theorem cyclicHom_injective [DiscreteTopology G] :
+    Function.Injective (cyclicHom (M := M) σ hσ) := by
   rw [← MonoidHom.ker_eq_bot_iff, eq_bot_iff]
   intro α hα
   induction α using induction_on with | h f => ?_
