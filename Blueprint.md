@@ -336,7 +336,17 @@ Absolute Brauer group (`Brauer/Absolute.lean`, `Brauer/Unramified.lean`), `Ω/K`
   `PadicField.pairing_eq_zero_of_mem_pow`, `PadicField.eq_one_of_forall_pairing_eq_zero` (left kernel trivial),
   `PadicField.exists_pairing_ne_zero_of_not_mem_pow` (right kernel `(Kˣ)ⁿ`; existence theorem +
   `Brauer.exists_hom_zmod_ne_one`, characters separate points).
-* H13 **planned** compatibility with the Artin map `⟨χ, a⟩ = χ(artin a)` (route: both sides bilinear;
-  unramified case via `cupClass(Frob^w, a) = cupClass(Frob, a^{w⁻¹})`; uniformisers by subtracting an
-  unramified character with the same value on `artin π`); `H¹(K, μ_n)` formulation via
-  `KummerTheory.kummerEquiv` (cup with coboundaries is a coboundary); corestriction (not needed so far).
+* H13 **done** (`Brauer/ArtinPairing.lean`, `Brauer/DualityH1.lean`): **the pairing computes the Artin
+  map**: `PadicField.artinChar n χ a = χ̄(abRec_{L_χ} a)` (`PadicField.artinChar_eq`: `= χ(g)` for any lift
+  `g` of `artin a`), **`PadicField.pairing_eq_artinChar`** (`⟨χ, a⟩ = χ(artin a)`). Ingredients:
+  `ContH2.sum_range_add_div` (`∑_{j<d} ⌊(j+w)/d⌋ = w`), `ContH2.phiFun_cupFun_of_gen`,
+  `Brauer.cupClass_eq_of_gen` (change of generator), `PadicField.invEquiv_infl_unrClass`,
+  `PadicField.abRec_unramified`, `PadicField.pairing_eq_artinChar_of_isUnramified`, the unramified
+  characters `PadicField.unrChar` (`PadicField.artinChar_unrChar`), `PadicField.pairing_eq_artinChar_of_v_eq_one`
+  (subtract `φ` with `φ(artin π) = χ(artin π)`), `PadicField.monoidHom_ext_of_v_eq_one`.
+  `H¹` form: cup product `Brauer.cupH1 : H¹(K, μ_n) →* H²(K, μ_n)` (`Brauer.cupKummerFun_coboundary`),
+  `PadicField.pairingH1`, `PadicField.cupH1_kummer`, **`PadicField.pairingH1_kummer`**
+  (`⟨χ, κ(a)⟩ = χ(artin a)`), perfectness **`PadicField.eq_one_of_forall_pairingH1_eq_zero`**,
+  **`PadicField.eq_one_of_forall_pairingH1_eq_zero'`** (with `KummerTheory.kummer_surjective`, `ker_kummer`).
+* Not done: corestriction `Br(L) → Br(K)` and `inv ∘ cor = inv` (not needed for the above); duality for
+  general finite Galois modules; Euler characteristic formula; `H²(K, ℤ/n)`.

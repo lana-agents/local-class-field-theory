@@ -102,7 +102,11 @@ pairing** `PadicField.pairing : H¹(K, ℤ/n) × Kˣ → ℤ/n`, `(χ, a) ↦ χ
 modulo `(Kˣ)ⁿ` (`PadicField.eq_one_of_forall_pairing_eq_zero`,
 `PadicField.exists_pairing_ne_zero_of_not_mem_pow`), with `⟨χ, a⟩ = 0 ⟺ a ∈ N_{L_χ}`
 (`PadicField.pairing_eq_zero_iff`; the cup product with a Kummer class is the carry class of the
-cyclic field `L_χ`, `Brauer.toBr_mk_cupKummer`, `Brauer.carryClass_eq_infl`).
+cyclic field `L_χ`, `Brauer.toBr_mk_cupKummer`, `Brauer.carryClass_eq_infl`), and **the pairing computes
+the Artin map**: `⟨χ, a⟩ = χ(artin a)` (`PadicField.pairing_eq_artinChar`); on continuous cohomology
+`H¹(K, ℤ/n) × H¹(K, μ_n) → H²(K, μ_n) ≃ ℤ/n` (`Brauer.cupH1`, `PadicField.pairingH1`,
+`PadicField.pairingH1_kummer`) it is perfect (`PadicField.eq_one_of_forall_pairingH1_eq_zero`,
+`PadicField.eq_one_of_forall_pairingH1_eq_zero'`).
 
 Not done (outside the scope of this repository's goals, possible future work): the explicit
 decomposition `Gal(K^ab/K) ≅ 𝒪ˣ × Ẑ` (needs the profinite completion of `𝒪ˣ × ℤ` and
