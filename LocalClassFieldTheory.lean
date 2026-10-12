@@ -7,6 +7,7 @@ import LocalClassFieldTheory.Brauer.Cyclic
 import LocalClassFieldTheory.Brauer.Duality
 import LocalClassFieldTheory.Brauer.DualityH1
 import LocalClassFieldTheory.Brauer.FundamentalClass
+import LocalClassFieldTheory.Brauer.H2ZHat
 import LocalClassFieldTheory.Brauer.InfRes
 import LocalClassFieldTheory.Brauer.Invariant
 import LocalClassFieldTheory.Brauer.KummerCompat

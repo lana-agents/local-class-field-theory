@@ -10,8 +10,15 @@ import LocalClassFieldTheory.Brauer.ContH2
 
 For a discrete group `G` (all cochains are locally constant) acting on a commutative group `M`,
 `ContH2 G M` is Mathlib's `groupCohomology.H2` of the representation
-`Rep.ofMulDistribMulAction G M` (`ContH2.addEquivH2`, for `G M : Type`, the universe of
-`Rep.ofMulDistribMulAction`).
+`Rep.ofMulDistribMulAction G M` (`ContH2.addEquivH2`).
+
+Universes: the statement is for `G M : Type`. This restriction is forced by Mathlib, not by the
+proof: `groupCohomology` (`H2`, `H2π`, ...) is only defined for `A : Rep.{u, u, u} k G`, i.e. the
+coefficient ring `k`, the group `G` and the carrier of `A` must live in one universe, and
+`Rep.ofMulDistribMulAction G M : Rep ℤ G` has `k = ℤ : Type`. (Replacing `ℤ` by `ULift ℤ` would
+leave the representation `Rep.ofMulDistribMulAction` that Mathlib's `H2` lemmas
+(`isMulCocycle₂_of_mem_cocycles₂`, ...) are stated for.) The Galois groups of interest
+(`Gal(L/K)` for `K L : Type`) live in `Type`.
 -/
 
 open groupCohomology CategoryTheory
