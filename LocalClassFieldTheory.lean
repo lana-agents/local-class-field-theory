@@ -29,6 +29,7 @@ import LocalClassFieldTheory.Reciprocity.Abelian
 import LocalClassFieldTheory.Reciprocity.Artin
 import LocalClassFieldTheory.Reciprocity.ArtinContinuous
 import LocalClassFieldTheory.Reciprocity.BaseChange
+import LocalClassFieldTheory.Reciprocity.Conjugation
 import LocalClassFieldTheory.Reciprocity.CyclicLevel
 import LocalClassFieldTheory.Reciprocity.CyclicRec
 import LocalClassFieldTheory.Reciprocity.Embedding
