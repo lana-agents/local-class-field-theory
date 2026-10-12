@@ -229,6 +229,8 @@ theorem exists_norm_frobLift_baseChange {D : IntermediateField K Ω} [FiniteDime
   exact h2.trans ((h3 τ₁).trans (congrArg (resBaseChange K' E) h1.symm))
 
 set_option maxHeartbeats 1000000 in
+-- The proof unifies reciprocity maps over the bases `K` and `K'`, whose definitions are expensive
+-- to unfold; this exceeds the default heartbeat limit.
 /-- **Norm compatibility of the cyclic reciprocity maps**: for `x ∈ K'ˣ`,
 `cycRec_{K'} (E K') x |_E = cycRec_K E (N_{K'/K} x)`. -/
 theorem cycRec_baseChange (x : K'ˣ) :
