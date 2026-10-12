@@ -169,7 +169,8 @@ Notation: `Ω` an algebraic closure of `K`, `K_t ⊆ Ω` the unramified extensio
 
 ## F. Existence theorem
 
-* F0 **planned (easy)** norm groups of finite abelian `L ⊆ Ω` are upward closed (`N ⊇ N_L` ⇒
+* F0 **done** (`Reciprocity/Existence.lean`: `exists_normGroup_eq_of_le`, `normGroup_sup`,
+  `pow_mem_of_index_ne_zero`, `exists_nrm_sub_one_lt_mem`, `existence_of_pow`) norm groups of finite abelian `L ⊆ Ω` are upward closed (`N ⊇ N_L` ⇒
   `N = N_{L'}`, `L'` the fixed field of `abRec_L(N)`) and closed under `∩` (`N_{L₁L₂}`); finite
   index subgroups contain `(Kˣ)^n` and are open (`exists_pow_eq_of_nrm_sub_one_lt`). So
   existence ⟺ every `(Kˣ)^n` contains a norm group.

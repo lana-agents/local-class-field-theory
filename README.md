@@ -55,6 +55,9 @@ Galois `K'/K` (`PadicField.artin_baseChange`); the existence theorem is open. Wh
   `PadicField.mem_absInertia_of_artin`, `PadicField.exists_unit_abRec_eq`; norm compatibility
   (`Reciprocity/{FrobLiftPow,BaseChange,NormCompat}.lean`): `PadicField.cycRec_baseChange`,
   `PadicField.abRec_baseChange`, `PadicField.artin_baseChange` (finite Galois `K'/K`).
+* Towards existence (`Reciprocity/Existence.lean`): norm groups are upward closed and closed under
+  intersections, finite-index subgroups are open, and existence reduces to `(Kˣ)^n`
+  (`PadicField.existence_of_pow`).
 
 Not yet done: norm compatibility for non-Galois `K'/K`, units *onto* the full
 inertia group of `Gal(K^ab/K)` (needs compactness of `𝒪ˣ`), and the existence theorem.
