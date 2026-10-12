@@ -287,7 +287,8 @@ theorem artin_apply_maxUnramified_of_v_eq_zero (x : Kˣ) (hx : v p (x : K) = 0)
 
 /-- **Uniformisers map to the arithmetic Frobenius modulo inertia**: every extension `σ` of
 `artin x` (`v(x) = 1`) to `Ω` satisfies `σ ≡ Frob (mod I_K)`. -/
-theorem mk_eq_arithFrob_of_artin [Algebra.IsAlgebraic ℚ_[p] Ω] (x : Kˣ) (hx : v p (x : K) = 1) (σ : Ω ≃ₐ[K] Ω)
+theorem mk_eq_arithFrob_of_artin [Algebra.IsAlgebraic ℚ_[p] Ω] (x : Kˣ) (hx : v p (x : K) = 1)
+    (σ : Ω ≃ₐ[K] Ω)
     (hσ : ∀ y : maxAbelian K Ω, σ y = artin p K Ω x y) :
     (QuotientGroup.mk σ : (Ω ≃ₐ[K] Ω) ⧸ absInertia p K Ω) = arithFrob p K Ω := by
   apply (unramifiedQuotientEquiv p K Ω).injective
@@ -298,7 +299,8 @@ theorem mk_eq_arithFrob_of_artin [Algebra.IsAlgebraic ℚ_[p] Ω] (x : Kˣ) (hx 
 
 /-- **Units map into inertia**: every extension `σ` of `artin u` (`u` a unit) to `Ω` lies in the
 absolute inertia group. -/
-theorem mem_absInertia_of_artin [Algebra.IsAlgebraic ℚ_[p] Ω] (x : Kˣ) (hx : v p (x : K) = 0) (σ : Ω ≃ₐ[K] Ω)
+theorem mem_absInertia_of_artin [Algebra.IsAlgebraic ℚ_[p] Ω] (x : Kˣ) (hx : v p (x : K) = 0)
+    (σ : Ω ≃ₐ[K] Ω)
     (hσ : ∀ y : maxAbelian K Ω, σ y = artin p K Ω x y) : σ ∈ absInertia p K Ω := by
   rw [absInertia_eq, IntermediateField.mem_fixingSubgroup_iff]
   intro y hy
