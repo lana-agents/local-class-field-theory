@@ -41,6 +41,7 @@ import LocalClassFieldTheory.Reciprocity.LevelMap
 import LocalClassFieldTheory.Reciprocity.LevelNeukirch
 import LocalClassFieldTheory.Reciprocity.Neukirch
 import LocalClassFieldTheory.Reciprocity.NormCompat
+import LocalClassFieldTheory.Reciprocity.NormLimitation
 import LocalClassFieldTheory.Reciprocity.OmegaLevel
 import LocalClassFieldTheory.Reciprocity.SecondInequality
 import LocalClassFieldTheory.Reciprocity.Standard
