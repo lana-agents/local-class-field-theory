@@ -14,7 +14,7 @@ project:
     Current state: foundations (valuation theory of finite extensions of ℚ_p, unramified
     extensions and Frobenius, Herbrand quotients) and the class field axiom for cyclic
     extensions, and local reciprocity Kˣ/N Lˣ ≃ Gal(L/K) for every finite abelian L inside an
-    algebraic closure; the global Artin map to Gal(K^ab/K) and the existence theorem are not yet done.
+    algebraic closure; the Artin map to Gal(K^ab/K) is constructed (continuous, Frobenius/inertia properties); norm compatibility and the existence theorem are not yet done.
   authors:
     - "Claude (Anthropic)"
     - "LANA Project"
@@ -44,7 +44,7 @@ classification:
   msc2020: ["11S31"]
 
 status:
-  scope: "in progress: foundations, unramified extensions, Frobenius, Herbrand quotients, class field axiom, local reciprocity for finite abelian extensions inside Ω; global Artin map and existence theorem not yet formalised"
+  scope: "in progress: foundations, unramified extensions, Frobenius, Herbrand quotients, class field axiom, local reciprocity for finite abelian extensions inside Ω; Artin map K^x -> Gal(K^ab/K) (continuous, Frobenius and inertia properties); norm compatibility and existence theorem not yet formalised"
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: []
@@ -63,6 +63,8 @@ status:
     - "PadicField.cycRec, PadicField.ker_cycRec, PadicField.cycRec_norm_frobLift: cyclic reciprocity map, kernel N L^x, Neukirch's formula"
     - "PadicField.abRec, PadicField.ker_abRec, PadicField.abRec_surjective, PadicField.abRecEquiv: K^x / N L^x ≃ Gal(L/K) for finite abelian L ⊆ Ω"
     - "PadicField.resHom_abRec_of_le: compatibility of abRec with restriction"
+    - "PadicField.artin, PadicField.artin_apply, PadicField.continuous_artin: the Artin map K^x -> Gal(K^ab/K), continuous"
+    - "PadicField.mk_eq_arithFrob_of_artin, PadicField.mem_absInertia_of_artin: uniformisers map to Frobenius mod inertia, units into inertia"
     - "PadicField.absInertia_eq, PadicField.unramifiedQuotientEquiv, PadicField.arithFrob: inertia, unramified quotient, Frobenius"
 
 automation:

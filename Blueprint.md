@@ -145,10 +145,23 @@ Notation: `Ω` an algebraic closure of `K`, `K_t ⊆ Ω` the unramified extensio
 
 ## E. The Artin map and its characterisation
 
-* E1 **planned** `K^ab ⊆ Ω`; `artin K : Kˣ →* Gal(K^ab/K)`, continuous (preimages of open subgroups
-  contain some `U^(n)`), dense image.
-* E2 **planned** uniformisers ↦ arithmetic Frobenius mod inertia; `artin(𝒪ˣ_K) = Gal(K^ab/K^ur)`.
-* E3 **planned** norm compatibility `artin_{K'}(x)|_{K^ab} = artin_K(N_{K'/K} x)`.
+* E1 **done** (`Reciprocity/Artin.lean`: `AbFin`, `maxAbelian`, `artin`, `artin_apply`,
+  `artin_apply_eq_self_iff`, `mem_ker_artin_iff`; `Reciprocity/ArtinContinuous.lean`:
+  `unitsTopology`, `continuous_artin`, `mem_normGroup_of_nrm_sub_one_lt`;
+  `PadicField/Powers.lean`: `exists_root_of_isAdicComplete` (non-monic Hensel),
+  `exists_pow_eq_of_nrm_sub_one_lt`) `K^ab = ⨆` finite abelian `L ⊆ Ω`; `artin : Kˣ →* Gal(K^ab/K)`
+  glued from `abRec` (`Subalgebra.iSupLift`); `artin x` fixes `L` iff `x ∈ N Lˣ`; norm groups
+  contain `{‖u - 1‖ < ‖n² p‖}` (`n`-th powers), hence `artin` is continuous (Krull topology).
+  Dense image: **planned** (follows from surjectivity of every `abRec L`).
+* E2 **done** (`Artin.lean`: `cycRec_unramified`, `artin_apply_unramified`,
+  `artin_apply_maxUnramified_of_v_eq_one`, `mk_eq_arithFrob_of_artin`,
+  `mem_absInertia_of_artin`, `exists_unit_abRec_eq`) `artin x` acts on `K_n` as `Frob^{v(x)}`;
+  uniformisers ↦ `arithFrob` modulo inertia; units ↦ inertia, onto the inertia group at every
+  finite abelian level. **planned**: `artin(𝒪ˣ) = Gal(K^ab/K^ur)` (needs compactness of `𝒪ˣ`).
+* E3 **planned** norm compatibility `artin_{K'}(x)|_{K^ab} = artin_K(N_{K'/K} x)` (first for Galois
+  `K'/K`): generators of `K'ˣ` are Neukirch values `N_{Σ/K'} π` of Frobenius lifts `τ` over `K'`;
+  over `K` these are Frobenius lifts with `k = f(K'/K)`, so a `k`-version of
+  `cycRec_norm_frobLift` (core lemma `StdLevel.rho_norm_fixedField` already allows `k`) gives it.
 
 ## F. Existence theorem
 

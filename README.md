@@ -6,7 +6,10 @@ Local class field theory for mixed-characteristic local fields.
 
 **In progress.** Local reciprocity `Kˣ/N_{L/K} Lˣ ≃ Gal(L/K)` is formalised for every finite
 abelian `L` inside a fixed algebraic closure `Ω`; the global Artin map `Kˣ → Gal(K^ab/K)` and the
-existence theorem are **not** formalised yet. What is proved (no `sorry`, no
+existence theorem are **not** formalised yet. The Artin map `PadicField.artin : Kˣ →* Gal(K^ab/K)`
+is constructed, continuous, sends uniformisers to the arithmetic Frobenius modulo inertia and units
+into inertia (onto inertia at every finite level); norm compatibility and the existence theorem
+are open. What is proved (no `sorry`, no
 `axiom`), all in the concrete setting of fields `K` with `[Algebra ℚ_[p] K]
 [FiniteDimensional ℚ_[p] K]` (see `Blueprint.md` for the route and lemma-level status):
 
@@ -46,8 +49,13 @@ existence theorem are **not** formalised yet. What is proved (no `sorry`, no
   `PadicField.abRec L : Kˣ →* Gal(L/K)` with kernel `N_{L/K} Lˣ` (`PadicField.ker_abRec`),
   surjective, compatible with restriction, i.e. `PadicField.abRecEquiv : Kˣ ⧸ N Lˣ ≃* Gal(L/K)`.
 
-Not yet done: the Artin map `Kˣ → Gal(K^ab/K)` and its characterising properties (norm
-compatibility, units onto inertia), and the existence theorem.
+* The Artin map (`Reciprocity/{Artin,ArtinContinuous}.lean`, `PadicField/Powers.lean`):
+  `PadicField.maxAbelian`, `PadicField.artin`, `PadicField.artin_apply`,
+  `PadicField.continuous_artin`, `PadicField.mk_eq_arithFrob_of_artin`,
+  `PadicField.mem_absInertia_of_artin`, `PadicField.exists_unit_abRec_eq`.
+
+Not yet done: norm compatibility of the Artin map for finite `K'/K`, units *onto* the full
+inertia group of `Gal(K^ab/K)` (needs compactness of `𝒪ˣ`), and the existence theorem.
 
 No lana-agents repository depends on this one: `iut` and its pinned lana-agents
 dependencies do not `require` it.
