@@ -25,8 +25,14 @@ reciprocity, and the existence theorem are **not** formalised. What is proved (n
   with an automorphism of finite order: multiplicativity in short exact sequences, value `1` on
   finite and induced modules, value `n` on `ℤ`.
 
-Not yet done: the maximal unramified extension and `Gal(K^ur/K)`, the reciprocity map and its
-properties, the existence theorem.
+* Inside a fixed algebraic closure `Ω`: the unramified extension `K_n` of each degree (unique),
+  `K^ur` with its arithmetic Frobenius (topologically generating `Gal(K^ur/K)`), the absolute
+  inertia group `absInertia p K Ω = Gal(Ω/K^ur)`, the unramified quotient
+  `Gal(Ω/K)/I ≃ Gal(K^ur/K)` and the arithmetic Frobenius `arithFrob` modulo inertia.
+* First steps towards reciprocity: the second inequality `[Kˣ : N Lˣ] ≤ [L : K]` for abelian
+  `L/K`, norm groups of unramified extensions, standard extensions `M·K_t`.
+
+Not yet done: the reciprocity map and its properties, the existence theorem.
 
 No lana-agents repository depends on this one: `iut` and its pinned lana-agents
 dependencies do not `require` it.
