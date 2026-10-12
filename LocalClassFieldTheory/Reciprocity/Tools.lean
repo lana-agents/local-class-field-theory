@@ -158,6 +158,19 @@ theorem isUnramified_of_algEquiv (σ : E ≃ₐ[K] E') (h : IsUnramified p K E) 
   unfold IsUnramified at *
   rw [← e_eq_of_algEquiv σ, h]
 
+include hp in
+/-- `K`-isomorphisms preserve the normalised valuation. -/
+theorem v_algEquiv (σ : E ≃ₐ[K] E') (x : E) : v p (σ x) = v p x := by
+  letI : Algebra E E' := σ.toRingHom.toAlgebra
+  haveI : IsScalarTower K E E' := IsScalarTower.of_algebraMap_eq fun x ↦ (σ.commutes x).symm
+  haveI : IsScalarTower ℚ_[p] E E' := IsScalarTower.of_algebraMap_eq fun x ↦ by
+    rw [IsScalarTower.algebraMap_apply ℚ_[p] K E, IsScalarTower.algebraMap_apply ℚ_[p] K E']
+    exact (σ.commutes _).symm
+  have he : e p E E' = 1 := e_eq_one_of_e_eq (K := K) (e_eq_of_algEquiv σ)
+  have := v_algebraMap (p := p) (K := E) (L := E') x
+  rw [he, Nat.cast_one, one_mul] at this
+  exact this
+
 end Equiv
 
 end PadicField

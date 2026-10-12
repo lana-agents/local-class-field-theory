@@ -28,13 +28,16 @@ import LocalClassFieldTheory.PadicField.UnramifiedExistence
 import LocalClassFieldTheory.Reciprocity.Abelian
 import LocalClassFieldTheory.Reciprocity.Artin
 import LocalClassFieldTheory.Reciprocity.ArtinContinuous
+import LocalClassFieldTheory.Reciprocity.BaseChange
 import LocalClassFieldTheory.Reciprocity.CyclicLevel
 import LocalClassFieldTheory.Reciprocity.CyclicRec
 import LocalClassFieldTheory.Reciprocity.Embedding
+import LocalClassFieldTheory.Reciprocity.FrobLiftPow
 import LocalClassFieldTheory.Reciprocity.LevelFrob
 import LocalClassFieldTheory.Reciprocity.LevelMap
 import LocalClassFieldTheory.Reciprocity.LevelNeukirch
 import LocalClassFieldTheory.Reciprocity.Neukirch
+import LocalClassFieldTheory.Reciprocity.NormCompat
 import LocalClassFieldTheory.Reciprocity.OmegaLevel
 import LocalClassFieldTheory.Reciprocity.SecondInequality
 import LocalClassFieldTheory.Reciprocity.Standard
