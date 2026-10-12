@@ -2,6 +2,7 @@ import LocalClassFieldTheory.Brauer.Absolute
 import LocalClassFieldTheory.Brauer.ContH2
 import LocalClassFieldTheory.Brauer.Cyclic
 import LocalClassFieldTheory.Brauer.InfRes
+import LocalClassFieldTheory.Brauer.Invariant
 import LocalClassFieldTheory.Brauer.LocalGalois
 import LocalClassFieldTheory.Brauer.OrderBound
 import LocalClassFieldTheory.Brauer.Relative

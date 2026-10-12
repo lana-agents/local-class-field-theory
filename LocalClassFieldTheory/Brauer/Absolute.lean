@@ -213,22 +213,26 @@ theorem isMulCoboundary₁_ker (L : IntermediateField K Ω) [Normal K L]
 
 set_option synthInstance.maxHeartbeats 200000 in
 -- `SMul Gal(L/K) Lˣ` for intermediate fields `L` is slow to synthesize.
+theorem mem_range_of_fixed (L : IntermediateField K Ω) [Normal K L] (m : Ωˣ)
+    (hm : ∀ n ∈ (AlgEquiv.restrictNormalHom (F := K) (K₁ := Ω) L).ker, n • m = m) :
+    m ∈ (Units.map (algebraMap L Ω : L →* Ω)).range := by
+  have hmL : (m : Ω) ∈ L := by
+    rw [← InfiniteGalois.fixedField_fixingSubgroup L]
+    intro σ
+    have := hm σ (by rw [IntermediateField.restrictNormalHom_ker]; exact σ.2)
+    exact congrArg Units.val this
+  refine ⟨Units.mk0 ⟨m, hmL⟩ (by simp [Subtype.ext_iff]), ?_⟩
+  ext
+  rfl
+
+set_option synthInstance.maxHeartbeats 200000 in
+-- `SMul Gal(L/K) Lˣ` for intermediate fields `L` is slow to synthesize.
 /-- Inflation `Br(L/K) → Br(K)` is injective. -/
 theorem infl_injective (L : IntermediateField K Ω) [FiniteDimensional K L] [IsGalois K L] :
-    Function.Injective (infl (Ω := Ω) L) := by
-  haveI : Algebra.IsIntegral K Ω := inferInstance
-  refine ContH2.map_injective _ _ (AlgEquiv.restrictNormalHom_surjective Ω) _ ?_ _ ?_
+    Function.Injective (infl (Ω := Ω) L) :=
+  ContH2.map_injective _ _ (AlgEquiv.restrictNormalHom_surjective Ω) _
+    (Units.map_injective (algebraMap L Ω).injective) _ (mem_range_of_fixed L)
     isLocallyConstant_smul_units (isMulCoboundary₁_ker L)
-  · exact Units.map_injective (algebraMap L Ω).injective
-  · intro m hm
-    have hmL : (m : Ω) ∈ L := by
-      rw [← InfiniteGalois.fixedField_fixingSubgroup L]
-      intro σ
-      have := hm σ (by rw [IntermediateField.restrictNormalHom_ker]; exact σ.2)
-      exact congrArg Units.val this
-    refine ⟨Units.mk0 ⟨m, hmL⟩ (by simp [Subtype.ext_iff]), ?_⟩
-    ext
-    rfl
 
 end Hilbert90
 
