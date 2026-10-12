@@ -14,7 +14,7 @@ project:
     Current state: foundations (valuation theory of finite extensions of ℚ_p, unramified
     extensions and Frobenius, Herbrand quotients) and the class field axiom for cyclic
     extensions, and local reciprocity Kˣ/N Lˣ ≃ Gal(L/K) for every finite abelian L inside an
-    algebraic closure; the Artin map to Gal(K^ab/K) is constructed (continuous, Frobenius/inertia properties); norm compatibility and the existence theorem are not yet done.
+    algebraic closure; the Artin map to Gal(K^ab/K) is constructed (continuous, Frobenius/inertia properties); norm compatibility (Galois K'/K) done; the existence theorem is not yet done.
   authors:
     - "Claude (Anthropic)"
     - "LANA Project"
@@ -65,6 +65,7 @@ status:
     - "PadicField.resHom_abRec_of_le: compatibility of abRec with restriction"
     - "PadicField.artin, PadicField.artin_apply, PadicField.continuous_artin: the Artin map K^x -> Gal(K^ab/K), continuous"
     - "PadicField.mk_eq_arithFrob_of_artin, PadicField.mem_absInertia_of_artin: uniformisers map to Frobenius mod inertia, units into inertia"
+    - "PadicField.artin_baseChange: artin_{K'}(x) restricted to K^ab equals artin_K(N_{K'/K} x) for finite Galois K'/K"
     - "PadicField.absInertia_eq, PadicField.unramifiedQuotientEquiv, PadicField.arithFrob: inertia, unramified quotient, Frobenius"
 
 automation:

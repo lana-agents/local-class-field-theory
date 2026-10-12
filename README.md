@@ -8,8 +8,8 @@ Local class field theory for mixed-characteristic local fields.
 abelian `L` inside a fixed algebraic closure `Ω`; the global Artin map `Kˣ → Gal(K^ab/K)` and the
 existence theorem are **not** formalised yet. The Artin map `PadicField.artin : Kˣ →* Gal(K^ab/K)`
 is constructed, continuous, sends uniformisers to the arithmetic Frobenius modulo inertia and units
-into inertia (onto inertia at every finite level); norm compatibility and the existence theorem
-are open. What is proved (no `sorry`, no
+into inertia (onto inertia at every finite level), and is compatible with norms for finite
+Galois `K'/K` (`PadicField.artin_baseChange`); the existence theorem is open. What is proved (no `sorry`, no
 `axiom`), all in the concrete setting of fields `K` with `[Algebra ℚ_[p] K]
 [FiniteDimensional ℚ_[p] K]` (see `Blueprint.md` for the route and lemma-level status):
 
@@ -52,9 +52,11 @@ are open. What is proved (no `sorry`, no
 * The Artin map (`Reciprocity/{Artin,ArtinContinuous}.lean`, `PadicField/Powers.lean`):
   `PadicField.maxAbelian`, `PadicField.artin`, `PadicField.artin_apply`,
   `PadicField.continuous_artin`, `PadicField.mk_eq_arithFrob_of_artin`,
-  `PadicField.mem_absInertia_of_artin`, `PadicField.exists_unit_abRec_eq`.
+  `PadicField.mem_absInertia_of_artin`, `PadicField.exists_unit_abRec_eq`; norm compatibility
+  (`Reciprocity/{FrobLiftPow,BaseChange,NormCompat}.lean`): `PadicField.cycRec_baseChange`,
+  `PadicField.abRec_baseChange`, `PadicField.artin_baseChange` (finite Galois `K'/K`).
 
-Not yet done: norm compatibility of the Artin map for finite `K'/K`, units *onto* the full
+Not yet done: norm compatibility for non-Galois `K'/K`, units *onto* the full
 inertia group of `Gal(K^ab/K)` (needs compactness of `𝒪ˣ`), and the existence theorem.
 
 No lana-agents repository depends on this one: `iut` and its pinned lana-agents

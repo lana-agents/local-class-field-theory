@@ -158,10 +158,14 @@ Notation: `Ω` an algebraic closure of `K`, `K_t ⊆ Ω` the unramified extensio
   `mem_absInertia_of_artin`, `exists_unit_abRec_eq`) `artin x` acts on `K_n` as `Frob^{v(x)}`;
   uniformisers ↦ `arithFrob` modulo inertia; units ↦ inertia, onto the inertia group at every
   finite abelian level. **planned**: `artin(𝒪ˣ) = Gal(K^ab/K^ur)` (needs compactness of `𝒪ˣ`).
-* E3 **planned** norm compatibility `artin_{K'}(x)|_{K^ab} = artin_K(N_{K'/K} x)` (first for Galois
-  `K'/K`): generators of `K'ˣ` are Neukirch values `N_{Σ/K'} π` of Frobenius lifts `τ` over `K'`;
-  over `K` these are Frobenius lifts with `k = f(K'/K)`, so a `k`-version of
-  `cycRec_norm_frobLift` (core lemma `StdLevel.rho_norm_fixedField` already allows `k`) gives it.
+* E3 **done for finite Galois `K'/K`** (`Reciprocity/FrobLiftPow.lean`:
+  `StdLevel.rho_norm_frobLift_pow`, `cycRec_norm_frobLift_pow`; `Reciprocity/BaseChange.lean`:
+  `restrictScalars_unramifiedOfDegree`, `resHom_frob_baseChange`, `autRestrict`;
+  `Reciprocity/NormCompat.lean`: `baseChange`, `resBaseChange`, `cycRec_baseChange`,
+  `abRec_baseChange`, `artin_baseChange`) `artin_{K'}(x)|_{K^ab} = artin_K(N_{K'/K} x)`:
+  Neukirch values `N_{Σ/K'} π` of Frobenius lifts over `K'` are Frobenius lifts of degree
+  `f(K'/K)` over `K` with the same fixed field; both sides are trivial on `N_{E K'/K'}` and these
+  values generate. **planned**: non-Galois `K'/K` (pass to a Galois closure).
 
 ## F. Existence theorem
 
