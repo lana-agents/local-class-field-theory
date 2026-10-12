@@ -20,7 +20,7 @@ fundamental class of `ℤ`.
 
 ## Main definitions
 
-* `ContH2.fixedSubgroup G M`, `ContH2.normHom G M`, `ContH2.Hhat0 G M`.
+* `ContH2.fixedSubgroup G M`, `ContH2.normMap G M`, `ContH2.Hhat0 G M`.
 * `ContH2.phiFun σ f = ∏_{i < n} f(σ^i, σ)`.
 * `ContH2.cyclicHom σ hσ : ContH2 G M →* Hhat0 G M`, `ContH2.cyclicEquiv σ hσ`.
 
@@ -52,27 +52,27 @@ theorem mem_fixedSubgroup {m : M} : m ∈ fixedSubgroup G M ↔ ∀ g : G, g •
 variable [Fintype G]
 
 /-- The norm `m ↦ ∏_g g • m`. -/
-def normHom : M →* M where
+def normMap : M →* M where
   toFun m := ∏ g : G, g • m
   map_one' := by simp
   map_mul' a b := by simp [smul_mul', prod_mul_distrib]
 
 variable {G M} in
-theorem normHom_apply (m : M) : normHom G M m = ∏ g : G, g • m := rfl
+theorem normMap_apply (m : M) : normMap G M m = ∏ g : G, g • m := rfl
 
 variable {G M} in
-theorem normHom_mem_fixedSubgroup (m : M) : normHom G M m ∈ fixedSubgroup G M := by
+theorem normMap_mem_fixedSubgroup (m : M) : normMap G M m ∈ fixedSubgroup G M := by
   intro g
-  rw [normHom_apply, smul_prod']
+  rw [normMap_apply, smul_prod']
   simp_rw [smul_smul]
   exact Fintype.prod_equiv (Equiv.mulLeft g) _ _ (fun _ => rfl)
 
 /-- The Tate group `Ĥ⁰(G, M) = M^G / N_G M`. -/
-abbrev Hhat0 : Type _ := fixedSubgroup G M ⧸ (normHom G M).range.subgroupOf (fixedSubgroup G M)
+abbrev Hhat0 : Type _ := fixedSubgroup G M ⧸ (normMap G M).range.subgroupOf (fixedSubgroup G M)
 
 variable {G M} in
 theorem Hhat0.mk_eq_one_iff (a : fixedSubgroup G M) :
-    (QuotientGroup.mk a : Hhat0 G M) = 1 ↔ ∃ m, normHom G M m = a := by
+    (QuotientGroup.mk a : Hhat0 G M) = 1 ↔ ∃ m, normMap G M m = a := by
   rw [QuotientGroup.eq_one_iff, Subgroup.mem_subgroupOf, MonoidHom.mem_range]
 
 end Generic
@@ -163,9 +163,9 @@ theorem phiFun_mul (f f' : G × G → M) : phiFun σ (f * f') = phiFun σ f * ph
 
 omit [TopologicalSpace G] in
 include hσ in
-theorem phiFun_dx (x : G → M) : phiFun σ (dx G M x) = normHom G M (x σ) := by
+theorem phiFun_dx (x : G → M) : phiFun σ (dx G M x) = normMap G M (x σ) := by
   simp only [phiFun, dx_apply]
-  rw [prod_mul_distrib, prod_div_distrib, normHom_apply,
+  rw [prod_mul_distrib, prod_div_distrib, normMap_apply,
     prod_range_pow σ hσ (fun g => g • x σ)]
   have h1 : ∏ i ∈ range (orderOf σ), x (σ ^ i * σ) = ∏ i ∈ range (orderOf σ), x (σ ^ i) := by
     simp_rw [← pow_succ]
@@ -279,7 +279,7 @@ theorem cyclicHom_injective [DiscreteTopology G] : Function.Injective (cyclicHom
     simp only [X, range_one, prod_singleton, pow_zero, one_smul]
     rw [map_one_fst f, ← hc]
     mul_abel
-  have hphi : phiFun σ (f : G × G → M) = normHom G M m := by
+  have hphi : phiFun σ (f : G × G → M) = normMap G M m := by
     rw [hm]
   rw [dx_apply, hxσ, ← pow_succ]
   rcases Nat.lt_or_ge (k + 1) (orderOf σ) with hk1 | hk1
@@ -288,7 +288,7 @@ theorem cyclicHom_injective [DiscreteTopology G] : Function.Injective (cyclicHom
     mul_abel
   · have hk1 : k + 1 = orderOf σ := by omega
     rw [hk1, pow_orderOf_eq_one, idx_one, idx_pow σ hσ hk]
-    rw [normHom_apply, ← prod_range_pow σ hσ (fun g => g • m), phiFun, ← hk1,
+    rw [normMap_apply, ← prod_range_pow σ hσ (fun g => g • m), phiFun, ← hk1,
       prod_range_succ, prod_range_succ] at hphi
     simp only [X, range_zero, prod_empty, prod_div_distrib]
     have : f (σ ^ k, σ) = (∏ x ∈ range k, σ ^ x • m) * σ ^ k • m /
@@ -340,7 +340,7 @@ theorem cyclicHom_surjective [DiscreteTopology G] :
   · refine ⟨1, ?_⟩
     rw [map_one, eq_comm, Hhat0.mk_eq_one_iff]
     refine ⟨a, ?_⟩
-    rw [normHom_apply, ← prod_range_pow σ hσ (fun g => g • (a : M)), hn]
+    rw [normMap_apply, ← prod_range_pow σ hσ (fun g => g • (a : M)), hn]
     simp
   · have hn2 : 1 < orderOf σ := by
       have := orderOf_pos σ
