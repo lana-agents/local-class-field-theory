@@ -130,6 +130,30 @@ theorem relCyclicEquiv_mk (σ : L ≃ₐ[K] L) (hσ : ∀ g, g ∈ Subgroup.zpow
   rw [relCyclicEquiv, MulEquiv.trans_apply, cyclicEquiv_mk, ← hhat0Equiv_mk, phiUnits,
     MulEquiv.apply_symm_apply]
 
+/-- The carry cocycle `(σ^i, σ^j) ↦ a ^ ⌊(i + j)/n⌋` of `a ∈ Kˣ`. -/
+noncomputable def cupCocycle (σ : L ≃ₐ[K] L) (hσ : ∀ g, g ∈ Subgroup.zpowers σ) (a : Kˣ) :
+    cocycles (L ≃ₐ[K] L) Lˣ :=
+  mkCocycle (cupFun σ hσ (fixedUnitsEquiv K L a : Lˣ)) (.of_discrete _)
+    (isMulCocycle₂_cupFun σ hσ (fixedUnitsEquiv K L a).2)
+
+theorem cupCocycle_apply (σ : L ≃ₐ[K] L) (hσ : ∀ g, g ∈ Subgroup.zpowers σ) (a : Kˣ)
+    (x : (L ≃ₐ[K] L) × (L ≃ₐ[K] L)) :
+    cupCocycle σ hσ a x = cupFun σ hσ (fixedUnitsEquiv K L a : Lˣ) x := rfl
+
+/-- The class of the carry cocycle of `a ∈ Kˣ`. -/
+noncomputable def cupClass (σ : L ≃ₐ[K] L) (hσ : ∀ g, g ∈ Subgroup.zpowers σ) (a : Kˣ) :
+    RelBr K L :=
+  mk (cupCocycle σ hσ a)
+
+theorem relCyclicEquiv_cupClass (σ : L ≃ₐ[K] L) (hσ : ∀ g, g ∈ Subgroup.zpowers σ)
+    (hn : 1 < orderOf σ) (a : Kˣ) :
+    relCyclicEquiv σ hσ (cupClass σ hσ a) = QuotientGroup.mk a := by
+  rw [cupClass, cupCocycle, relCyclicEquiv_mk]
+  congr 1
+  rw [phiUnits, MulEquiv.symm_apply_eq]
+  ext : 1
+  exact phiFun_cupFun σ hσ hn _
+
 end Brauer
 
 namespace PadicField
@@ -220,6 +244,11 @@ theorem unrClass_surjective : Function.Surjective (unrClass h) := by
   obtain ⟨a, ha⟩ := QuotientGroup.mk_surjective
     (relCyclicEquiv (frob h) (mem_zpowers_frob h) α)
   exact ⟨a, by rw [unrClass, ha, MulEquiv.symm_apply_apply]⟩
+
+theorem unrClass_eq_cupClass (hn : 1 < Module.finrank K L) (a : Kˣ) :
+    unrClass h a = cupClass (frob h) (mem_zpowers_frob h) a := by
+  rw [unrClass, MulEquiv.symm_apply_eq, relCyclicEquiv_cupClass]
+  rwa [orderOf_frob]
 
 theorem invUnr_injective : Function.Injective (invUnr h) := by
   rw [← MonoidHom.ker_eq_bot_iff, eq_bot_iff]

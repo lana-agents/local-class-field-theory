@@ -127,6 +127,10 @@ variable {G M} in
 theorem coe_one_apply (g : G × G) : (1 : cocycles G M) g = 1 := rfl
 
 variable {G M} in
+theorem cocycles_ext {c d : cocycles G M} (h : ∀ x y, c (x, y) = d (x, y)) : c = d :=
+  Subtype.ext (funext fun xy => h xy.1 xy.2)
+
+variable {G M} in
 theorem isMulCocycle₂ (c : cocycles G M) : IsMulCocycle₂ (c : G × G → M) := c.2.2
 
 variable {G M} in

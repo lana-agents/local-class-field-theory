@@ -373,6 +373,21 @@ theorem phiFun_mapFun {G' M' : Type*} [Group G'] [CommGroup M'] (π : G' →* G)
   refine prod_range_mul_of_periodic (fun i => ψ (f (σ ^ i, σ))) _ _ fun i => ?_
   simp only [pow_add, pow_orderOf_eq_one, mul_one]
 
+omit [TopologicalSpace G] [MulDistribMulAction G M] in
+/-- Comparison of carry cocycles along maps `π : H → G`, `π' : H → G'` with
+`π x = σ ^ (d * idx σ' (π' x))` and `orderOf σ = d * orderOf σ'`. -/
+theorem cupFun_comp {G' H M' N : Type*} [Group G'] [Fintype G'] [CommGroup M'] [CommGroup N]
+    (σ' : G') (hσ' : ∀ g, g ∈ Subgroup.zpowers σ') {d : ℕ} (hd : 0 < d)
+    (ho : orderOf σ = d * orderOf σ') (π : H → G) (π' : H → G')
+    (hπ : ∀ x, π x = σ ^ (d * idx σ' hσ' (π' x))) (ψ : M →* N) (ψ' : M' →* N) (a : M) (a' : M')
+    (ha : ψ a = ψ' a') (x y : H) :
+    ψ (cupFun σ hσ a (π x, π y)) = ψ' (cupFun σ' hσ' a' (π' x, π' y)) := by
+  have hlt : ∀ z, d * idx σ' hσ' (π' z) < orderOf σ := fun z => by
+    rw [ho]
+    exact Nat.mul_lt_mul_of_pos_left (idx_lt _ _ _) hd
+  simp only [cupFun, hπ, idx_pow σ hσ (hlt _), ho, ← mul_add, Nat.mul_div_mul_left _ _ hd,
+    map_pow, ha]
+
 end Cyclic
 
 end ContH2
