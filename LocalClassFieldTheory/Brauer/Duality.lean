@@ -328,8 +328,9 @@ theorem chiExp_eq (g : Ω ≃ₐ[K] Ω) :
           Nat.card_pos)
     _ = n := Nat.mul_div_cancel' hdvd
 
-theorem pow_smul_eq_of_pow_eq {α : Ωˣ} {a : Kˣ} (hαa : α ^ n = Units.map (algebraMap K Ω : K →* Ω) a)
-    (σ : Ω ≃ₐ[K] Ω) : σ • α ^ n = α ^ n := by
+theorem pow_smul_eq_of_pow_eq {α : Ωˣ} {a : Kˣ}
+    (hαa : α ^ n = Units.map (algebraMap K Ω : K →* Ω) a) (σ : Ω ≃ₐ[K] Ω) :
+    σ • α ^ n = α ^ n := by
   rw [hαa]
   ext
   simp [AlgEquiv.smul_units_def]
