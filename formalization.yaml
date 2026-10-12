@@ -43,7 +43,7 @@ classification:
   msc2020: ["11S31"]
 
 status:
-  scope: "in progress: foundations, unramified extensions, Frobenius, Herbrand quotients, class field axiom for cyclic extensions; reciprocity map not yet formalised"
+  scope: "in progress: foundations, unramified extensions, Frobenius, Herbrand quotients, class field axiom, reciprocity at standard levels; global Artin map not yet formalised"
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: []
@@ -54,6 +54,10 @@ status:
     - "PadicField.residueGalEquiv, PadicField.frob: Gal(L/K) ≃ Gal(residue fields), arithmetic Frobenius"
     - "Herbrand.herbrand_eq_mul_of_ses: Herbrand quotients are multiplicative"
     - "PadicField.index_normGroup_of_isCyclic: [K^x : N_{L/K} L^x] = [L : K] for cyclic L/K"
+    - "PadicField.index_normGroup_le: second inequality for abelian L/K"
+    - "PadicField.rhoF_norm_tau: Neukirch's formula at a standard level"
+    - "PadicField.comap_rhoF_fixingSubgroup: K^x / N L^x = Gal(L/K) for cyclic L inside a standard level"
+    - "PadicField.absInertia_eq, PadicField.unramifiedQuotientEquiv, PadicField.arithFrob: inertia, unramified quotient, Frobenius"
 
 automation:
   methods:

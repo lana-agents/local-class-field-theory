@@ -147,7 +147,7 @@ theorem comap_rhoF_fixingSubgroup (L : IntermediateField K F)
     set q : ℤ := (a - 1) / N
     have hqr : a = N * q + r := by
       have h := Int.emod_def (a - 1) N
-      show a = N * ((a - 1) / N) + ((a - 1) % N + 1)
+      change a = N * ((a - 1) / N) + ((a - 1) % N + 1)
       linarith
     set x' := x * (ϖ ^ N) ^ (-q)
     have hvx' : v p (x' : K) = r := by
@@ -180,7 +180,8 @@ theorem comap_rhoF_fixingSubgroup (L : IntermediateField K F)
       rw [le_iff_le, Subgroup.zpowers_le, ← hτ]
       exact hx'L
     have hNy : Units.mk0 _ hy0 ∈ normGroup K L :=
-      normGroup_le_of_le (p := p) hLS ⟨Units.mk0 y (fun h ↦ hy0 (Algebra.norm_eq_zero_iff.2 h)), Units.ext rfl⟩
+      normGroup_le_of_le (p := p) hLS
+        ⟨Units.mk0 y (fun h ↦ hy0 (Algebra.norm_eq_zero_iff.2 h)), Units.ext rfl⟩
     have hker : x' * (Units.mk0 _ hy0)⁻¹ ∈ normGroup K L := by
       apply normGroup_top_le (p := p) L
       apply mem_normGroup_of_rhoF_eq_one hM hU hdeg s hs he

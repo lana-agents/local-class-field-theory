@@ -29,10 +29,17 @@ reciprocity, and the existence theorem are **not** formalised. What is proved (n
   `K^ur` with its arithmetic Frobenius (topologically generating `Gal(K^ur/K)`), the absolute
   inertia group `absInertia p K Ω = Gal(Ω/K^ur)`, the unramified quotient
   `Gal(Ω/K)/I ≃ Gal(K^ur/K)` and the arithmetic Frobenius `arithFrob` modulo inertia.
-* First steps towards reciprocity: the second inequality `[Kˣ : N Lˣ] ≤ [L : K]` for abelian
-  `L/K`, norm groups of unramified extensions, standard extensions `M·K_t`.
+* Reciprocity at a standard level (`LocalClassFieldTheory/Reciprocity/`): the second inequality
+  `[Kˣ : N Lˣ] ≤ [L : K]` for abelian `L/K`; norm groups of unramified extensions; for a
+  "standard" extension `F = M·U` (`M/K` cyclic totally ramified, `U/K` unramified) an explicit
+  surjective homomorphism `ρ_F : Kˣ → Gal(F/K)` with kernel in `N_{F/K} Fˣ`, Neukirch's formula
+  `ρ_F(N_{Σ/K} π_Σ) = τ` for Frobenius lifts `τ`, and for every cyclic `L ⊆ M·K_N ⊆ F`:
+  `ρ_F⁻¹(Gal(F/L)) = N_{L/K} Lˣ` (`PadicField.comap_rhoF_fixingSubgroup`), i.e. local
+  reciprocity `Kˣ/N Lˣ ≃ Gal(L/K)` for such `L`.
 
-Not yet done: the reciprocity map and its properties, the existence theorem.
+Not yet done: independence of the standard level and the reciprocity map for arbitrary finite
+abelian `L ⊆ Ω`, the Artin map `Kˣ → Gal(K^ab/K)` and its characterising properties (norm
+compatibility, units onto inertia), and the existence theorem.
 
 No lana-agents repository depends on this one: `iut` and its pinned lana-agents
 dependencies do not `require` it.
