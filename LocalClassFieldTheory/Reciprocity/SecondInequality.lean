@@ -46,11 +46,24 @@ theorem normGroup_tower {K E L : Type*} [Field K] [Field E] [Field L] [Algebra K
   · rintro ⟨_, ⟨y, rfl⟩, rfl⟩
     exact ⟨y, Units.ext (by simp [Algebra.norm_norm])⟩
 
-/-- **The second inequality**: for an abelian extension `L/K`, `[Kˣ : N Lˣ] ≤ [L : K]`. -/
-theorem index_normGroup_le {K L : Type*} [Field K] [Field L] [Algebra ℚ_[p] K] [Algebra ℚ_[p] L]
-    [Algebra K L] [IsScalarTower ℚ_[p] K L] [FiniteDimensional ℚ_[p] K]
+/-- The image of a finite-index subgroup under a homomorphism with finite-index range has finite
+index. -/
+theorem index_map_ne_zero {G G' : Type*} [Group G] [Group G'] (f : G →* G') (H : Subgroup G)
+    (hH : H.index ≠ 0) (hr : f.range.index ≠ 0) : (H.map f).index ≠ 0 := by
+  have hle : H.map f ≤ f.range := by
+    rintro _ ⟨x, -, rfl⟩; exact ⟨x, rfl⟩
+  rw [← Subgroup.relIndex_mul_index hle]
+  refine mul_ne_zero ?_ hr
+  rw [MonoidHom.range_eq_map, Subgroup.relIndex_map_map, top_sup_eq,
+    Subgroup.relIndex_top_right]
+  exact fun h ↦ hH (Nat.eq_zero_of_zero_dvd (h ▸ Subgroup.index_dvd_of_le le_sup_left))
+
+/-- **The second inequality** (with finiteness): for an abelian extension `L/K`,
+`0 < [Kˣ : N Lˣ] ≤ [L : K]`. -/
+theorem index_normGroup_pos_le {K L : Type*} [Field K] [Field L] [Algebra ℚ_[p] K]
+    [Algebra ℚ_[p] L] [Algebra K L] [IsScalarTower ℚ_[p] K L] [FiniteDimensional ℚ_[p] K]
     [FiniteDimensional ℚ_[p] L] [IsAbelianGalois K L] :
-    (normGroup K L).index ≤ Module.finrank K L := by
+    0 < (normGroup K L).index ∧ (normGroup K L).index ≤ Module.finrank K L := by
   haveI := finiteDimensional_tower (p := p) K L
   -- strong induction on the degree
   induction h : Module.finrank K L using Nat.strong_induction_on generalizing L with
@@ -62,12 +75,15 @@ theorem index_normGroup_le {K L : Type*} [Field K] [Field L] [Algebra ℚ_[p] K]
       exact ⟨⟨fun a b ↦ (hbot a).trans (hbot b).symm⟩, ⟨1⟩⟩
     rw [← h, hn]
     -- every element of `K` is a norm
-    refine le_of_eq (Subgroup.index_eq_one.2 (eq_top_iff.2 fun x _ ↦ ?_))
-    have hrank := hn
-    obtain ⟨y, hy⟩ : ∃ y : Lˣ, Algebra.norm K (y : L) = x := by
-      refine ⟨Units.map (algebraMap K L : K →* L) x, ?_⟩
-      simp [Algebra.norm_algebraMap, hrank]
-    exact ⟨y, Units.ext hy⟩
+    have h1 : (normGroup K L).index = 1 := by
+      refine Subgroup.index_eq_one.2 (eq_top_iff.2 fun x _ ↦ ?_)
+      have hrank := hn
+      obtain ⟨y, hy⟩ : ∃ y : Lˣ, Algebra.norm K (y : L) = x := by
+        refine ⟨Units.map (algebraMap K L : K →* L) x, ?_⟩
+        simp [Algebra.norm_algebraMap, hrank]
+      exact ⟨y, Units.ext hy⟩
+    rw [h1]
+    exact ⟨one_pos, le_rfl⟩
   · obtain ⟨g, hg⟩ := not_forall.1 hbot
     set H := Subgroup.zpowers g
     set E := IntermediateField.fixedField H
@@ -88,18 +104,31 @@ theorem index_normGroup_le {K L : Type*} [Field K] [Field L] [Algebra ℚ_[p] K]
     have hEK : Module.finrank K E < n := by
       rw [← h, ← Module.finrank_mul_finrank K E L]
       exact lt_mul_of_one_lt_right Module.finrank_pos hEL
-    have ihE : (normGroup K E).index ≤ Module.finrank K E :=
-      ih _ hEK (L := E) inferInstance rfl
+    have ihE := ih _ hEK (L := E) inferInstance rfl
     have hcyc := index_normGroup_of_isCyclic (p := p) (K := E) (L := L)
     rw [normGroup_tower (E := E)]
+    refine ⟨Nat.pos_of_ne_zero (index_map_ne_zero _ _ (by rw [hcyc]; exact Module.finrank_pos.ne')
+      ihE.1.ne'), ?_⟩
     calc ((normGroup E L).map (Units.map (Algebra.norm K : E →* K))).index
         ≤ (Units.map (Algebra.norm K : E →* K)).range.index * (normGroup E L).index :=
           index_map_le_mul _ _ (by rw [hcyc]; exact Module.finrank_pos.ne')
       _ ≤ Module.finrank K E * Module.finrank E L := by
           rw [hcyc]
-          exact Nat.mul_le_mul_right _ ihE
+          exact Nat.mul_le_mul_right _ ihE.2
       _ = n := by rw [Module.finrank_mul_finrank K E L, h]
 
+/-- **The second inequality**: for an abelian extension `L/K`, `[Kˣ : N Lˣ] ≤ [L : K]`. -/
+theorem index_normGroup_le {K L : Type*} [Field K] [Field L] [Algebra ℚ_[p] K] [Algebra ℚ_[p] L]
+    [Algebra K L] [IsScalarTower ℚ_[p] K L] [FiniteDimensional ℚ_[p] K]
+    [FiniteDimensional ℚ_[p] L] [IsAbelianGalois K L] :
+    (normGroup K L).index ≤ Module.finrank K L :=
+  (index_normGroup_pos_le (p := p)).2
+
+/-- Norm groups of abelian extensions have finite index. -/
+theorem index_normGroup_ne_zero {K L : Type*} [Field K] [Field L] [Algebra ℚ_[p] K]
+    [Algebra ℚ_[p] L] [Algebra K L] [IsScalarTower ℚ_[p] K L] [FiniteDimensional ℚ_[p] K]
+    [FiniteDimensional ℚ_[p] L] [IsAbelianGalois K L] : (normGroup K L).index ≠ 0 :=
+  (index_normGroup_pos_le (p := p)).1.ne'
 
 section Unramified
 
