@@ -11,6 +11,7 @@ import LocalClassFieldTheory.Brauer.Invariant
 import LocalClassFieldTheory.Brauer.KummerCompat
 import LocalClassFieldTheory.Brauer.KummerH2
 import LocalClassFieldTheory.Brauer.LocalGalois
+import LocalClassFieldTheory.Brauer.MathlibBridge
 import LocalClassFieldTheory.Brauer.OrderBound
 import LocalClassFieldTheory.Brauer.Relative
 import LocalClassFieldTheory.Brauer.Restriction

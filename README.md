@@ -110,7 +110,8 @@ the Artin map**: `⟨χ, a⟩ = χ(artin a)` (`PadicField.pairing_eq_artinChar`)
 with `μ_n ⊆ μ_m`, `ζ ↦ ζ^{m/n}` and restriction (`PadicField.h2MuEquiv_h2MuIncl`,
 `PadicField.h2MuEquiv_h2MuPow`, `PadicField.h2MuEquiv_resMu`). Corestriction `ContH2.cor`
 (`cor ∘ res = [G:H]`, `ContH2.cor_res`) and `Brauer.corBr : Br(K') → Br(K)` with
-`inv_K ∘ cor = inv_{K'}` (`PadicField.invEquiv_corBr`).
+`inv_K ∘ cor = inv_{K'}` (`PadicField.invEquiv_corBr`). For discrete `G`, `ContH2 G M` agrees with
+Mathlib's `groupCohomology.H2` (`ContH2.addEquivH2`).
 
 Not done (outside the scope of this repository's goals, possible future work): the explicit
 decomposition `Gal(K^ab/K) ≅ 𝒪ˣ × Ẑ` (needs the profinite completion of `𝒪ˣ × ℤ` and

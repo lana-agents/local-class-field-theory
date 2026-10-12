@@ -358,5 +358,8 @@ Absolute Brauer group (`Brauer/Absolute.lean`, `Brauer/Unramified.lean`), `Ω/K`
   **`ContH2.cor_res`**. Brauer groups (`Brauer/CorBr.lean`): `Brauer.brFixingEquiv`
   (`Br(K') ≃ H²(Gal(Ω/K)_{K'}, Ωˣ)`), **`Brauer.corBr`**, **`Brauer.corBr_res`** (`cor ∘ res = [K':K]`),
   `PadicField.res_surjective`, **`PadicField.invEquiv_corBr`** (`inv_K ∘ cor = inv_{K'}`).
+* H16 **done** (`Brauer/MathlibBridge.lean`): `ContH2.addEquivH2 : Additive (ContH2 G M) ≃+
+  groupCohomology.H2 (Rep.ofMulDistribMulAction G M)` for discrete `G` (`G M : Type`), so the relative
+  Brauer groups agree with Mathlib's `H²(Gal(L/K), Lˣ)`.
 * Not done: duality for general finite Galois modules; Euler characteristic formula; `H²(K, ℤ/n)`;
   the Tate–Nakayama isomorphism in all degrees.
