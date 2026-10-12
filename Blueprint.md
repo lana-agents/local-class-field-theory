@@ -169,5 +169,19 @@ Notation: `Ω` an algebraic closure of `K`, `K_t ⊆ Ω` the unramified extensio
 
 ## F. Existence theorem
 
-* F1 **planned** every open finite-index subgroup of `Kˣ` is a norm group; `artin` is injective,
-  `𝒪ˣ_K ≃ inertia of Gal(K^ab/K)`.
+* F0 **planned (easy)** norm groups of finite abelian `L ⊆ Ω` are upward closed (`N ⊇ N_L` ⇒
+  `N = N_{L'}`, `L'` the fixed field of `abRec_L(N)`) and closed under `∩` (`N_{L₁L₂}`); finite
+  index subgroups contain `(Kˣ)^n` and are open (`exists_pow_eq_of_nrm_sub_one_lt`). So
+  existence ⟺ every `(Kˣ)^n` contains a norm group.
+* F1 **planned** `μ_n ⊆ K`: Kummer `L_n = K((Kˣ)^{1/n})` is finite abelian of exponent `n`
+  (`Kˣ/(Kˣ)^n` finite: `U^(m) ⊆ (Kˣ)^n`, `𝒪/𝔪^m` finite), `N_{L_n} ⊇ (Kˣ)^n` (exponent `n`), and
+  `[L_n : K] ≥ [Kˣ : (Kˣ)^n]` (Kummer pairing, `|Hom(G, μ_n)| ≤ |G|` via
+  `CommGroup.monoidHom_mulEquiv_self_of_hasEnoughRootsOfUnity`), hence `N_{L_n} = (Kˣ)^n`.
+* F2 **planned** general `K`: `K' = K(μ_n)`; `N_{L'/K} = N_{K'/K}((K'ˣ)^n) ⊆ (Kˣ)^n` for the
+  Kummer `L'/K'`, `L'/K` Galois but not abelian. Needs the norm limitation theorem
+  `N_{L'/K} = N_{M/K}`, `M = L' ∩ K^ab`; via E3 and conjugation functoriality
+  `artin_{K'}(σx) = σ artin_{K'}(x) σ⁻¹` this reduces (for `Gal(K'/K)` cyclic, then by a cyclic
+  tower) to `[G,G] = [G,H]`. Alternative route: Lubin–Tate extensions `K_{π,m}` with
+  `N = ⟨π⟩ × U^(m)`.
+* F3 **planned** injectivity of `artin` on `𝒪ˣ` and `𝒪ˣ ≃ I(K^ab/K)` (needs F and compactness of
+  `𝒪ˣ`).
