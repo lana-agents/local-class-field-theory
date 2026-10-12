@@ -97,7 +97,7 @@ theorem continuous_artin :
     simp only [Set.mem_preimage, Metric.mem_ball, dist_eq_norm] at h
     exact h
   have hN : u ∈ normGroup K L.1 := mem_normGroup_of_nrm_sub_one_lt u hu'
-  show artin p K Ω u ∈ s
+  change artin p K Ω u ∈ s
   apply hEs
   rw [SetLike.mem_coe, IntermediateField.mem_fixingSubgroup_iff]
   intro y hy
