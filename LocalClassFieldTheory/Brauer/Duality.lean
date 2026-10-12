@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: LANA Project
 -/
 import LocalClassFieldTheory.Brauer.KummerH2
+import LocalClassFieldTheory.Reciprocity.ExistenceTheorem
 
 /-!
 # The cup product pairing `H¹(K, ℤ/n) × H¹(K, μ_n) → H²(K, μ_n)`
@@ -431,4 +432,189 @@ theorem exists_hom_zmod_ne_one {A : Type*} [CommGroup A] [Finite A] {n : ℕ} [N
   have := zmodEmbed_eq_zero hmi h'
   rw [← ofAdd_toAdd (e x i), this, ofAdd_zero]
 
+theorem carryClass_congr [NeZero n] (χ : (Ω ≃ₐ[K] Ω) →* Multiplicative (ZMod n))
+    (hχ : IsLocallyConstant χ) {α β : Ωˣ} (hα : ∀ σ : Ω ≃ₐ[K] Ω, σ • α ^ n = α ^ n)
+    (hβ : ∀ σ : Ω ≃ₐ[K] Ω, σ • β ^ n = β ^ n) (h : α ^ n = β ^ n) :
+    carryClass n χ hχ α hα = carryClass n χ hχ β hβ := by
+  simp only [carryClass]
+  congr 1
+  exact cocycles_ext fun g g' => by simp only [coe_mkCocycle, carryFun, h]
+
+theorem carryClass_mul [NeZero n] (χ : (Ω ≃ₐ[K] Ω) →* Multiplicative (ZMod n))
+    (hχ : IsLocallyConstant χ) {α β : Ωˣ} (hα : ∀ σ : Ω ≃ₐ[K] Ω, σ • α ^ n = α ^ n)
+    (hβ : ∀ σ : Ω ≃ₐ[K] Ω, σ • β ^ n = β ^ n) (hαβ : ∀ σ : Ω ≃ₐ[K] Ω,
+      σ • (α * β) ^ n = (α * β) ^ n) :
+    carryClass n χ hχ (α * β) hαβ = carryClass n χ hχ α hα * carryClass n χ hχ β hβ := by
+  simp only [carryClass]
+  rw [← map_mul]
+  congr 1
+  exact cocycles_ext fun g g' => by
+    simp only [coe_mkCocycle, carryFun, coe_mul_apply, mul_pow]
+
+theorem cupKummer_mul_left [NeZero n] (χ χ' : LocChar K Ω n) (ζ : (Ω ≃ₐ[K] Ω) → Mu n Ω)
+    (hζ : IsLocallyConstant ζ) (hζc : IsMulCocycle₁ ζ) :
+    cupKummer n (χ * χ').1 (χ * χ').2 ζ hζ hζc =
+      cupKummer n χ.1 χ.2 ζ hζ hζc * cupKummer n χ'.1 χ'.2 ζ hζ hζc := by
+  refine cocycles_ext fun g h => ?_
+  simp only [cupKummer, coe_mkCocycle, cupKummerFun, coe_mul_apply, chiExp]
+  rw [Subgroup.coe_mul, MonoidHom.mul_apply, toAdd_mul, ZMod.val_add, mu_pow_mod, pow_add]
+
 end Brauer
+
+namespace PadicField
+
+open Brauer
+
+variable {p : ℕ} [hp : Fact p.Prime]
+variable {K : Type*} [Field K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+variable {Ω : Type*} [Field Ω] [Algebra K Ω] [Algebra ℚ_[p] Ω] [IsScalarTower ℚ_[p] K Ω]
+  [IsAlgClosed Ω] [IsGalois K Ω]
+variable (n : ℕ) [NeZero n]
+
+theorem exists_root_K (a : Kˣ) : ∃ α : Ωˣ, α ^ n = Units.map (algebraMap K Ω : K →* Ω) a :=
+  exists_root n (Nat.pos_of_ne_zero (NeZero.ne n)) _
+
+/-- A chosen `n`-th root of `a ∈ Kˣ` in `Ω`. -/
+noncomputable def rootK (a : Kˣ) : Ωˣ := (exists_root_K (Ω := Ω) n a).choose
+
+theorem rootK_pow (a : Kˣ) : rootK (Ω := Ω) n a ^ n = Units.map (algebraMap K Ω : K →* Ω) a :=
+  (exists_root_K n a).choose_spec
+
+/-- The cup product `χ ∪ κ(a) ∈ H²(K, μ_n)` of a character and the Kummer class of `a`. -/
+noncomputable def cupKummerClass (χ : LocChar K Ω n) (a : Kˣ) : H2Mu K Ω n :=
+  mk (cupKummer n χ.1 χ.2 (kummerFun (rootK n a) (pow_smul_eq_of_pow_eq n (rootK_pow n a)))
+    (isLocallyConstant_kummerFun n _ _) (isMulCocycle₁_kummerFun _ _))
+
+/-- **The local duality pairing** `H¹(K, ℤ/n) × Kˣ → ℤ/n`, `(χ, a) ↦ χ ∪ κ(a) ∈ H²(K, μ_n) ≃ ℤ/n`
+(`PadicField.h2MuEquiv`, cyclotomic rigidity). -/
+noncomputable def pairing (χ : LocChar K Ω n) (a : Kˣ) : ZMod n :=
+  Multiplicative.toAdd (h2MuEquiv p K Ω (Nat.pos_of_ne_zero (NeZero.ne n)) (cupKummerClass n χ a))
+
+theorem toBr_cupKummerClass (χ : LocChar K Ω n) (a : Kˣ) :
+    toBr n (cupKummerClass n χ a) =
+      carryClass n χ.1 χ.2 (rootK n a) (pow_smul_eq_of_pow_eq n (rootK_pow n a)) :=
+  toBr_mk_cupKummer n χ.1 χ.2 _ _
+
+theorem invEquiv_toBr_cupKummerClass (χ : LocChar K Ω n) (a : Kˣ) :
+    invEquiv p K Ω (toBr n (cupKummerClass n χ a)) =
+      Multiplicative.ofAdd (zmodToQZ n (pairing (p := p) n χ a)) :=
+  invEquiv_toBr_h2MuEquiv _ _
+
+/-- `⟨χ, a⟩ = 0` iff `a` is a norm from the cyclic extension cut out by `χ`. -/
+theorem pairing_eq_zero_iff (χ : LocChar K Ω n) (a : Kˣ) :
+    pairing (p := p) n χ a = 0 ↔ a ∈ normGroup K (charField n χ) := by
+  rw [← carryClass_eq_one_iff n χ (rootK n a) a (rootK_pow n a), ← toBr_cupKummerClass,
+    pairing, ← ofAdd_eq_one, ofAdd_toAdd, MulEquiv.map_eq_one_iff,
+    ← (toBr_injective n (Nat.pos_of_ne_zero (NeZero.ne n))).eq_iff, map_one]
+
+theorem pairing_mul_right (χ : LocChar K Ω n) (a b : Kˣ) :
+    pairing (p := p) n χ (a * b) = pairing (p := p) n χ a + pairing (p := p) n χ b := by
+  apply zmodToQZ_injective (Nat.pos_of_ne_zero (NeZero.ne n))
+  apply Multiplicative.ofAdd.injective
+  rw [map_add, ofAdd_add, ← invEquiv_toBr_cupKummerClass, ← invEquiv_toBr_cupKummerClass,
+    ← invEquiv_toBr_cupKummerClass, ← map_mul, toBr_cupKummerClass, toBr_cupKummerClass,
+    toBr_cupKummerClass]
+  congr 1
+  have hab : ∀ σ : Ω ≃ₐ[K] Ω, σ • (rootK n a * rootK n b) ^ n = (rootK n a * rootK n b) ^ n :=
+    pow_smul_eq_of_pow_eq n (a := a * b) (by rw [mul_pow, rootK_pow, rootK_pow, map_mul])
+  rw [carryClass_congr n χ.1 χ.2 _ hab (by rw [mul_pow, rootK_pow, rootK_pow, rootK_pow,
+    map_mul]), carryClass_mul]
+
+theorem pairing_mul_left (χ χ' : LocChar K Ω n) (a : Kˣ) :
+    pairing (p := p) n (χ * χ') a = pairing (p := p) n χ a + pairing (p := p) n χ' a := by
+  rw [pairing, pairing, pairing, ← toAdd_mul, ← map_mul, cupKummerClass, cupKummerClass,
+    cupKummerClass, ← map_mul, cupKummer_mul_left]
+
+theorem isCyclic_charField (χ : LocChar K Ω n) :
+    IsCyclic (charField n χ ≃ₐ[K] charField n χ) :=
+  isCyclic_of_injective (charBar n χ) (charBar_injective n χ)
+
+variable (p) in
+include hp in
+theorem index_normGroup_charField (χ : LocChar K Ω n) :
+    (normGroup K (charField n χ)).index = Nat.card (charField n χ ≃ₐ[K] charField n χ) := by
+  haveI := isCyclic_charField n χ
+  rw [index_normGroup_of_isCyclic (p := p), IsGalois.card_aut_eq_finrank]
+
+/-- `(Kˣ)ⁿ` pairs trivially with every character. -/
+theorem pairing_eq_zero_of_mem_pow (χ : LocChar K Ω n) {a : Kˣ}
+    (ha : a ∈ (powMonoidHom n : Kˣ →* Kˣ).range) : pairing (p := p) n χ a = 0 := by
+  rw [pairing_eq_zero_iff]
+  obtain ⟨b, rfl⟩ := ha
+  have hdvd := (exists_charBar_eq n χ).1
+  rw [← index_normGroup_charField p] at hdvd
+  obtain ⟨k, hk⟩ := hdvd
+  simp only [powMonoidHom_apply]
+  have e : b ^ n = (b ^ (normGroup K (charField n χ)).index) ^ k := by
+    rw [← pow_mul, ← hk]
+  rw [e]
+  exact Subgroup.pow_mem _ (Subgroup.pow_index_mem _ b) k
+
+/-- **Left non-degeneracy**: a character pairing trivially with `Kˣ` is trivial. -/
+theorem eq_one_of_forall_pairing_eq_zero (χ : LocChar K Ω n)
+    (h : ∀ a : Kˣ, pairing (p := p) n χ a = 0) : χ = 1 := by
+  have htop : normGroup K (charField n χ) = ⊤ :=
+    eq_top_iff.2 fun a _ => (pairing_eq_zero_iff n χ a).1 (h a)
+  have hd : Nat.card (charField n χ ≃ₐ[K] charField n χ) = 1 := by
+    rw [← index_normGroup_charField p, htop, Subgroup.index_top]
+  haveI : Subsingleton (charField n χ ≃ₐ[K] charField n χ) :=
+    (Nat.card_eq_one_iff_unique.1 hd).1
+  apply Subtype.ext
+  ext g : 1
+  rw [← charBar_restrict, Subsingleton.elim (AlgEquiv.restrictNormalHom _ g) 1, map_one]
+  rfl
+
+/-- **Right non-degeneracy**: `a ∉ (Kˣ)ⁿ` pairs non-trivially with some character. -/
+theorem exists_pairing_ne_zero_of_not_mem_pow {a : Kˣ}
+    (ha : a ∉ (powMonoidHom n : Kˣ →* Kˣ).range) :
+    ∃ χ : LocChar K Ω n, pairing (p := p) n χ a ≠ 0 := by
+  haveI : CharZero K := charZero_of_injective_algebraMap (algebraMap ℚ_[p] K).injective
+  haveI := (KummerTheory.finiteKummerQuotients_of_isDiscreteValuationRing (𝒪 p K) K).finiteIndex
+    n (NeZero.ne n)
+  obtain ⟨M, hM⟩ := existence (p := p) (Ω := Ω) ((powMonoidHom n : Kˣ →* Kˣ).range)
+    Subgroup.FiniteIndex.index_ne_zero
+  set x := abRec p M.1 a with hxdef
+  have hx : x ≠ 1 := fun h => ha (by rw [← hM, ← ker_abRec (p := p)]; exact h)
+  letI : CommGroup (M.1 ≃ₐ[K] M.1) :=
+    { (inferInstance : Group (M.1 ≃ₐ[K] M.1)) with
+      mul_comm := fun σ τ => IsMulCommutative.is_comm.comm σ τ }
+  have hexp : ∀ g : M.1 ≃ₐ[K] M.1, g ^ n = 1 := by
+    intro g
+    obtain ⟨b, rfl⟩ := abRec_surjective (p := p) M.1 g
+    rw [← map_pow, ← MonoidHom.mem_ker, ker_abRec (p := p), hM]
+    exact ⟨b, rfl⟩
+  obtain ⟨ψ, hψ⟩ := exists_hom_zmod_ne_one hexp hx
+  set χ0 : (Ω ≃ₐ[K] Ω) →* Multiplicative (ZMod n) :=
+    ψ.comp (AlgEquiv.restrictNormalHom M.1) with hχ0def
+  have hχ0 : IsLocallyConstant χ0 :=
+    ((IsLocallyConstant.iff_continuous _).2
+      (InfiniteGalois.restrictNormalHom_continuous M.1)).comp ψ
+  set χ : LocChar K Ω n := ⟨χ0, hχ0⟩
+  refine ⟨χ, fun h0 => ?_⟩
+  rw [pairing_eq_zero_iff] at h0
+  have hker : ∀ σ : Ω ≃ₐ[K] Ω, AlgEquiv.restrictNormalHom M.1 σ = 1 → χ0 σ = 1 := by
+    intro σ hσ
+    rw [hχ0def, MonoidHom.comp_apply, hσ, map_one]
+  have hLM : charField n χ ≤ M.1 := by
+    intro y hy
+    rw [← InfiniteGalois.fixedField_fixingSubgroup M.1]
+    rintro ⟨σ, hσ⟩
+    have hσ' : σ ∈ (AlgEquiv.restrictNormalHom (F := K) (K₁ := Ω) M.1).ker := by
+      rw [IntermediateField.restrictNormalHom_ker]; exact hσ
+    exact hy ⟨σ, hker σ hσ'⟩
+  haveI := isCyclic_charField n χ
+  haveI : IsAbelianGalois K (charField n χ) := .of_isCyclic K _
+  have h1 : abRec p (charField n χ) a = 1 := by
+    rw [← MonoidHom.mem_ker, ker_abRec (p := p)]; exact h0
+  rw [← resHom_abRec_of_le (p := p) M.1 (charField n χ) hLM a] at h1
+  obtain ⟨σ, hσ⟩ := AlgEquiv.restrictNormalHom_surjective (F := K) (K₁ := M.1) Ω x
+  have hσL : σ ∈ (charField n χ).fixingSubgroup := by
+    rw [← IntermediateField.restrictNormalHom_ker, MonoidHom.mem_ker,
+      ← resHom_restrictNormalHom hLM, hσ]
+    exact h1
+  rw [fixingSubgroup_charField] at hσL
+  apply hψ
+  rw [← hσ]
+  exact hσL
+
+end PadicField
