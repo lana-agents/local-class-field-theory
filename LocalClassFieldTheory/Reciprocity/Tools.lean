@@ -82,6 +82,31 @@ theorem mk0_norm_mem_normGroup_of_e_eq_one (he : e p S T = 1) (u : S) (hu : nrm 
 
 end Tower
 
+section Descent
+
+variable {K S T : Type*} [Field K] [Field S] [Field T] [Algebra ℚ_[p] K] [Algebra ℚ_[p] S]
+  [Algebra ℚ_[p] T] [Algebra K S] [Algebra K T] [IsScalarTower ℚ_[p] K S]
+  [IsScalarTower ℚ_[p] K T] [FiniteDimensional ℚ_[p] K] [FiniteDimensional ℚ_[p] S]
+  [FiniteDimensional ℚ_[p] T]
+
+include hp in
+/-- If `j : S → T` is a `K`-embedding with `f(S/K) = f(T/K)`, then the norm of a uniformiser of
+`T` is the norm of a uniformiser of `S`. -/
+theorem exists_norm_eq_of_algHom (j : S →ₐ[K] T) (hf : f p K S = f p K T) (y : T)
+    (hy : v p y = 1) : ∃ x : S, v p x = 1 ∧ Algebra.norm K x = Algebra.norm K y := by
+  letI : Algebra S T := j.toRingHom.toAlgebra
+  letI : SMul S T := Algebra.toSMul
+  letI : Module S T := Algebra.toModule
+  haveI : IsScalarTower K S T := IsScalarTower.of_algebraMap_eq fun x ↦ (j.commutes x).symm
+  haveI : IsScalarTower ℚ_[p] S T := IsScalarTower.of_algebraMap_eq fun x ↦ by
+    rw [IsScalarTower.algebraMap_apply ℚ_[p] K S, IsScalarTower.algebraMap_apply ℚ_[p] K T]
+    exact (j.commutes _).symm
+  haveI := finiteDimensional_tower (p := p) K S
+  haveI := finiteDimensional_tower (p := p) S T
+  exact ⟨Algebra.norm S y, v_norm_eq_one_of_f_eq (K := K) hf hy, Algebra.norm_norm⟩
+
+end Descent
+
 section NormGroup
 
 variable {K E E' : Type*} [Field K] [Field E] [Field E'] [Algebra K E] [Algebra K E']

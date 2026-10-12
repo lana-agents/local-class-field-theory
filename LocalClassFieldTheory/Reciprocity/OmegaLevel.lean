@@ -65,6 +65,25 @@ theorem resHom_trans {E'' : IntermediateField K Ω} [Normal K E'] (h : E ≤ E')
   rw [resHom_apply, resHom_apply]
   rfl
 
+/-- An automorphism of `A = L ⊔ U` trivial on `L` and on `U` is trivial. -/
+theorem eq_one_of_resHom_eq_one {L U A : IntermediateField K Ω} [Normal K L] [Normal K U]
+    (hA : A = L ⊔ U) (hLA : L ≤ A) (hUA : U ≤ A) (σ : A ≃ₐ[K] A) (hL : resHom hLA σ = 1)
+    (hU : resHom hUA σ = 1) : σ = 1 := by
+  have hfix : ∀ (E : IntermediateField K Ω) [Normal K E] (hEA : E ≤ A),
+      resHom hEA σ = 1 → E ≤ lift (fixedField (Subgroup.zpowers σ)) := by
+    intro E _ hEA h x hx
+    have h1 := resHom_apply hEA σ ⟨x, hx⟩
+    rw [h, AlgEquiv.one_apply] at h1
+    refine (mem_lift (⟨x, hEA hx⟩ : A)).2 ?_
+    rintro ⟨_, j, rfl⟩
+    exact zpow_apply_eq_of_apply_eq (Subtype.ext h1.symm) j
+  have hle := sup_le (hfix L hLA hL) (hfix U hUA hU)
+  ext a
+  have ha : (a : Ω) ∈ L ⊔ U := by rw [← hA]; exact a.2
+  have := (mem_lift a).1 (hle ha) ⟨σ, Subgroup.mem_zpowers _⟩
+  rw [AlgEquiv.one_apply]
+  exact congrArg Subtype.val this
+
 end Res
 
 variable (p K Ω) in
