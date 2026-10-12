@@ -97,7 +97,8 @@ theorem isMulCocycle₂_mul {f f' : G × G → M} (hf : IsMulCocycle₂ f) (hf' 
 
 open scoped Topology in
 /-- The coboundary of a locally constant cochain is locally constant (smooth action). -/
-theorem isLocallyConstant_dx [IsTopologicalGroup G] (hsmooth : ∀ m : M, IsLocallyConstant fun g : G => g • m)
+theorem isLocallyConstant_dx [IsTopologicalGroup G]
+    (hsmooth : ∀ m : M, IsLocallyConstant fun g : G => g • m)
     {x : G → M} (hx : IsLocallyConstant x) : IsLocallyConstant (dx G M x) := by
   rw [IsLocallyConstant.iff_eventually_eq]
   rintro ⟨g, k⟩
@@ -119,7 +120,8 @@ theorem isLocallyConstant_dx [IsTopologicalGroup G] (hsmooth : ∀ m : M, IsLoca
 omit [MulDistribMulAction G M] in
 open Classical in
 /-- Extension by `1` of a locally constant function on an open subgroup. -/
-theorem isLocallyConstant_extend [IsTopologicalGroup G] {N : Subgroup G} (hN : IsOpen (N : Set G)) (x : N → M)
+theorem isLocallyConstant_extend [IsTopologicalGroup G] {N : Subgroup G} (hN : IsOpen (N : Set G))
+    (x : N → M)
     (hx : IsLocallyConstant x) :
     IsLocallyConstant fun g => if hg : g ∈ N then x ⟨g, hg⟩ else 1 := by
   have hNc : IsClosed (N : Set G) := Subgroup.isClosed_of_isOpen N hN
@@ -218,9 +220,9 @@ theorem exists_map_eq_of_res [IsTopologicalGroup G] (φ : G →* Q) (hφ : Conti
     rw [hf₁N _ (hsm g) n hn, smul_one, one_mul, mul_inv_cancel_left] at key
     have hy1 : y (g * n) = f₁ (s (φ g), (s (φ g))⁻¹ * g * n) := by
       simp only [y, hφgn, mul_assoc]
-    show f₁ (g, n) * dx G M y (g, n) = 1
+    change f₁ (g, n) * dx G M y (g, n) = 1
     rw [dx_apply, hyn, smul_one, hy1, ← key]
-    show _ * (_ / _ * f₁ (s (φ g), (s (φ g))⁻¹ * g)) = 1
+    change _ * (_ / _ * f₁ (s (φ g), (s (φ g))⁻¹ * g)) = 1
     mul_abel
   -- Step 3: kill `f₂ (n, h)` by Hilbert 90 for `N`
   have hR₂ : ∀ g k, ∀ n ∈ φ.ker, f₂ (g, k * n) = f₂ (g, k) := by

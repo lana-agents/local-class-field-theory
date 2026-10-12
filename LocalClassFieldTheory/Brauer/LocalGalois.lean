@@ -144,7 +144,8 @@ theorem nrm_sub_le_of_tameChar_eq_one (σ : inertia p K L) (hσ : tameChar σ = 
     simpa [Integers.coe_smul] using h
   have hσπ : (σ : L ≃ₐ[K] L) π = π * w := by
     rw [hwdef, mul_div_cancel₀ _ hπ.ne_zero]
-  have hσx : (σ : L ≃ₐ[K] L) x - x = π ^ k * (w ^ k * ((σ : L ≃ₐ[K] L) u - u) + (w ^ k - 1) * u) := by
+  have hσx : (σ : L ≃ₐ[K] L) x - x =
+      π ^ k * (w ^ k * ((σ : L ≃ₐ[K] L) u - u) + (w ^ k - 1) * u) := by
     rw [hxu, map_mul, map_zpow₀, hσπ, mul_zpow]
     ring
   rw [hσx, nrm_mul, hxu, nrm_mul, hu, mul_one, mul_comm]
@@ -207,7 +208,8 @@ theorem eq_one_of_tameChar_eq_one {σ : inertia p K L} (hσ : tameChar σ = 1) {
   have hbound : nrm p L (∑ i ∈ Finset.range m, ((τ ^ i) d - d)) ≤ c * nrm p L d :=
     nrm_sum_le _ _ (mul_nonneg hc0 (nrm_nonneg _)) fun i _ => hpow i d
   have hd : nrm p L d ≤ c * nrm p L d := by
-    have e : (m : L) * d = -∑ i ∈ Finset.range m, ((τ ^ i) d - d) := eq_neg_of_add_eq_zero_left hzero
+    have e : (m : L) * d = -∑ i ∈ Finset.range m, ((τ ^ i) d - d) :=
+      eq_neg_of_add_eq_zero_left hzero
     have := congrArg (nrm p L) e
     rw [nrm_mul, hmnrm, one_mul, nrm_neg] at this
     exact this.trans_le hbound

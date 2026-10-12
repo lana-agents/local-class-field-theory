@@ -260,6 +260,33 @@ theorem map_mk (φ : G' →* G) (hφ : Continuous φ) (ψ : M →* M')
     (h : ∀ (g : G') (m : M), ψ (φ g • m) = g • ψ m) (f : cocycles G M) :
     map φ hφ ψ h (mk f) = mk (cocyclesMap φ hφ ψ h f) := rfl
 
+/-- Transport of `H²` along an isomorphism `e : G' ≃* G` of topological groups compatible with
+the actions on `M`. -/
+def mapEquiv {G' : Type*} [Group G'] [TopologicalSpace G'] [MulDistribMulAction G' M]
+    (e : G' ≃* G) (he : Continuous e) (he' : Continuous e.symm)
+    (h : ∀ (g : G') (m : M), e g • m = g • m) : ContH2 G M ≃* ContH2 G' M where
+  toFun := map (e : G' →* G) he (MonoidHom.id M) h
+  invFun := map (e.symm : G →* G') he' (MonoidHom.id M) (fun g m => by
+    have := h (e.symm g) m
+    rw [MulEquiv.apply_symm_apply] at this
+    exact this.symm)
+  left_inv x := by
+    induction x using induction_on with | h f => ?_
+    simp only [map_mk]
+    congr 1
+    exact cocycles_ext fun a b => by simp
+  right_inv x := by
+    induction x using induction_on with | h f => ?_
+    simp only [map_mk]
+    congr 1
+    exact cocycles_ext fun a b => by simp
+  map_mul' := map_mul _
+
+theorem card_mapEquiv {G' : Type*} [Group G'] [TopologicalSpace G'] [MulDistribMulAction G' M]
+    (e : G' ≃* G) (he : Continuous e) (he' : Continuous e.symm)
+    (h : ∀ (g : G') (m : M), e g • m = g • m) : Nat.card (ContH2 G' M) = Nat.card (ContH2 G M) :=
+  (Nat.card_congr (mapEquiv e he he' h).toEquiv).symm
+
 end Map
 
 /-! ### Injectivity of inflation -/
