@@ -149,7 +149,8 @@ theorem res_infl_cupClass [IsGalois K Ω] {m : ℕ} (hm : 0 < m) (a : Kˣ) :
     res K' (infl (unramifiedOfDegree p K Ω (f p K K' * m))
       (cupClass (frobT p K Ω (f p K K' * m)) (mem_zpowers_frob _) a)) =
     infl (unramifiedOfDegree p K' Ω m)
-      (cupClass (frobT p K' Ω m) (mem_zpowers_frob _) (Units.map (algebraMap K K' : K →* K') a)) := by
+      (cupClass (frobT p K' Ω m) (mem_zpowers_frob _)
+        (Units.map (algebraMap K K' : K →* K') a)) := by
   rw [cupClass, cupClass, infl_mk, infl_mk, res_mk]
   exact congrArg mk (cocycles_ext fun σ τ => res_infl_cup_apply K' hm a σ τ)
 
