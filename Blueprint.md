@@ -124,17 +124,24 @@ Notation: `Ω` an algebraic closure of `K`, `K_t ⊆ Ω` the unramified extensio
   `f_fixedField_tau_le`, `exists_v_eq_one_tau`, `rhoF_norm_tau`) Neukirch's formula: for a Frobenius lift `σ̃ = (σ, φ^k) ∈ Gal(M_t/K)`
   (`k ≥ 1`) with fixed field `Σ`, `ρ_E(N_{Σ/K} π_Σ) = σ̃|_E` (coset computation
   `N_{Σ/K} = ∏_{j<k} φ^j ∘ N_{M_t/K_t}` and `φη/η = π_Σ^{σ⁻¹-1}` for `η = ∏_{j<k} φ^j(π_Σ/π_M)`).
-* D8 **planned** Neukirch map `r_L : Gal(L/K) → Kˣ/N Lˣ` for finite Galois `L`, independent of the
-  uniformiser, compatible with quotients `L' ⊆ L`.
-* D9 **done at a fixed standard level** (`Reciprocity/CyclicLevel.lean`:
-  `comap_rhoF_fixingSubgroup : L.fixingSubgroup.comap ρ_F = normGroup K L` for cyclic
-  `L ⊆ E = Fix(1, φ^N) = M K_N ⊆ F`). Remaining: realise every cyclic `L ⊆ Ω` inside such a
-  level (fixed field of a Frobenius lift in `L K_N`), and show that `ρ_F|_L` does not depend
-  on the level (D8: compare via Neukirch values in `L K_s`). cyclic `L/K`: `L ⊆ M K_N` (fixed field of a Frobenius lift); `r_L` is an
-  isomorphism (kernel computation + class field axiom).
-* D10 **planned** abelian `L/K`: `Kˣ/⋂_χ N L_χˣ ↪ ∏_χ Gal(L_χ/K)` over cyclic subextensions, `r_L`
-  injective homomorphism into it, second inequality ⇒ `N Lˣ = ⋂_χ N L_χˣ` and
-  `r_L : Gal(L/K) ≃ Kˣ/N Lˣ`.
+* D8 **done** (`Reciprocity/OmegaLevel.lean`, `LevelNeukirch.lean`, `CyclicRec.lean`:
+  `StdLevel`, `StdLevel.rho_res_eq_one_iff`, `StdLevel.rho_norm_fixedField`,
+  `StdLevel.rho_norm_frobLift`, `StdLevel.rho_res_eq_of_le`) levels inside `Ω`
+  (`F = M ⊔ K_t`); Neukirch's formula for Frobenius lifts `τ` in any finite Galois `D ⊇ L ⊔ K_t`
+  (lift `τ|_{L ⊔ K_t}` to `(g, φ)` in `F`, compare uniformisers of `Fix τ|_A ⊆ Fix(g, φ)`
+  (`f = 1`), `A / Fix` unramified so units are norms); level independence: compare `ρ_F` and
+  `ρ_{F'}` on `x` with `v(x) = 1` via the Neukirch value of `ρ_{F'}(x)`.
+* D9 **done** (`Reciprocity/CyclicLevel.lean`: `comap_rhoF_fixingSubgroup` at a fixed level;
+  `Embedding.lean`: `exists_totRam_le_sup`; `CyclicRec.lean`:
+  `CycEmb`, `cycRec`, `ker_cycRec`, `cycRec_surjective`, `cycRec_eq_of_adapted`,
+  `cycRec_norm_frobLift`) every cyclic `L ⊆ Ω` lies in `M ⊔ K_s` with `M` the fixed field of a
+  Frobenius lift in `L ⊔ K_n` (cyclic, totally ramified); `cycRec L = ρ_F|_L`.
+* D10 **done** (`Reciprocity/Abelian.lean`: `exists_isCyclic_quotient`, `resCyc_injective`,
+  `resCyc_mem_range`, `range_recCyc_and_ker`, `abRec`, `ker_abRec`, `abRec_surjective`,
+  `abRecEquiv`, `resHom_abRec`, `resHom_abRec_of_le`; `SecondInequality.lean`:
+  `index_normGroup_pos_le`) abelian `L`: cyclic subextensions separate `Gal(L/K)` (characters);
+  `Φ = (cycRec E)_E` maps Neukirch values of Frobenius lifts in `L ⊔ K_s` to `res(τ|_L)`, these
+  generate, and the second inequality gives `Φ(Kˣ) = res(Gal(L/K))`, `ker Φ = N Lˣ`.
 
 ## E. The Artin map and its characterisation
 

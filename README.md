@@ -4,8 +4,9 @@ Local class field theory for mixed-characteristic local fields.
 
 ## Status
 
-**In progress.** No reciprocity map exists yet: the Artin map, local
-reciprocity, and the existence theorem are **not** formalised. What is proved (no `sorry`, no
+**In progress.** Local reciprocity `Kˣ/N_{L/K} Lˣ ≃ Gal(L/K)` is formalised for every finite
+abelian `L` inside a fixed algebraic closure `Ω`; the global Artin map `Kˣ → Gal(K^ab/K)` and the
+existence theorem are **not** formalised yet. What is proved (no `sorry`, no
 `axiom`), all in the concrete setting of fields `K` with `[Algebra ℚ_[p] K]
 [FiniteDimensional ℚ_[p] K]` (see `Blueprint.md` for the route and lemma-level status):
 
@@ -37,8 +38,15 @@ reciprocity, and the existence theorem are **not** formalised. What is proved (n
   `ρ_F⁻¹(Gal(F/L)) = N_{L/K} Lˣ` (`PadicField.comap_rhoF_fixingSubgroup`), i.e. local
   reciprocity `Kˣ/N Lˣ ≃ Gal(L/K)` for such `L`.
 
-Not yet done: independence of the standard level and the reciprocity map for arbitrary finite
-abelian `L ⊆ Ω`, the Artin map `Kˣ → Gal(K^ab/K)` and its characterising properties (norm
+* Reciprocity inside `Ω` (`Reciprocity/{OmegaLevel,LevelNeukirch,Embedding,CyclicRec,Abelian}.lean`):
+  every cyclic `L ⊆ Ω` lies in a standard level (`PadicField.exists_totRam_le_sup`); the
+  restriction of `ρ_F` to `L` does not depend on the level (`PadicField.StdLevel.rho_res_eq_of_le`);
+  the cyclic reciprocity map `PadicField.cycRec L` (kernel `N Lˣ`, surjective, Neukirch's formula
+  `PadicField.cycRec_norm_frobLift`); for finite abelian `L ⊆ Ω` the reciprocity map
+  `PadicField.abRec L : Kˣ →* Gal(L/K)` with kernel `N_{L/K} Lˣ` (`PadicField.ker_abRec`),
+  surjective, compatible with restriction, i.e. `PadicField.abRecEquiv : Kˣ ⧸ N Lˣ ≃* Gal(L/K)`.
+
+Not yet done: the Artin map `Kˣ → Gal(K^ab/K)` and its characterising properties (norm
 compatibility, units onto inertia), and the existence theorem.
 
 No lana-agents repository depends on this one: `iut` and its pinned lana-agents
