@@ -203,4 +203,142 @@ theorem algebraMap_norm_tau (y : fixedField (Subgroup.zpowers (tau hM hU hdeg g 
   change g' ((stdFrob hM hU hdeg ^ j) (y : F)) = _
   rw [std_comm hM hU hdeg]
 
+
+omit hk hke [FiniteDimensional U F] [DecidableEq (F ≃ₐ[K] F)] hM hU hdeg in
+/-- Telescoping: `a(∏_{j<k} a^j ξ) / ∏_{j<k} a^j ξ = a^k ξ / ξ`. -/
+theorem uMap_prod_pow_div {R : Type*} [Field R] [Algebra R F] (a : F ≃ₐ[R] F) (ξ : Fˣ)
+    (n : ℕ) : uMap a (∏ j ∈ Finset.range n, uMap (a ^ j) ξ) / ∏ j ∈ Finset.range n,
+      uMap (a ^ j) ξ = uMap (a ^ n) ξ / ξ := by
+  rw [map_prod, ← Finset.prod_div_distrib]
+  have : ∀ j, uMap a (uMap (a ^ j) ξ) = uMap (a ^ (j + 1)) ξ := fun j ↦ by
+    ext; simp [pow_succ', AlgEquiv.mul_apply]
+  simp_rw [this]
+  rw [Finset.prod_range_div (fun j ↦ uMap (a ^ j) ξ) n]
+  congr 1
+
+
+omit hk hke [FiniteDimensional U F] [DecidableEq (F ≃ₐ[K] F)] hM hU hdeg in
+theorem v_galois {R : Type*} [Field R] [Algebra ℚ_[p] R] [Algebra R F]
+    [IsScalarTower ℚ_[p] R F] (a : F ≃ₐ[R] F) (x : F) : v p (a x) = v p x := by
+  by_cases hx : x = 0
+  · simp [hx]
+  exact (nrm_eq_iff_v_eq ((map_ne_zero_iff _ a.injective).2 hx) hx).1
+    (nrm_algEquiv_tower (p := p) R F a x)
+
+omit hk hke [FiniteDimensional U F] [DecidableEq (F ≃ₐ[K] F)] hM hU hdeg in
+theorem v_prod {ι : Type*} (t : Finset ι) (f : ι → F) (hf : ∀ i, f i ≠ 0) :
+    v p (∏ i ∈ t, f i) = ∑ i ∈ t, v p (f i) := by
+  classical
+  induction t using Finset.induction_on with
+  | empty => simp
+  | insert a t ha ih =>
+    rw [Finset.prod_insert ha, Finset.sum_insert ha,
+      v_mul (hf a) (Finset.prod_ne_zero_iff.2 fun i _ ↦ hf i), ih]
+
+omit hk hke [FiniteDimensional U F] [DecidableEq (F ≃ₐ[K] F)] in
+theorem norm_U_galois_M (h : F ≃ₐ[M] F) (z : F) :
+    algebraMap U F (Algebra.norm U (h z)) = h (algebraMap U F (Algebra.norm U z)) := by
+  haveI := finiteDimensional_tower (p := p) U F
+  haveI : IsGalois U F := IsGalois.tower_top_of_isGalois K U F
+  rw [Algebra.norm_eq_prod_automorphisms, Algebra.norm_eq_prod_automorphisms, map_prod]
+  exact Finset.prod_congr rfl fun g' _ ↦ std_comm hM hU hdeg g' h z
+
+variable (s : M ≃ₐ[K] M) (hs : ∀ g, g ∈ Subgroup.zpowers s)
+  (he : Module.finrank K M ∣ Module.finrank K U)
+
+/-- **Neukirch's formula**: if `y ∈ Σ = Fix(τ)` has `v_F(y) = 1` then `ρ_F(N_{Σ/K} y) = τ`. -/
+theorem rhoF_norm_tau (y : fixedField (Subgroup.zpowers (tau hM hU hdeg g k)))
+    (hy : v p (y : F) = 1) (hy0 : Algebra.norm K y ≠ 0) :
+    rhoF hM hU hdeg s hs he (Units.mk0 _ hy0) = tau hM hU hdeg g k := by
+  haveI := finiteDimensional_tower (p := p) K F
+  haveI : IsGalois U F := IsGalois.tower_top_of_isGalois K U F
+  set φ := stdFrob hM hU hdeg
+  set sU := stdGen hM hU hdeg s
+  have hyF : (y : F) ≠ 0 := by
+    intro h; rw [h] at hy; simp [v, wval] at hy
+  set Y : Fˣ := Units.mk0 _ hyF
+  have hfFU : f p U F = 1 := by
+    have h1 := e_mul_f (p := p) (K := U) (L := F)
+    rw [std_e_U hM hU hdeg] at h1
+    exact (Nat.mul_eq_left Module.finrank_pos.ne').1 h1
+  have hNU0 : Algebra.norm U (y : F) ≠ 0 := Algebra.norm_ne_zero_iff.2 hyF
+  have hnorm := algebraMap_norm_tau hM hU hdeg g k hk hke y
+  -- `v_K (N y) = k`
+  have hvN : v p (Algebra.norm K y) = k := by
+    have h1 := v_algebraMap (p := p) (K := K) (L := F) (Algebra.norm K y)
+    rw [hnorm, (std_e hM hU hdeg).1, v_prod _ _ fun j ↦ (map_ne_zero_iff _ (φ ^ j).injective).2
+      ((map_ne_zero_iff _ (algebraMap U F).injective).2 hNU0)] at h1
+    simp_rw [v_galois, v_algebraMap (p := p) (K := U) (L := F), std_e_U hM hU hdeg,
+      std_finrank_U hM hU hdeg, v_norm hyF, hfFU, hy] at h1
+    simp only [Finset.sum_const, Finset.card_range, nsmul_eq_mul] at h1
+    have he0 : (Module.finrank K M : ℤ) ≠ 0 := by
+      haveI := finiteDimensional_tower (p := p) K M
+      exact_mod_cast Module.finrank_pos.ne'
+    push_cast at h1
+    have : (Module.finrank K M : ℤ) * (k : ℤ) = (Module.finrank K M : ℤ) * v p (Algebra.norm K y)
+      := by linear_combination h1
+    exact (mul_left_cancel₀ he0 this).symm
+  set X : Kˣ := Units.mk0 _ hy0
+  set ϖ : Kˣ := stdVarpi (p := p) (K := K) (M := M)
+  have hπ := uniformizer_spec (p := p) (K := M)
+  set πM : Fˣ := Units.map (algebraMap M F : M →* F) (Units.mk0 _ hπ.ne_zero)
+  set ξ : Fˣ := Y / πM
+  set η : Fˣ := ∏ j ∈ Finset.range k, uMap (φ ^ j) ξ
+  obtain ⟨m, hm⟩ : ∃ m : ℕ, sU ^ m = g⁻¹ :=
+    mem_powers_iff_mem_zpowers.2 (stdGen_generates hM hU hdeg s hs g⁻¹)
+  set z : Fˣ := ∏ i ∈ Finset.range m, uMap (sU ^ i) Y
+  -- `τ` fixes `y`
+  have hτy : g ((φ ^ k) (y : F)) = (y : F) :=
+    y.2 ⟨tau hM hU hdeg g k, Subgroup.mem_zpowers _⟩
+  have hφky : (φ ^ k) (y : F) = g⁻¹ (y : F) := by
+    have := congrArg g.symm hτy
+    rw [AlgEquiv.symm_apply_apply] at this
+    rw [AlgEquiv.aut_inv, this]
+  have hφπ : ∀ j : ℕ, (φ ^ j) (πM : F) = πM := fun j ↦ (φ ^ j).commutes _
+  have hφK : ∀ (j : ℕ) (c : K), (φ ^ j) (algebraMap K F c) = algebraMap K F c := fun j c ↦ by
+    rw [IsScalarTower.algebraMap_apply K M F]; exact (φ ^ j).commutes _
+  have hNπ : algebraMap U F (Algebra.norm U (πM : F)) = algebraMap K F (ϖ : K) := by
+    rw [show (πM : F) = algebraMap M F (uniformizer p M) from rfl, std_norm_M hM hU hdeg,
+      ← IsScalarTower.algebraMap_apply]
+    rfl
+  have hdata : PsiData hM hU hdeg s (unitPart hM X) η z := by
+    refine ⟨?_, ?_⟩
+    · apply (algebraMap U F).injective
+      have hj : ∀ j ∈ Finset.range k, algebraMap U F (Algebra.norm U ((uMap (φ ^ j) ξ : Fˣ) : F))
+          = (φ ^ j) (algebraMap U F (Algebra.norm U (y : F))) / algebraMap K F (ϖ : K) := by
+        intro j _
+        rw [coe_uMap, norm_U_galois_M hM hU hdeg, Units.val_div_eq_div_val, norm_div',
+          map_div₀, map_div₀, hNπ, hφK]
+        rfl
+      rw [show (η : F) = ∏ j ∈ Finset.range k, ((uMap (φ ^ j) ξ : Fˣ) : F) from
+        Units.coe_prod _ _, map_prod, map_prod, Finset.prod_congr rfl hj,
+        Finset.prod_div_distrib, ← hnorm, Finset.prod_const, Finset.card_range,
+        unitPart_apply, ← IsScalarTower.algebraMap_apply]
+      simp only [Units.val_mul, Units.val_zpow_eq_zpow_val, X, Units.val_mk0, hvN]
+      rw [map_mul, map_zpow₀, zpow_neg, zpow_natCast, div_eq_mul_inv]
+    · rw [uMap_prod_pow_div φ ξ k, uMap_prod_pow_div sU Y m, hm]
+      ext
+      simp only [Units.val_div_eq_div_val, coe_uMap, ξ, map_div₀, hφπ, Y, Units.val_mk0, hφky]
+      have h1 := πM.ne_zero
+      field_simp
+  -- `v(z) = m`
+  have hvz : v p (z : F) = m := by
+    rw [show (z : F) = ∏ i ∈ Finset.range m, ((uMap (sU ^ i) Y : Fˣ) : F) from
+      Units.coe_prod _ _, v_prod _ _ fun i ↦ Units.ne_zero _]
+    simp only [coe_uMap, v_galois, Y, Units.val_mk0, hy, Finset.sum_const, Finset.card_range,
+      nsmul_eq_mul, mul_one]
+  have hpsi := psi_eq_of_psiData hM hU hdeg s hs he hdata
+  rw [hvz] at hpsi
+  -- conclusion
+  rw [rhoF_apply, hpsi]
+  change stdProd hM hU hdeg (_, φ ^ v p (Algebra.norm K y)) = stdProd hM hU hdeg (g, φ ^ k)
+  rw [hvN]
+  congr 2
+  · apply (MulEquiv.ofBijective _ (stdResM_bijective hM hU hdeg)).injective
+    rw [MulEquiv.apply_symm_apply]
+    change s ^ (-(m : ℤ)) = stdResM g
+    have : stdResM (K := K) (sU ^ m) = s ^ m := by rw [map_pow, stdResM_stdGen]
+    rw [hm, map_inv] at this
+    rw [zpow_neg, zpow_natCast, ← this, inv_inv]
+
 end PadicField
