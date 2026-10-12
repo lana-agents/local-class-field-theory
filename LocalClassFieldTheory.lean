@@ -28,6 +28,7 @@ import LocalClassFieldTheory.PadicField.UnramifiedExistence
 import LocalClassFieldTheory.Reciprocity.Abelian
 import LocalClassFieldTheory.Reciprocity.Artin
 import LocalClassFieldTheory.Reciprocity.ArtinContinuous
+import LocalClassFieldTheory.Reciprocity.ArtinInertia
 import LocalClassFieldTheory.Reciprocity.BaseChange
 import LocalClassFieldTheory.Reciprocity.Conjugation
 import LocalClassFieldTheory.Reciprocity.CyclicLevel
