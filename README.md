@@ -111,7 +111,10 @@ with `μ_n ⊆ μ_m`, `ζ ↦ ζ^{m/n}` and restriction (`PadicField.h2MuEquiv_h
 `PadicField.h2MuEquiv_h2MuPow`, `PadicField.h2MuEquiv_resMu`). Corestriction `ContH2.cor`
 (`cor ∘ res = [G:H]`, `ContH2.cor_res`) and `Brauer.corBr : Br(K') → Br(K)` with
 `inv_K ∘ cor = inv_{K'}` (`PadicField.invEquiv_corBr`). For discrete `G`, `ContH2 G M` agrees with
-Mathlib's `groupCohomology.H2` (`ContH2.addEquivH2`).
+Mathlib's `groupCohomology.H2` (`ContH2.addEquivH2`). For cyclic `L/K` with generator `σ`,
+`inv(infl cup_σ(a)) = k/[L:K]` when `abRec_L(a) = σ^k` (`PadicField.invEquiv_infl_cupClass`), and the
+fundamental class inverts the reciprocity map: `relCyclicEquiv σ u_{L/K} = (abRecEquiv L)⁻¹ σ`
+(`PadicField.relCyclicEquiv_fundClass`).
 
 Not done (outside the scope of this repository's goals, possible future work): the explicit
 decomposition `Gal(K^ab/K) ≅ 𝒪ˣ × Ẑ` (needs the profinite completion of `𝒪ˣ × ℤ` and

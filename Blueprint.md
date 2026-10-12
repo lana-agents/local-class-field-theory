@@ -361,5 +361,11 @@ Absolute Brauer group (`Brauer/Absolute.lean`, `Brauer/Unramified.lean`), `Ω/K`
 * H16 **done** (`Brauer/MathlibBridge.lean`): `ContH2.addEquivH2 : Additive (ContH2 G M) ≃+
   groupCohomology.H2 (Rep.ofMulDistribMulAction G M)` for discrete `G` (`G M : Type`), so the relative
   Brauer groups agree with Mathlib's `H²(Gal(L/K), Lˣ)`.
+* H17 **done** (`Brauer/FundamentalClass.lean`): for a cyclic `L ⊆ Ω` with generator `σ`:
+  `PadicField.genChar`/`PadicField.genLocChar` (`χ_σ : σ^k ↦ k`), `PadicField.carryClass_genLocChar`,
+  **`PadicField.invEquiv_infl_cupClass`** (`inv(infl cup_σ(a)) = k/d` for `abRec_L(a) = σ^k`),
+  `PadicField.cupClass_eq_fundClass`, **`PadicField.relCyclicEquiv_fundClass`**
+  (`relCyclicEquiv σ u_{L/K} = (abRecEquiv L)⁻¹ σ`: the fundamental class inverts reciprocity — the
+  degree `-2 → 0` Tate–Nakayama statement for cyclic `L/K`).
 * Not done: duality for general finite Galois modules; Euler characteristic formula; `H²(K, ℤ/n)`;
   the Tate–Nakayama isomorphism in all degrees.
