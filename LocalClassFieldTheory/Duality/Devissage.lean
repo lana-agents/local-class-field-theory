@@ -311,28 +311,39 @@ theorem dvd_exponent_of_equiv {ι M : Type*} [Monoid M] {n : ι → ℕ}
       using (ZMod.addOrderOf_one (n i)).symm
   exact this ▸ Monoid.order_dvd_exponent _
 
-include hp in
-/-- **The Euler characteristic formula for finite modules with trivial action**, provided `K`
-contains the `e`-th roots of unity, `e = exp(M)`: by the structure theorem `M ≃ ∏ ℤ/n_i` with
-`n_i ∣ e`, and `ℤ/n_i` is handled by `PadicField.eulerCharacteristicFor_trivZMod`. -/
-theorem eulerCharacteristicFor_of_trivial (M : Type*) [CommGroup M] [Finite M]
+/-- **Dévissage for modules with trivial action**: if the Euler characteristic formula holds
+for `ℤ/n` for every `n > 1` dividing `e = exp(M)`, it holds for every finite `M` with trivial
+action (structure theorem: `M ≃ ∏ ℤ/n_i` with `n_i ∣ e`). -/
+theorem eulerCharacteristicFor_of_trivial' (M : Type*) [CommGroup M] [Finite M]
     [TopologicalSpace M] [DiscreteTopology M] [IsTopologicalGroup M]
     [MulDistribMulAction (Ω ≃ₐ[K] Ω) M] [SmoothAction (Ω ≃ₐ[K] Ω) M]
     (htriv : ∀ (g : Ω ≃ₐ[K] Ω) (m : M), g • m = m)
-    [HasEnoughRootsOfUnity K (Monoid.exponent M)] : EulerCharacteristicFor p K Ω M := by
+    (h : ∀ (n : ℕ) [NeZero n], 1 < n → n ∣ Monoid.exponent M →
+      EulerCharacteristicFor p K Ω (TrivZMod n)) : EulerCharacteristicFor p K Ω M := by
   obtain ⟨ι, _, n, hn, ⟨e⟩⟩ := CommGroup.equiv_prod_multiplicative_zmod_of_finite M
-  haveI : NeZero (Monoid.exponent M) := ⟨Monoid.exponent_ne_zero_of_finite⟩
   let eι := Fintype.equivFin ι
   let m : Fin (Fintype.card ι) → ℕ := fun j => n (eι.symm j)
   haveI : ∀ j, NeZero (m j) := fun j => ⟨by have := hn (eι.symm j); simp only [m]; omega⟩
-  have hm : ∀ j, EulerCharacteristicFor p K Ω (TrivZMod (m j)) := fun j => by
-    haveI := HasEnoughRootsOfUnity.of_dvd K (dvd_exponent_of_equiv e (eι.symm j))
-    exact eulerCharacteristicFor_trivZMod (HasEnoughRootsOfUnity.natCard_rootsOfUnity K _)
+  have hm : ∀ j, EulerCharacteristicFor p K Ω (TrivZMod (m j)) := fun j =>
+    h (m j) (hn (eι.symm j)) (dvd_exponent_of_equiv e (eι.symm j))
   have hP := eulerCharacteristicFor_pi (Fintype.card ι) (fun j => TrivZMod (m j)) hm
   let τ' : ((i : ι) → Multiplicative (ZMod (n i))) ≃* ∀ j, TrivZMod (m j) :=
     { Equiv.piCongrLeft' (fun i => Multiplicative (ZMod (n i))) eι with
       map_mul' := fun _ _ => rfl }
   exact eulerCharacteristicFor_of_equiv (e.trans τ').symm
     (fun g x => by rw [htriv]; rfl) hP
+
+include hp in
+/-- **The Euler characteristic formula for finite modules with trivial action**, provided `K`
+contains the `e`-th roots of unity, `e = exp(M)`. -/
+theorem eulerCharacteristicFor_of_trivial (M : Type*) [CommGroup M] [Finite M]
+    [TopologicalSpace M] [DiscreteTopology M] [IsTopologicalGroup M]
+    [MulDistribMulAction (Ω ≃ₐ[K] Ω) M] [SmoothAction (Ω ≃ₐ[K] Ω) M]
+    (htriv : ∀ (g : Ω ≃ₐ[K] Ω) (m : M), g • m = m)
+    [HasEnoughRootsOfUnity K (Monoid.exponent M)] : EulerCharacteristicFor p K Ω M := by
+  haveI : NeZero (Monoid.exponent M) := ⟨Monoid.exponent_ne_zero_of_finite⟩
+  refine eulerCharacteristicFor_of_trivial' M htriv fun n _ _ hdvd => ?_
+  haveI := HasEnoughRootsOfUnity.of_dvd K hdvd
+  exact eulerCharacteristicFor_trivZMod (HasEnoughRootsOfUnity.natCard_rootsOfUnity K _)
 
 end PadicField

@@ -35,6 +35,7 @@ import LocalClassFieldTheory.Duality.LongExact
 import LocalClassFieldTheory.Duality.MuN
 import LocalClassFieldTheory.Duality.Statements
 import LocalClassFieldTheory.Duality.Transport
+import LocalClassFieldTheory.Duality.ZModPrime
 import LocalClassFieldTheory.Galois.CosetNorm
 import LocalClassFieldTheory.Galois.ZHat
 import LocalClassFieldTheory.Herbrand.Basic
