@@ -18,6 +18,7 @@ import LocalClassFieldTheory.Brauer.OrderBound
 import LocalClassFieldTheory.Brauer.Relative
 import LocalClassFieldTheory.Brauer.Restriction
 import LocalClassFieldTheory.Brauer.TateNakayama
+import LocalClassFieldTheory.Brauer.TateNakayamaDegrees
 import LocalClassFieldTheory.Brauer.Unramified
 import LocalClassFieldTheory.ClassFieldAxiom.Approximation
 import LocalClassFieldTheory.ClassFieldAxiom.Axiom
@@ -27,9 +28,11 @@ import LocalClassFieldTheory.ClassFieldAxiom.Hilbert90
 import LocalClassFieldTheory.ClassFieldAxiom.Lattice
 import LocalClassFieldTheory.ClassFieldAxiom.Units
 import LocalClassFieldTheory.ClassFieldAxiom.Vanishing
+import LocalClassFieldTheory.Duality.Cartier
 import LocalClassFieldTheory.Duality.CupProduct
 import LocalClassFieldTheory.Duality.MuN
 import LocalClassFieldTheory.Duality.Statements
+import LocalClassFieldTheory.Duality.Transport
 import LocalClassFieldTheory.Galois.CosetNorm
 import LocalClassFieldTheory.Galois.ZHat
 import LocalClassFieldTheory.Herbrand.Basic

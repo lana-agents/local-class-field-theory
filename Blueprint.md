@@ -397,5 +397,52 @@ Absolute Brauer group (`Brauer/Absolute.lean`, `Brauer/Unramified.lean`), `Ω/K`
   product are not formalised.
 * H16 note: `ContH2.addEquivH2` is only for `G M : Type` because Mathlib's `groupCohomology` needs
   `Rep.{u,u,u} k G` and `k = ℤ : Type` (documented in `Brauer/MathlibBridge.lean`).
-* Not done: duality for general finite Galois modules; Euler characteristic formula; `H²(K, ℤ/n)`;
-  the Tate–Nakayama isomorphism in all degrees (and for non-abelian `G`).
+* H20 **done** index of `n`-th powers (`PadicField/PowIndex.lean`, `PadicField/PowIndexPadic.lean`).
+  Group theory: `PowIndex.index_range_pow_mul_card` (`[A : Aⁿ]·#H[n] = [H : Hⁿ]·#A[n]` for `H` of
+  finite index). Congruence subgroups `PowIndex.onePlus c = 1 + cR`: `PowIndex.map_pow_onePlus`
+  (`(1 + n d R)ⁿ = 1 + n² d R` for `d ∈ 𝔪`, binomial identity `KummerTheory.one_add_pow_eq` and the
+  `𝔪`-adic fixed point lemma), `PowIndex.relIndex_onePlus` (`[1 + cR : 1 + cdR] = #(R/dR)`, `d ∣ c`,
+  via `1 + ca ↦ a mod d`), `PowIndex.exists_onePlus_inf_ker` (no torsion in `1 + ϖ^j R`, Krull),
+  **`PowIndex.index_range_pow_units`** (`[Rˣ : (Rˣ)ⁿ] = #(R/nR)·#μ_n(R)`), `PowIndex.unitsProdEquiv`
+  (`Kˣ ≅ Rˣ × ℤ`), **`PowIndex.index_range_pow_field`**. `p`-adic: `PadicField.v_natCast`
+  (`v_K(n) = e·v_p(n)`), `PadicField.q_eq_pow` (`q = p^f`), `PadicField.card_quot_natCast`
+  (`#(𝒪/n𝒪) = p^{v_p(n)[K:ℚ_p]}`, `e f = [K:ℚ_p]`), **`PadicField.index_range_pow`**.
+* H21 **done** cup products and statements (`Duality/CupProduct.lean`, `Duality/Statements.lean`,
+  `Duality/Transport.lean`). `Brauer.GPairing` (equivariant bilinear `M × N → P`),
+  `Brauer.SmoothAction` (open stabilisers), `Brauer.H0` (`M^G`), `Brauer.cup02`, `Brauer.cup20`,
+  `Brauer.cup11` (cocycle `(x ∪ y)(g,h) = e(x(g), g•y(h))`, coboundary formulas
+  `Brauer.cup11Fun_coboundary_left/right`), **`Brauer.cup11_swap`** (`x ∪ y = (y ∪' x)⁻¹`, coboundary of
+  `g ↦ e(x(g), y(g))⁻¹`). Cartier dual `Brauer.CartierDual n Ω M = Hom(M, μ_n)` with
+  `(g•φ)(m) = g•φ(g⁻¹m)`, `Brauer.CartierDual.smoothAction`, `Brauer.CartierDual.evalPairing`.
+  `Brauer.PerfectDeg0/1/2 χ e` (bijectivity of `H^i(M) → Hom(H^{2-i}(N), ℤ/n)`),
+  `PadicField.invMu` (`h2MuEquiv`), **`PadicField.TateDualityFor`**, **`PadicField.LocalTateDuality`**,
+  **`PadicField.EulerCharacteristicFor`**, **`PadicField.LocalEulerCharacteristic`** (statements).
+  Transport along `τ : N ≃ N'`: `Brauer.h0Map/h1Map/h2Map` (bijective), `Brauer.cup02_h2Map`,
+  `Brauer.cup11_h1Map`, `Brauer.cup20_h0Map`, `Brauer.perfectDeg0/1/2_iff_of_equiv`.
+* H22 **done** `μ_n` and `ℤ/n` (`Duality/MuN.lean`, `Duality/Cartier.lean`). `Brauer.TrivZMod n`
+  (trivial action), `Brauer.powPairing` (`(k, ζ) ↦ ζ^k`), `Brauer.h1TrivEquiv`
+  (`H¹(K, ℤ/n) ≃ LocChar`), `Brauer.cup11_powPairing` (= `cupH1`), `Brauer.card_hom_zmod_le`
+  (`#Hom(A, ℤ/n) ≤ #A`, Pontryagin duality `AddChar.card_eq`), `Brauer.bijective_pow_comp`,
+  `Brauer.bijective_pow_eval(')`. Duality: `PadicField.perfectDeg0_trivZMod`,
+  `PadicField.perfectDeg1_trivZMod`, `PadicField.perfectDeg1_mu`, `PadicField.perfectDeg2_mu`
+  (degree one: injectivity from `eq_one_of_forall_pairingH1_eq_zero(')` + `cup11_swap`, then
+  counting `PadicField.card_h1_trivZMod_eq`). Cartier form: `Brauer.dualTrivEquiv`
+  (`μ_n ≃ Hom(ℤ/n, μ_n)`), `PadicField.dualMuEquiv` (`ℤ/n ≃ Hom(μ_n, μ_n)`),
+  `PadicField.perfectDeg0/1_eval_trivZMod`, `PadicField.perfectDeg1/2_eval_mu`. If
+  `#μ_n(K) = n`: `PadicField.trivZModMuEquiv` equivariant, `PadicField.h2TrivEquiv`
+  (`H²(K, ℤ/n) ≃ ℤ/n`), `PadicField.perfectDeg0_mu`, `PadicField.perfectDeg2_trivZMod`,
+  **`PadicField.tateDualityFor_trivZMod`**, **`PadicField.tateDualityFor_mu`**.
+* H23 **done** Euler characteristic: `PadicField.card_h0_mu` (`H⁰(K, μ_n) = μ_n(K)`),
+  `PadicField.card_h1_mu_eq`, `PadicField.card_h2_mu`, `PadicField.card_mu`,
+  **`PadicField.eulerCharacteristicFor_mu`**, `PadicField.card_h1_trivZMod`,
+  **`PadicField.eulerCharacteristicFor_trivZMod`** (`μ_n ⊆ K`).
+* H24 **done** Tate–Nakayama degrees (`Brauer/TateNakayamaDegrees.lean`):
+  **`PadicField.fundClassPowEquiv : ℤ/[L:K] ≃* Br(L/K)`** (`k ↦ u^k`, any finite Galois `L/K`),
+  `PadicField.invEquiv_infl_fundClassPowEquiv` (`inv(u^k) = k/[L:K]`),
+  **`PadicField.bijective_relNak_fundClass`** (degree `-2`, abelian `L/K`).
+* Not done: `PadicField.LocalTateDuality` and `PadicField.LocalEulerCharacteristic` for general
+  finite `M` (route: dévissage to `ℤ/ℓ` and `μ_ℓ` needs the long exact cohomology sequence in
+  degrees `0..2` and restriction–corestriction to `K(μ_n)`, neither formalised for `ContH1/ContH2`;
+  also `H²(K, ℤ/n) ≅ Hom(μ_n(K), ℤ/n)` without `μ_n ⊆ K` needs one of these); unramified `M`;
+  finite-level (`Gal(L/K)`) duality; Tate–Nakayama for non-abelian `G` in degree `-2`
+  (needs `Ĥ⁻²(G, ℤ) ≅ G^ab` and the norm limitation theorem) and in degrees `≥ 1`.

@@ -28,7 +28,7 @@ by evaluation (`Brauer.evalPairing`), and the cup products land in `H²(K, μ_n)
   discrete `G_K`-module (statement only: Tate's formula, Serre II.5.7, NSW 7.3.1).
 
 The cases proved so far (`M = μ_n` and `M = ℤ/n` with trivial action) are in
-`LocalClassFieldTheory.Duality.MuN`.
+`LocalClassFieldTheory.Duality.MuN` and `LocalClassFieldTheory.Duality.Cartier`.
 
 The Cartier dual of a finite smooth module is smooth (`Brauer.CartierDual.smoothAction`), which is
 needed for the cup product `H¹(M) × H¹(M^∨) → H²(μ_n)` to be defined on locally constant cochains.
@@ -172,6 +172,8 @@ namespace PadicField
 
 open Brauer
 
+universe u
+
 variable (p : ℕ) [hp : Fact p.Prime]
 variable (K : Type*) [Field K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
 variable (Ω : Type*) [Field Ω] [Algebra K Ω] [Algebra ℚ_[p] Ω] [IsScalarTower ℚ_[p] K Ω]
@@ -184,7 +186,7 @@ noncomputable def invMu (n : ℕ) [NeZero n] : H2Mu K Ω n →* Multiplicative (
 /-- **Local Tate duality for `M`**: for a finite discrete `G_K`-module `M` killed by `n`, the cup
 product pairings `H^i(K, M) × H^{2-i}(K, M^∨) → H²(K, μ_n) ≃ ℤ/n` with the Cartier dual
 `M^∨ = Hom(M, μ_n)` are perfect for `i = 0, 1, 2`. -/
-def TateDualityFor (M : Type) [CommGroup M] [Finite M] [TopologicalSpace M] [DiscreteTopology M]
+def TateDualityFor (M : Type*) [CommGroup M] [Finite M] [TopologicalSpace M] [DiscreteTopology M]
     [MulDistribMulAction (Ω ≃ₐ[K] Ω) M] [SmoothAction (Ω ≃ₐ[K] Ω) M] (n : ℕ) [NeZero n] :
     Prop :=
   PerfectDeg0 (invMu p K Ω n) (CartierDual.evalPairing (n := n) (Ω := Ω) (M := M)) ∧
@@ -192,12 +194,12 @@ def TateDualityFor (M : Type) [CommGroup M] [Finite M] [TopologicalSpace M] [Dis
     PerfectDeg2 (invMu p K Ω n) (CartierDual.evalPairing (n := n) (Ω := Ω) (M := M))
 
 /-- **Local Tate duality** (Tate–Poitou), as a statement: for every finite discrete
-`Gal(Ω/K)`-module `M` and every `n` killing `M`, the cup product pairings with the Cartier dual
-into `H²(K, μ_n) ≃ ℤ/n` are perfect in degrees `0, 1, 2`. Proved here for `M = μ_n` and
-`M = ℤ/n` in the degrees listed in `LocalClassFieldTheory.Duality.MuN`; the general case is
-open in this repository. -/
+`Gal(Ω/K)`-module `M` (in a universe `u`) and every `n` killing `M`, the cup product pairings
+with the Cartier dual into `H²(K, μ_n) ≃ ℤ/n` are perfect in degrees `0, 1, 2`. Proved here for
+`M = μ_n` and `M = ℤ/n` in the degrees listed in `LocalClassFieldTheory.Duality.Cartier`; the
+general case is open in this repository. -/
 def LocalTateDuality : Prop :=
-  ∀ (M : Type) [CommGroup M] [Finite M] [TopologicalSpace M] [DiscreteTopology M]
+  ∀ (M : Type u) [CommGroup M] [Finite M] [TopologicalSpace M] [DiscreteTopology M]
     [MulDistribMulAction (Ω ≃ₐ[K] Ω) M] [SmoothAction (Ω ≃ₐ[K] Ω) M] (n : ℕ) [NeZero n],
     (∀ m : M, m ^ n = 1) → TateDualityFor p K Ω M n
 
@@ -212,10 +214,11 @@ def EulerCharacteristicFor (M : Type*) [CommGroup M] [TopologicalSpace M] [IsTop
 
 /-- **Tate's local Euler characteristic formula**, as a statement: for every finite discrete
 `Gal(Ω/K)`-module `M`, `#H⁰(K, M) · #H²(K, M) / #H¹(K, M) = |#M|_K = p^{-v_p(#M) [K : ℚ_p]}`.
-Proved here for `M = μ_n` (`PadicField.eulerCharacteristicFor_mu`); the general case is open in
-this repository. -/
+Proved here for `M = μ_n` (`PadicField.eulerCharacteristicFor_mu`) and, when `μ_n ⊆ K`, for
+`M = ℤ/n` (`PadicField.eulerCharacteristicFor_trivZMod`); the general case is open in this
+repository. -/
 def LocalEulerCharacteristic : Prop :=
-  ∀ (M : Type) [CommGroup M] [Finite M] [TopologicalSpace M] [DiscreteTopology M]
+  ∀ (M : Type u) [CommGroup M] [Finite M] [TopologicalSpace M] [DiscreteTopology M]
     [MulDistribMulAction (Ω ≃ₐ[K] Ω) M] [SmoothAction (Ω ≃ₐ[K] Ω) M],
     EulerCharacteristicFor p K Ω M
 

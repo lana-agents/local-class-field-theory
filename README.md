@@ -140,13 +140,40 @@ formalised), proved by reduction to the cyclic extension `L/L^{⟨g⟩}`. `H²(K
 (`PadicField.h2ZHatOneEquiv_res`). The comparison with Mathlib's `groupCohomology.H2` is stated for
 `G M : Type` because Mathlib's group cohomology requires the ring, group and module in one universe.
 
-Not done (outside the scope of this repository's goals, possible future work): higher
-ramification groups (upper numbering) and the conductor–ramification
-correspondence, Lubin–Tate theory (explicit `K^ab = K^ur · K_π`), local class field theory in
-positive characteristic.
+**Local duality, Tate–Nakayama, Euler characteristic (`LocalClassFieldTheory/Duality/`,
+`Brauer/TateNakayamaDegrees.lean`, `PadicField/PowIndex*.lean`).**
+* The index of `n`-th powers: `[Kˣ : (Kˣ)ⁿ] = n · #μ_n(K) · p^{v_p(n) [K:ℚ_p]}`
+  (`PadicField.index_range_pow`; for any complete DVR with finite residue field
+  `PowIndex.index_range_pow_field`: `[Kˣ : (Kˣ)ⁿ] = n · #(R/nR) · #μ_n(K)`).
+* Cup products `H⁰ × H² → H²`, `H² × H⁰ → H²`, `H¹ × H¹ → H²` for an equivariant pairing
+  (`Brauer.cup02`, `Brauer.cup20`, `Brauer.cup11`, graded commutativity `Brauer.cup11_swap`), the
+  Cartier dual `M^∨ = Hom(M, μ_n)` (`Brauer.CartierDual`, smooth for finite smooth `M`) and the
+  precise statements **`PadicField.LocalTateDuality`** (perfectness of
+  `H^i(K, M) × H^{2-i}(K, M^∨) → H²(K, μ_n) ≃ ℤ/n` for all finite `M`, `i = 0, 1, 2`) and
+  **`PadicField.LocalEulerCharacteristic`** (`#H⁰ · #H² / #H¹ = |#M|_K`) — these general
+  statements are **not proved**.
+* Proved cases: for `M = ℤ/n` (trivial action) duality in degrees `0, 1`
+  (`PadicField.perfectDeg0_eval_trivZMod`, `PadicField.perfectDeg1_eval_trivZMod`), for
+  `M = μ_n` in degrees `1, 2` (`PadicField.perfectDeg1_eval_mu`, `PadicField.perfectDeg2_eval_mu`),
+  and all degrees when `μ_n ⊆ K` (`PadicField.tateDualityFor_trivZMod`,
+  `PadicField.tateDualityFor_mu`); the Euler characteristic formula for `μ_n`
+  (`PadicField.eulerCharacteristicFor_mu`) and, when `μ_n ⊆ K`, for `ℤ/n`
+  (`PadicField.eulerCharacteristicFor_trivZMod`); `#H¹(K, ℤ/n) = #H¹(K, μ_n) = [Kˣ : (Kˣ)ⁿ]`
+  (`PadicField.card_h1_trivZMod`, `PadicField.card_h1_mu_eq`).
+* Tate–Nakayama: degree `0`, `ℤ/[L:K] ≃ Br(L/K)`, `k ↦ u_{L/K}^k`, for every finite Galois `L/K`
+  (`PadicField.fundClassPowEquiv`, `inv = k/[L:K]`: `PadicField.invEquiv_infl_fundClassPowEquiv`);
+  degree `-2` for abelian `L/K` (`PadicField.bijective_relNak_fundClass`).
 
-No lana-agents repository depends on this one: `iut` and its pinned lana-agents
-dependencies do not `require` it.
+Not done (outside the scope of this repository's goals, possible future work): local Tate
+duality and the Euler characteristic formula for general finite Galois modules (stated as
+`PadicField.LocalTateDuality`, `PadicField.LocalEulerCharacteristic`), in particular
+`H²(K, ℤ/n) ≅ Hom(μ_n(K), ℤ/n)` when `μ_n ⊄ K`; Tate–Nakayama in degree `-2` for non-abelian
+`L/K` and in positive degrees; higher ramification groups (upper numbering) and the
+conductor–ramification correspondence, Lubin–Tate theory (explicit `K^ab = K^ur · K_π`), local
+class field theory in positive characteristic.
+
+Downstream: `iut` requires this repository (`lakefile.toml` of `iut`, pinned at a commit of
+`main`).
 
 ## Goals
 
