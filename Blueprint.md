@@ -236,8 +236,15 @@ Notation: `Ω` an algebraic closure of `K`, `K_t ⊆ Ω` the unramified extensio
 
 * Done since: profinite completion (E5), uniqueness (E6), independence of `Ω` (E7), unit
   filtration and conductors (E8).
-* Open (beyond the goals of this repository): `Gal(K^ab/K) ≅ 𝒪ˣ × Ẑ` after choosing a
-  uniformiser (needs `Gal(K^ur/K) ≅ Ẑ` and the profinite completion of `𝒪ˣ × ℤ`); higher
+* Done since: `Gal(K^ur/K) ≅ Ẑ` (`PadicField.galMaxUnramifiedEquiv`, Frobenius `↦ 1`) and
+  `Gal(K^ab/K) ≅ 𝒪ˣ × Ẑ` after choosing a uniformiser (`PadicField.galAbEquiv`). Route: the
+  continuous homomorphism `a ↦ g^a` out of `Ẑ = lim ℤ/n` for any element of a profinite group
+  (`Brauer.zhatPow`, via `G ≅ lim G/U`); `a ↦ Frob^a` is injective because `Frob^k` fixes `K_n`
+  iff `n ∣ k`, and surjective because its image is closed and contains the dense `⟨Frob⟩`;
+  `(u, a) ↦ artin(u) artin(π)^a` is injective (act on the `K_n`, then `artin_injective`) and
+  surjective (closed image containing the dense image of `artin`), and `𝒪ˣ × Ẑ` is compact.
+  No profinite completion is needed.
+* Open (beyond the goals of this repository): higher
   ramification groups in upper numbering and `artin(U^(n)) = G^n`; Lubin–Tate theory (optional
   future work: explicit `K^ab = K^ur K_π`, not needed for the existence theorem); positive
   characteristic.

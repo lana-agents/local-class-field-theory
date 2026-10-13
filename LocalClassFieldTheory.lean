@@ -28,6 +28,7 @@ import LocalClassFieldTheory.ClassFieldAxiom.Lattice
 import LocalClassFieldTheory.ClassFieldAxiom.Units
 import LocalClassFieldTheory.ClassFieldAxiom.Vanishing
 import LocalClassFieldTheory.Galois.CosetNorm
+import LocalClassFieldTheory.Galois.ZHat
 import LocalClassFieldTheory.Herbrand.Basic
 import LocalClassFieldTheory.Herbrand.Exact
 import LocalClassFieldTheory.Herbrand.Examples
@@ -46,6 +47,7 @@ import LocalClassFieldTheory.PadicField.Tower
 import LocalClassFieldTheory.PadicField.Uniformizer
 import LocalClassFieldTheory.PadicField.Unramified
 import LocalClassFieldTheory.PadicField.UnramifiedExistence
+import LocalClassFieldTheory.PadicField.UnramifiedZHat
 import LocalClassFieldTheory.Reciprocity.Abelian
 import LocalClassFieldTheory.Reciprocity.Artin
 import LocalClassFieldTheory.Reciprocity.ArtinContinuous
@@ -59,6 +61,7 @@ import LocalClassFieldTheory.Reciprocity.Embedding
 import LocalClassFieldTheory.Reciprocity.Existence
 import LocalClassFieldTheory.Reciprocity.ExistenceTheorem
 import LocalClassFieldTheory.Reciprocity.FrobLiftPow
+import LocalClassFieldTheory.Reciprocity.GaloisStructure
 import LocalClassFieldTheory.Reciprocity.Kummer
 import LocalClassFieldTheory.Reciprocity.LevelFrob
 import LocalClassFieldTheory.Reciprocity.LevelMap

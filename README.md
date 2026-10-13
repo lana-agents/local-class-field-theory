@@ -84,6 +84,22 @@ What is proved (no `sorry`, no `axiom`), all in the concrete setting of fields `
   the unit filtration `PadicField.unitFiltration` (`U^(0) = 𝒪ˣ`, antitone, trivial intersection)
   and the existence of conductors `PadicField.exists_unitFiltration_le_normGroup`.
 
+* **Galois groups as profinite groups** (`Galois/ZHat.lean`, `PadicField/UnramifiedZHat.lean`,
+  `Reciprocity/GaloisStructure.lean`): `Ẑ = lim ℤ/n` (`Brauer.ZHat`) is compact with `ℤ` dense
+  (`Brauer.denseRange_intToZHat`); for every profinite group `G` and `g ∈ G` the continuous
+  homomorphism `a ↦ g ^ a` from `Ẑ` (`Brauer.zhatPow`, unique: `Brauer.eq_zhatPow`).
+  **`PadicField.galMaxUnramifiedEquiv : Gal(K^ur/K) ≃ₜ* Ẑ`** (Krull topology), sending the
+  Frobenius to the topological generator `1` (`PadicField.galMaxUnramifiedEquiv_frobUr`); `σ` acting
+  on `K_n` as `Frob^k` has `n`-th component `k mod n`
+  (`PadicField.galMaxUnramifiedEquiv_apply_of_eq_pow`). After choosing a uniformiser `π`,
+  **`PadicField.galAbEquiv : Gal(K^ab/K) ≃ₜ* 𝒪ˣ × Ẑ`** (`𝒪ˣ = PadicField.unitGroup` with the
+  topology of the absolute value, compact: `PadicField.unitGroup.compactSpace`), inverse
+  `(u, a) ↦ artin(u) · artin(π)^a`, with `galAbEquiv (artin (u π^k)) = (u, k)`
+  (`PadicField.galAbEquiv_artin`, `PadicField.galAbEquiv_artin'`), `Ẑ`-component the restriction to
+  `K^ur` followed by `Gal(K^ur/K) ≅ Ẑ` (`PadicField.galAbEquiv_snd`), and inertia corresponding to
+  `𝒪ˣ × 1` (`PadicField.galAbEquiv_snd_eq_one_iff`); `Gal(K^ab/K)` is abelian
+  (`PadicField.gal_maxAbelian_mul_comm`).
+
 
 **Brauer groups (work package P9, `LocalClassFieldTheory/Brauer/`).** Second cohomology with
 locally constant cochains `ContH2 G M` (multiplicative model), inflation injectivity and
@@ -124,9 +140,8 @@ formalised), proved by reduction to the cyclic extension `L/L^{⟨g⟩}`. `H²(K
 (`PadicField.h2ZHatOneEquiv_res`). The comparison with Mathlib's `groupCohomology.H2` is stated for
 `G M : Type` because Mathlib's group cohomology requires the ring, group and module in one universe.
 
-Not done (outside the scope of this repository's goals, possible future work): the explicit
-decomposition `Gal(K^ab/K) ≅ 𝒪ˣ × Ẑ` (needs the profinite completion of `𝒪ˣ × ℤ` and
-`Gal(K^ur/K) ≅ Ẑ`), higher ramification groups (upper numbering) and the conductor–ramification
+Not done (outside the scope of this repository's goals, possible future work): higher
+ramification groups (upper numbering) and the conductor–ramification
 correspondence, Lubin–Tate theory (explicit `K^ab = K^ur · K_π`), local class field theory in
 positive characteristic.
 

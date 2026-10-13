@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: LANA Project
 -/
 import LocalClassFieldTheory.Brauer.KummerCompat
+import LocalClassFieldTheory.Galois.ZHat
 
 /-!
 # `H²(K, Ẑ(1)) ≃ Ẑ`
@@ -20,8 +21,9 @@ over the same index set.
 * `PadicField.h2ZHatOneEquiv : H²(K, Ẑ(1)) ≃* Ẑ`, the inverse limit of the cyclotomic rigidity
   isomorphisms `PadicField.h2MuEquiv`, compatible by `PadicField.h2MuEquiv_h2MuPow`;
 * `PadicField.h2ZHatOneEquiv_res`: under these isomorphisms, restriction to a finite `K' ⊆ Ω`
-  is multiplication by `[K' : K]`;
-* `Brauer.intToZHat : ℤ →+ Ẑ` is injective (`Brauer.intToZHat_injective`).
+  is multiplication by `[K' : K]`.
+
+`Brauer.ZHat` and `Brauer.intToZHat` are defined in `LocalClassFieldTheory.Galois.ZHat`.
 
 The limit definition of `H²(K, Ẑ(1))` is the usual one (continuous cochain cohomology of the
 profinite module `Ẑ(1)` agrees with it since the `H¹(K, μ_n)` are finite, so `lim¹` vanishes);
@@ -31,27 +33,6 @@ the comparison with continuous cochains is not formalised here.
 open ContH2 KummerTheory
 
 namespace Brauer
-
-/-- The profinite integers `Ẑ = lim_n ℤ/n`, as compatible families in `∏_{n > 0} ℤ/n`. -/
-def ZHat : AddSubgroup (∀ n : ℕ+, ZMod n) where
-  carrier := {x | ∀ n m : ℕ+, ∀ h : (n : ℕ) ∣ m, ZMod.castHom h (ZMod n) (x m) = x n}
-  add_mem' hx hy n m h := by rw [Pi.add_apply, Pi.add_apply, map_add, hx n m h, hy n m h]
-  zero_mem' n m h := by simp
-  neg_mem' hx n m h := by rw [Pi.neg_apply, Pi.neg_apply, map_neg, hx n m h]
-
-/-- The canonical map `ℤ → Ẑ`. -/
-def intToZHat : ℤ →+ ZHat :=
-  (AddMonoidHom.pi fun n : ℕ+ => (Int.castAddHom (ZMod n))).codRestrict _
-    fun k n m h => by simp
-
-theorem intToZHat_injective : Function.Injective intToZHat := by
-  rw [injective_iff_map_eq_zero]
-  intro k hk
-  have h : ((k : ZMod (k.natAbs + 1))) = 0 :=
-    congrArg (fun x : ZHat => (x : ∀ n : ℕ+, ZMod n) (⟨k.natAbs + 1, by omega⟩ : ℕ+)) hk
-  rw [ZMod.intCast_zmod_eq_zero_iff_dvd] at h
-  push_cast at h
-  exact Int.eq_zero_of_abs_lt_dvd h (by rw [Int.abs_eq_natAbs]; omega)
 
 variable (K Ω : Type*) [Field K] [Field Ω] [Algebra K Ω]
 
