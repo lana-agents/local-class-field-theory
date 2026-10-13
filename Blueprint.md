@@ -440,9 +440,58 @@ Absolute Brauer group (`Brauer/Absolute.lean`, `Brauer/Unramified.lean`), `Ω/K`
   **`PadicField.fundClassPowEquiv : ℤ/[L:K] ≃* Br(L/K)`** (`k ↦ u^k`, any finite Galois `L/K`),
   `PadicField.invEquiv_infl_fundClassPowEquiv` (`inv(u^k) = k/[L:K]`),
   **`PadicField.bijective_relNak_fundClass`** (degree `-2`, abelian `L/K`).
+* H25 **done** long exact sequence (`Duality/LongExact.lean`). `Brauer.GShortExact G A B C`
+  (`0 → A → B → C → 0` of `G`-modules), induced maps `Brauer.h0Hom/h1Hom/h2Hom`, connecting maps
+  **`Brauer.GShortExact.delta0`** (`c ↦ [g ↦ g•b/b]`) and **`Brauer.GShortExact.delta1`**
+  (`[x] ↦ [d x̃]`, independent of the locally constant lift: `mk_delta1Cocycle_eq`;
+  `Brauer.isLocallyConstant_dx` needs `B` smooth); exactness `ker = range` at all nine terms
+  `H⁰(A) ↪ H⁰(B) → H⁰(C) → H¹(A) → H¹(B) → H¹(C) → H²(A) → H²(B) → H²(C)`:
+  `h0Hom_injective`, `exact_h0B`, `exact_h0C`, `exact_h1A`, `exact_h1B`, `exact_h1C`, `exact_h2A`,
+  `exact_h2B`. Not available: `H²(B) → H²(C)` surjective (would follow from `H³`/`cd = 2`).
+* H26 **done** Euler characteristic dévissage (`Duality/Devissage.lean`).
+  `Brauer.card_identity_of_exact` (alternating product of cardinals along a 9-term exact sequence
+  surjective at the end, in `ℕ`), `Brauer.finite_of_exact`, `Brauer.GShortExact.card_identity`
+  (`χ(B) = χ(A)χ(C)`), `Brauer.GShortExact.h2Hom_surjective_of_section`,
+  **`PadicField.eulerCharacteristicFor_of_shortExact`** (hypothesis: `H²(B) → H²(C)` surjective),
+  `PadicField.eulerCharacteristicFor_of_split`, `PadicField.eulerCharacteristicFor_prod`,
+  `PadicField.eulerCharacteristicFor_pi`, `PadicField.eulerCharacteristicFor_of_equiv`,
+  `PadicField.eulerCharacteristicFor_of_subsingleton`, **`PadicField.eulerCharacteristicFor_pi_mu`**
+  (`∏ μ_{n_j}`), `PadicField.eulerCharacteristicFor_of_trivial'` (trivial action, from `ℤ/d`,
+  `d ∣ exp M`), **`PadicField.eulerCharacteristicFor_of_trivial`** (`HasEnoughRootsOfUnity K (exp M)`).
+* H27 **done** `H²(K, ℤ/ℓ)` (`Duality/ZModPrime.lean`). Generic: `ContH2.res`,
+  `ContH2.pow_eq_one_of_forall`, **`ContH2.res_injective_of_coprime`** (`cor ∘ res = [G:H]`),
+  `ContH2.conjHom`, `ContH2.conj`, **`ContH2.conj_res`** (`conj_σ ∘ res = res`, cochain identity
+  `ContH2.cor_res_aux`), `ContH2.conj_map_pow` (twist by `σ • ψ(m) = ψ(σ • m)^c`),
+  `PadicField.h2_res_injective_of_coprime` (`[K':K]` prime to `n`). Galois: `PadicField.kZeta`
+  (`K(ζ_ℓ)`, `PadicField.finrank_kZeta_lt`: `< ℓ`, via `minpoly ∣ Φ_ℓ`),
+  `PadicField.mem_fixingSubgroup_kZeta_iff`, `PadicField.conj_units_eq_self` (conjugation is
+  trivial on `Br(K(ζ))`, `PadicField.res_surjective`), `PadicField.conj_mu_eq_self`
+  (via `Brauer.toBr_injective` over `K(ζ)`), **`PadicField.h2_trivZMod_prime_eq_one`**
+  (`H²(K, ℤ/ℓ) = 0` if `μ_ℓ ⊄ K`), **`PadicField.card_h2_trivZMod_prime`** (`= #μ_ℓ(K)`),
+  **`PadicField.eulerCharacteristicFor_trivZMod_prime`**, **`PadicField.tateDualityFor_trivZMod_prime`**,
+  **`PadicField.tateDualityFor_mu_prime`** (all degrees, no condition on `K`),
+  `PadicField.trivZModCRT`, `PadicField.eulerCharacteristicFor_trivZMod_mul`,
+  **`PadicField.eulerCharacteristicFor_trivZMod_of_primePow`** (`μ_{ℓ^e} ⊆ K` only for `ℓ^e ∣ n`,
+  `e ≥ 2`), `PadicField.eulerCharacteristicFor_trivZMod_of_squarefree`,
+  `PadicField.eulerCharacteristicFor_of_trivial_of_primePow`,
+  **`PadicField.eulerCharacteristicFor_of_trivial_of_squarefree`**.
+* H28 **done** duality for products (`Duality/Products.lean`). `Brauer.bijective_prod_hom`,
+  `Brauer.h0/h1/h2_prod_bijective`, `Brauer.GPairing.prod`, `Brauer.cup02/cup20/cup11_prod`,
+  `Brauer.perfectDeg0/1/2_prod`, transport in the first argument
+  `Brauer.perfectDeg0/1/2_iff_of_equiv_left`, `Brauer.CartierDual.prodEquiv`,
+  `Brauer.CartierDual.congrEquiv`, **`PadicField.tateDualityFor_prod`**,
+  **`PadicField.tateDualityFor_of_equiv`**, `PadicField.tateDualityFor_of_subsingleton`,
+  `PadicField.tateDualityFor_pi`, **`PadicField.tateDualityFor_of_trivial_prime`**
+  (`M ≃ (ℤ/ℓ)^r`).
 * Not done: `PadicField.LocalTateDuality` and `PadicField.LocalEulerCharacteristic` for general
-  finite `M` (route: dévissage to `ℤ/ℓ` and `μ_ℓ` needs the long exact cohomology sequence in
-  degrees `0..2` and restriction–corestriction to `K(μ_n)`, neither formalised for `ContH1/ContH2`;
-  also `H²(K, ℤ/n) ≅ Hom(μ_n(K), ℤ/n)` without `μ_n ⊆ K` needs one of these); unramified `M`;
-  finite-level (`Gal(L/K)`) duality; Tate–Nakayama for non-abelian `G` in degree `-2`
+  finite `M`. Precisely missing: (1) surjectivity of `H²(K, B) → H²(K, C)` for non-split
+  `0 → A → B → C → 0` (equivalently `cd(G_K) = 2`; no `H³` here), which blocks dévissage along
+  non-split filtrations, in particular `#H²(K, ℤ/ℓ^e) = #μ_{ℓ^e}(K)` for `e ≥ 2` when
+  `μ_{ℓ^e} ⊄ K` (the restriction to `K(μ_{ℓ^e})` used for `e = 1` need not have degree prime
+  to `ℓ`); (2) naturality of the cup products with `δ⁰, δ¹` (five lemma for duality along
+  extensions); (3) the reduction of an `ℓ`-primary `M` to `K' = K(M, μ_ℓ)`-split modules needs,
+  besides `PadicField.h2_res_injective_of_coprime` (available), the analogous statements in
+  degrees `0, 1` and the Galois-invariants description of the image (`Hochschild–Serre`),
+  which are not formalised. Also not done: unramified `M`; finite-level (`Gal(L/K)`) duality;
+  Tate–Nakayama for non-abelian `G` in degree `-2`
   (needs `Ĥ⁻²(G, ℤ) ≅ G^ab` and the norm limitation theorem) and in degrees `≥ 1`.

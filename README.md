@@ -160,14 +160,37 @@ formalised), proved by reduction to the cyclic extension `L/L^{⟨g⟩}`. `H²(K
   (`PadicField.eulerCharacteristicFor_mu`) and, when `μ_n ⊆ K`, for `ℤ/n`
   (`PadicField.eulerCharacteristicFor_trivZMod`); `#H¹(K, ℤ/n) = #H¹(K, μ_n) = [Kˣ : (Kˣ)ⁿ]`
   (`PadicField.card_h1_trivZMod`, `PadicField.card_h1_mu_eq`).
+* Long exact sequence: for `0 → A → B → C → 0` (`Brauer.GShortExact`) the connecting maps
+  `Brauer.GShortExact.delta0`, `Brauer.GShortExact.delta1` and exactness of
+  `H⁰(A) ↪ H⁰(B) → H⁰(C) → H¹(A) → H¹(B) → H¹(C) → H²(A) → H²(B) → H²(C)`
+  (`exact_h0B`, …, `exact_h2B`); dévissage `χ(B) = χ(A) χ(C)`
+  (`PadicField.eulerCharacteristicFor_of_shortExact`, assuming `H²(B) → H²(C)` surjective, which
+  holds for split sequences), products, finite products, isomorphisms; the Euler characteristic
+  formula for `∏ μ_{n_j}` (`PadicField.eulerCharacteristicFor_pi_mu`) and for trivial modules when
+  `K` contains the `exp(M)`-th roots of unity (`PadicField.eulerCharacteristicFor_of_trivial`).
+* Without roots of unity in `K`: restriction to an open subgroup of index prime to `n` is
+  injective on `H²` (`ContH2.res_injective_of_coprime`), inner automorphisms act trivially
+  (`ContH2.conj_res`), and **`H²(K, ℤ/ℓ) = 0` if `μ_ℓ ⊄ K`** for a prime `ℓ`
+  (`PadicField.h2_trivZMod_prime_eq_one`, via `K(μ_ℓ)` and the twist by the cyclotomic
+  character), so `#H²(K, ℤ/ℓ) = #μ_ℓ(K)`. Hence, with no condition on `K`: local Tate duality in
+  all degrees for `ℤ/ℓ` and `μ_ℓ` (`PadicField.tateDualityFor_trivZMod_prime`,
+  `PadicField.tateDualityFor_mu_prime`), for products and isomorphic modules
+  (`PadicField.tateDualityFor_prod`, `PadicField.tateDualityFor_of_equiv`) and for trivial modules
+  killed by `ℓ` (`PadicField.tateDualityFor_of_trivial_prime`); the Euler characteristic formula
+  for `ℤ/n`, `n` squarefree, and for trivial modules of squarefree exponent
+  (`PadicField.eulerCharacteristicFor_of_trivial_of_squarefree`; in general it suffices that
+  `μ_{ℓ^e} ⊆ K` for the prime powers `ℓ^e ∣ exp(M)` with `e ≥ 2`,
+  `PadicField.eulerCharacteristicFor_of_trivial_of_primePow`).
 * Tate–Nakayama: degree `0`, `ℤ/[L:K] ≃ Br(L/K)`, `k ↦ u_{L/K}^k`, for every finite Galois `L/K`
   (`PadicField.fundClassPowEquiv`, `inv = k/[L:K]`: `PadicField.invEquiv_infl_fundClassPowEquiv`);
   degree `-2` for abelian `L/K` (`PadicField.bijective_relNak_fundClass`).
 
 Not done (outside the scope of this repository's goals, possible future work): local Tate
 duality and the Euler characteristic formula for general finite Galois modules (stated as
-`PadicField.LocalTateDuality`, `PadicField.LocalEulerCharacteristic`), in particular
-`H²(K, ℤ/n) ≅ Hom(μ_n(K), ℤ/n)` when `μ_n ⊄ K`; Tate–Nakayama in degree `-2` for non-abelian
+`PadicField.LocalTateDuality`, `PadicField.LocalEulerCharacteristic`; missing: surjectivity of
+`H²(K, B) → H²(K, C)` along non-split extensions, i.e. `cd(G_K) = 2`, and the compatibility of cup
+products with the connecting maps), in particular `H²(K, ℤ/ℓ^e) ≅ Hom(μ_{ℓ^e}(K), ℤ/ℓ^e)` for
+`e ≥ 2` when `μ_{ℓ^e} ⊄ K`; Tate–Nakayama in degree `-2` for non-abelian
 `L/K` and in positive degrees; higher ramification groups (upper numbering) and the
 conductor–ramification correspondence, Lubin–Tate theory (explicit `K^ab = K^ur · K_π`), local
 class field theory in positive characteristic.

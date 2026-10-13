@@ -27,8 +27,12 @@ by evaluation (`Brauer.evalPairing`), and the cup products land in `H²(K, μ_n)
 * **`PadicField.LocalEulerCharacteristic p K Ω`**: `EulerCharacteristicFor` for every finite
   discrete `G_K`-module (statement only: Tate's formula, Serre II.5.7, NSW 7.3.1).
 
-The cases proved so far (`M = μ_n` and `M = ℤ/n` with trivial action) are in
-`LocalClassFieldTheory.Duality.MuN` and `LocalClassFieldTheory.Duality.Cartier`.
+The cases proved so far are in `LocalClassFieldTheory.Duality.MuN`,
+`LocalClassFieldTheory.Duality.Cartier` (`M = μ_n`, `M = ℤ/n`),
+`LocalClassFieldTheory.Duality.ZModPrime` (`ℤ/ℓ`, `μ_ℓ` for primes `ℓ` without roots of unity
+in `K`; `ℤ/n` for squarefree `n`),
+`LocalClassFieldTheory.Duality.Devissage` and `LocalClassFieldTheory.Duality.Products`
+(products, isomorphisms, split extensions, trivial modules, `∏ μ_{n_j}`).
 
 The Cartier dual of a finite smooth module is smooth (`Brauer.CartierDual.smoothAction`), which is
 needed for the cup product `H¹(M) × H¹(M^∨) → H²(μ_n)` to be defined on locally constant cochains.
@@ -197,7 +201,9 @@ def TateDualityFor (M : Type*) [CommGroup M] [Finite M] [TopologicalSpace M] [Di
 `Gal(Ω/K)`-module `M` (in a universe `u`) and every `n` killing `M`, the cup product pairings
 with the Cartier dual into `H²(K, μ_n) ≃ ℤ/n` are perfect in degrees `0, 1, 2`. Proved here for
 `M = μ_n` and `M = ℤ/n` in the degrees listed in `LocalClassFieldTheory.Duality.Cartier`; the
-general case is open in this repository. -/
+general case is open in this repository (further cases: `PadicField.tateDualityFor_trivZMod_prime`,
+`PadicField.tateDualityFor_mu_prime`, `PadicField.tateDualityFor_prod`,
+`PadicField.tateDualityFor_of_trivial_prime`). -/
 def LocalTateDuality : Prop :=
   ∀ (M : Type u) [CommGroup M] [Finite M] [TopologicalSpace M] [DiscreteTopology M]
     [MulDistribMulAction (Ω ≃ₐ[K] Ω) M] [SmoothAction (Ω ≃ₐ[K] Ω) M] (n : ℕ) [NeZero n],
@@ -215,8 +221,9 @@ def EulerCharacteristicFor (M : Type*) [CommGroup M] [TopologicalSpace M] [IsTop
 /-- **Tate's local Euler characteristic formula**, as a statement: for every finite discrete
 `Gal(Ω/K)`-module `M`, `#H⁰(K, M) · #H²(K, M) / #H¹(K, M) = |#M|_K = p^{-v_p(#M) [K : ℚ_p]}`.
 Proved here for `M = μ_n` (`PadicField.eulerCharacteristicFor_mu`) and, when `μ_n ⊆ K`, for
-`M = ℤ/n` (`PadicField.eulerCharacteristicFor_trivZMod`); the general case is open in this
-repository. -/
+`M = ℤ/n` (`PadicField.eulerCharacteristicFor_trivZMod`); further cases in
+`LocalClassFieldTheory.Duality.Devissage` and `LocalClassFieldTheory.Duality.ZModPrime`; the
+general case is open in this repository. -/
 def LocalEulerCharacteristic : Prop :=
   ∀ (M : Type u) [CommGroup M] [Finite M] [TopologicalSpace M] [DiscreteTopology M]
     [MulDistribMulAction (Ω ≃ₐ[K] Ω) M] [SmoothAction (Ω ≃ₐ[K] Ω) M],
