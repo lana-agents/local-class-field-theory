@@ -30,6 +30,8 @@ import LocalClassFieldTheory.ClassFieldAxiom.Units
 import LocalClassFieldTheory.ClassFieldAxiom.Vanishing
 import LocalClassFieldTheory.Duality.Cartier
 import LocalClassFieldTheory.Duality.CupProduct
+import LocalClassFieldTheory.Duality.Devissage
+import LocalClassFieldTheory.Duality.LongExact
 import LocalClassFieldTheory.Duality.MuN
 import LocalClassFieldTheory.Duality.Statements
 import LocalClassFieldTheory.Duality.Transport
