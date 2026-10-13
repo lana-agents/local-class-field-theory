@@ -194,9 +194,19 @@ formalised), proved by reduction to the cyclic extension `L/L^{⟨g⟩}`. `H²(K
 * `H³` in cocycle form (`Duality/H3Vanishing.lean`): `ContH2.H3Trivial G A` (locally constant
   `3`-cocycles are coboundaries) implies `H²(B) → H²(C)` onto
   (`Brauer.GShortExact.h2Hom_surjective_of_h3Trivial`); the statement
-  **`PadicField.LocalH3Vanishing K Ω`** (`cd(G_K) = 2` in this form) is **not proved**; given it, the
+  **`PadicField.LocalH3Vanishing K Ω`** (`cd(G_K) ≤ 2` in this form); given it, the
   Euler characteristic formula is closed under all extensions
   (`PadicField.eulerCharacteristicFor_of_shortExact_of_localH3Vanishing`).
+* `cd(G_K) ≤ 2` (`Duality/H3Devissage.lean`, `H3Cores.lean`, `H3Kummer.lean`, `H3Local.lean`,
+  `H3Inflation.lean`, `EulerReduction.lean`): **`PadicField.localH3Vanishing_of_finiteLevel`**
+  derives `LocalH3Vanishing K Ω` from **`PadicField.H3FiniteLevelVanishing K Ω`**
+  (`H³(Gal(L/K'), Lˣ) = 0` for all finite Galois levels `L/K'`, Tate's theorem, **not proved**
+  here), via the degree-three long exact sequence (`Brauer.GShortExact.h3Trivial`), corestriction
+  in degree three (`ContH2.corFun3_res`, `ContH2.h3Trivial_of_res`), Sylow reduction to `ℤ/ℓ ≅ μ_ℓ`
+  (`Brauer.h3Trivial_of_pgroup_action`), the Kummer sequence and divisibility of `Br(K') = ℚ/ℤ`
+  (`PadicField.h3Trivial_mu`, from `Brauer.H3UnitsVanishing`: `H³(K', Ωˣ) = 0`) and inflation
+  (`Brauer.h3UnitsVanishing_of_finite`). Moreover **`PadicField.localEulerCharacteristic_of_simple`**:
+  `LocalH3Vanishing` and the Euler formula for simple modules imply `LocalEulerCharacteristic`.
 * Tate–Nakayama: degree `0`, `ℤ/[L:K] ≃ Br(L/K)`, `k ↦ u_{L/K}^k`, for every finite Galois `L/K`
   (`PadicField.fundClassPowEquiv`, `inv = k/[L:K]`: `PadicField.invEquiv_infl_fundClassPowEquiv`);
   degree `-2` for abelian `L/K` (`PadicField.bijective_relNak_fundClass`).
@@ -205,7 +215,8 @@ Not done (outside the scope of this repository's goals, possible future work): l
 duality and the Euler characteristic formula for general finite Galois modules (stated as
 `PadicField.LocalTateDuality`, `PadicField.LocalEulerCharacteristic`; missing: surjectivity of
 `H²(K, B) → H²(K, C)` along non-split extensions with non-trivial action, reduced to
-`PadicField.LocalH3Vanishing` (`cd(G_K) = 2`), the Euler formula for simple `𝔽_ℓ[G_K]`-modules
+`PadicField.LocalH3Vanishing` (`cd(G_K) ≤ 2`) and from there to `H³(Gal(L/K'), Lˣ) = 0`
+(`PadicField.H3FiniteLevelVanishing`), the Euler formula for simple `𝔽_ℓ[G_K]`-modules
 not reached by dévissage (Brauer characters), and the compatibility of cup products with the
 connecting maps); Tate–Nakayama in degree `-2` for non-abelian
 `L/K` and in positive degrees; higher ramification groups (upper numbering) and the

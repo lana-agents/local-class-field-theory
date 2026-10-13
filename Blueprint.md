@@ -513,12 +513,35 @@ Absolute Brauer group (`Brauer/Absolute.lean`, `Brauer/Unramified.lean`), `Ω/K`
   **`PadicField.perfectDeg0_mu_all`**, **`PadicField.tateDualityFor_trivZMod_all`**,
   **`PadicField.tateDualityFor_mu_all`** (all degrees, all `n`, all `K`),
   `PadicField.card_h2_eq_card_h0_dual_trivZMod`.
+* H32 **done** `cd(G_K) ≤ 2` in cocycle form, modulo `H³(Gal(L/K'), Lˣ) = 0` (`Duality/H3Devissage.lean`,
+  `Duality/H3Cores.lean`, `Duality/H3Kummer.lean`, `Duality/H3Local.lean`, `Duality/H3Inflation.lean`,
+  `Duality/EulerReduction.lean`). Dévissage: **`Brauer.GShortExact.h3Trivial`** (degree-three piece
+  of the long exact sequence: `H3Trivial A`, `H3Trivial C` ⇒ `H3Trivial B`),
+  `Brauer.h3Trivial_of_mulEquiv`, `Brauer.subQuotSES`, **`Brauer.finite_module_induction`**
+  (trivial + simple + extensions ⇒ all finite smooth modules), `Brauer.IsSimpleGModule`.
+  Corestriction in degree three: `ContH2.corFun3`, `ContH2.dc2_corFun`, **`ContH2.corFun3_res`**
+  (`cor ∘ res = z^{[G:H]} · d qFun3`, per coset four cocycle identities `ContH2.cor_res_aux3`),
+  **`ContH2.h3Trivial_of_res`** (restriction to an open subgroup of index invertible on `M` is
+  injective on `H³`). Kummer: **`Brauer.H3UnitsVanishing K Ω`** (`H³(K, Ωˣ) = 0`, statement),
+  `PadicField.br_divisible`, **`PadicField.h3Trivial_mu`** (`H³(K, Ωˣ) = 0` ⇒ `H³(K, μ_n) = 0`),
+  `Brauer.h3Trivial_of_groupEquiv`, `PadicField.h3Trivial_fixingSubgroup_mu`. Sylow reduction:
+  `Brauer.card_modEq_card_fixedPoints`, `Brauer.smul_eq_of_card_eq_prime`,
+  **`Brauer.h3Trivial_of_pgroup_action`**, `PadicField.exists_fixingSubgroup_eq`,
+  `PadicField.h3Trivial_of_exponent`, **`PadicField.localH3Vanishing_of_h3UnitsVanishing`**.
+  Inflation: `exists_openSubgroup_triple_invariant`, **`Brauer.h3UnitsVanishing_of_finite`**,
+  **`PadicField.H3FiniteLevelVanishing K Ω`** (statement: `H³(Gal(L/K'), Lˣ) = 0` for all finite
+  Galois levels; Tate's theorem, **not proved**), **`PadicField.localH3Vanishing_of_finiteLevel`**.
+  Euler: **`PadicField.localEulerCharacteristic_of_simple`** (`LocalH3Vanishing` + Euler for simple
+  modules ⇒ `LocalEulerCharacteristic`), `PadicField.localEulerCharacteristic_of_h3UnitsVanishing`,
+  **`PadicField.localEulerCharacteristic_of_finiteLevel`**.
 * Not done: `PadicField.LocalTateDuality` and `PadicField.LocalEulerCharacteristic` for general
   finite `M`. Precisely missing: (1) surjectivity of `H²(K, B) → H²(K, C)` for non-split
   `0 → A → B → C → 0` with non-trivial action; it is reduced to **`PadicField.LocalH3Vanishing`**
-  (`H³(K, A) = 0` for locally constant cocycles, i.e. `cd(G_K) = 2`), which is not proved
+  (`H³(K, A) = 0` for locally constant cocycles, i.e. `cd(G_K) = 2`), which is proved (H32) from
+  `PadicField.H3FiniteLevelVanishing` (`H³(Gal(L/K'), Lˣ) = 0`, Tate's theorem), not proved
   (for trivial modules it is circumvented by the Bockstein argument of H30); (2) even with (1),
-  `LocalEulerCharacteristic` needs the Euler formula for the simple `𝔽_ℓ[G_K]`-modules, which is
+  `LocalEulerCharacteristic` needs the Euler formula for the simple `𝔽_ℓ[G_K]`-modules (exactly
+  this input: `PadicField.localEulerCharacteristic_of_simple`), which is
   not reached by dévissage from `ℤ/ℓ`, `μ_ℓ` (Tate's proof uses Brauer characters / induced
   modules and the behaviour of `χ` under restriction–corestriction); (3) naturality of the cup
   products with `δ⁰, δ¹` (five lemma for duality along extensions); (4) the reduction of an

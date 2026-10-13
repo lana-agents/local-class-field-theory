@@ -31,6 +31,12 @@ import LocalClassFieldTheory.ClassFieldAxiom.Vanishing
 import LocalClassFieldTheory.Duality.Cartier
 import LocalClassFieldTheory.Duality.CupProduct
 import LocalClassFieldTheory.Duality.Devissage
+import LocalClassFieldTheory.Duality.EulerReduction
+import LocalClassFieldTheory.Duality.H3Cores
+import LocalClassFieldTheory.Duality.H3Devissage
+import LocalClassFieldTheory.Duality.H3Inflation
+import LocalClassFieldTheory.Duality.H3Kummer
+import LocalClassFieldTheory.Duality.H3Local
 import LocalClassFieldTheory.Duality.H3Vanishing
 import LocalClassFieldTheory.Duality.LongExact
 import LocalClassFieldTheory.Duality.MuN

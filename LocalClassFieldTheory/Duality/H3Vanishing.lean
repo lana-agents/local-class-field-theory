@@ -29,8 +29,8 @@ Main results:
   `H²(G, B) → H²(G, C)` is surjective (lift a `C`-valued cocycle `c` to `f = s ∘ c`; `dc2 f` is an
   `A`-valued `3`-cocycle, hence `dc2 f = dc2 g`, and `f / g` is a `B`-valued cocycle over `c`);
 * `PadicField.LocalH3Vanishing K Ω` : `H3Trivial (Gal(Ω/K)) A` for every finite discrete
-  `Gal(Ω/K)`-module `A` (a consequence of `cd(G_K) = 2`, Serre, *Galois cohomology* II.4.3; not
-  proved here);
+  `Gal(Ω/K)`-module `A` (a consequence of `cd(G_K) = 2`, Serre, *Galois cohomology* II.4.3;
+  reduced to `H³(Gal(L/K'), Lˣ) = 0` in `LocalClassFieldTheory.Duality.H3Inflation`);
 * **`PadicField.eulerCharacteristicFor_of_shortExact_of_h3Trivial`** : the Euler characteristic
   formula is closed under extensions `0 → A → B → C → 0` with `H3Trivial G_K A`;
 * `PadicField.eulerCharacteristicFor_of_shortExact_of_h2_subsingleton` : the same, unconditionally,
@@ -203,7 +203,9 @@ variable (Ω : Type*) [Field Ω] [Algebra K Ω] [Algebra ℚ_[p] Ω] [IsScalarTo
 /-- **`H³(K, A) = 0` for finite discrete modules, in cocycle form** (statement only): for every
 finite discrete `Gal(Ω/K)`-module `A` (in universe `u`), every locally constant `3`-cocycle with
 values in `A` is a coboundary. This is the consequence `H³(K, A) = 0` of `cd(G_K) = 2` (Serre,
-*Galois cohomology*, II.4.3) and is **not** proved in this repository; it is the only input
+*Galois cohomology*, II.4.3). It is derived from `H³(Gal(L/K'), Lˣ) = 0` at the finite levels
+(Tate's theorem, not proved here) in `PadicField.localH3Vanishing_of_finiteLevel`
+(`LocalClassFieldTheory.Duality.H3Inflation`); it is the only input
 missing for the surjectivity of `H²(K, B) → H²(K, C)` in the dévissage of the Euler
 characteristic (`PadicField.eulerCharacteristicFor_of_shortExact_of_localH3Vanishing`). -/
 def LocalH3Vanishing : Prop :=

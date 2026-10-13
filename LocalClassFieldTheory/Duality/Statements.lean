@@ -227,7 +227,9 @@ Proved here for `M = μ_n` (`PadicField.eulerCharacteristicFor_mu`) and, when `�
 trivial action (`PadicField.eulerCharacteristicFor_of_trivial_all`); further cases in
 `LocalClassFieldTheory.Duality.Devissage`. The general case is open in this repository; the
 dévissage along arbitrary extensions is reduced to `PadicField.LocalH3Vanishing`
-(`PadicField.eulerCharacteristicFor_of_shortExact_of_localH3Vanishing`). -/
+(`PadicField.eulerCharacteristicFor_of_shortExact_of_localH3Vanishing`), and the full statement
+to `LocalH3Vanishing` plus the formula for simple modules
+(`PadicField.localEulerCharacteristic_of_simple`). -/
 def LocalEulerCharacteristic : Prop :=
   ∀ (M : Type u) [CommGroup M] [Finite M] [TopologicalSpace M] [DiscreteTopology M]
     [MulDistribMulAction (Ω ≃ₐ[K] Ω) M] [SmoothAction (Ω ≃ₐ[K] Ω) M],
