@@ -27,6 +27,9 @@ import LocalClassFieldTheory.ClassFieldAxiom.Hilbert90
 import LocalClassFieldTheory.ClassFieldAxiom.Lattice
 import LocalClassFieldTheory.ClassFieldAxiom.Units
 import LocalClassFieldTheory.ClassFieldAxiom.Vanishing
+import LocalClassFieldTheory.Duality.CupProduct
+import LocalClassFieldTheory.Duality.MuN
+import LocalClassFieldTheory.Duality.Statements
 import LocalClassFieldTheory.Galois.CosetNorm
 import LocalClassFieldTheory.Galois.ZHat
 import LocalClassFieldTheory.Herbrand.Basic
@@ -40,6 +43,8 @@ import LocalClassFieldTheory.PadicField.Galois
 import LocalClassFieldTheory.PadicField.Integers
 import LocalClassFieldTheory.PadicField.MaxUnramified
 import LocalClassFieldTheory.PadicField.Norm
+import LocalClassFieldTheory.PadicField.PowIndex
+import LocalClassFieldTheory.PadicField.PowIndexPadic
 import LocalClassFieldTheory.PadicField.Powers
 import LocalClassFieldTheory.PadicField.Ramification
 import LocalClassFieldTheory.PadicField.Teichmuller
