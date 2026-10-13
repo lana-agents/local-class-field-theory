@@ -31,11 +31,14 @@ import LocalClassFieldTheory.ClassFieldAxiom.Vanishing
 import LocalClassFieldTheory.Duality.Cartier
 import LocalClassFieldTheory.Duality.CupProduct
 import LocalClassFieldTheory.Duality.Devissage
+import LocalClassFieldTheory.Duality.H3Vanishing
 import LocalClassFieldTheory.Duality.LongExact
 import LocalClassFieldTheory.Duality.MuN
 import LocalClassFieldTheory.Duality.Products
 import LocalClassFieldTheory.Duality.Statements
 import LocalClassFieldTheory.Duality.Transport
+import LocalClassFieldTheory.Duality.TrivialDuality
+import LocalClassFieldTheory.Duality.TrivialModules
 import LocalClassFieldTheory.Duality.ZModPrime
 import LocalClassFieldTheory.Galois.CosetNorm
 import LocalClassFieldTheory.Galois.ZHat

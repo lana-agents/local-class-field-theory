@@ -32,7 +32,10 @@ extension `K` of `ℚ_p`:
 
 The surjectivity of `H²(B) → H²(C)` for arbitrary (non-split) extensions is equivalent to the
 injectivity of `H³(K, A) → H³(K, B)` and follows from `cd(G_K) = 2`; since `H³` is not
-formalised, it is kept as an explicit hypothesis in `eulerCharacteristicFor_of_shortExact`.
+formalised, it is kept as an explicit hypothesis in `eulerCharacteristicFor_of_shortExact`. It is
+derived from the vanishing of `H³(K, A)` in cocycle form in
+`LocalClassFieldTheory.Duality.H3Vanishing`, and proved for the trivial extensions
+`0 → ℤ/ℓ^e → ℤ/ℓ^{e+1} → ℤ/ℓ → 0` in `LocalClassFieldTheory.Duality.TrivialModules`.
 -/
 
 open ContH2 groupCohomology KummerTheory

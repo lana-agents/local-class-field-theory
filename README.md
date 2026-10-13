@@ -181,6 +181,22 @@ formalised), proved by reduction to the cyclic extension `L/L^{⟨g⟩}`. `H²(K
   (`PadicField.eulerCharacteristicFor_of_trivial_of_squarefree`; in general it suffices that
   `μ_{ℓ^e} ⊆ K` for the prime powers `ℓ^e ∣ exp(M)` with `e ≥ 2`,
   `PadicField.eulerCharacteristicFor_of_trivial_of_primePow`).
+* Surjectivity of `H²` without `H³`: for the extensions `0 → ℤ/ℓ^e → ℤ/ℓ^{e+1} → ℤ/ℓ → 0`,
+  `H²(K, ℤ/ℓ^{e+1}) → H²(K, ℤ/ℓ)` is onto (`PadicField.h2_castMulHom_surjective`: a Bockstein
+  class `δ¹(χ) ≠ 0`, found by counting `#H¹(K, ℤ/n)`, generates `H²(K, ℤ/ℓ)`; naturality
+  `Brauer.GShortExact.delta1_natural`). Hence, **with no condition on `K`**: the Euler
+  characteristic formula for `ℤ/n` for every `n` and for **every finite module with trivial action**
+  (`PadicField.eulerCharacteristicFor_trivZMod_all`, `PadicField.eulerCharacteristicFor_of_trivial_all`),
+  `#H²(K, ℤ/n) = #μ_n(K) = #H⁰(K, (ℤ/n)^∨)` (`PadicField.card_h2_trivZMod`,
+  `PadicField.card_h2_eq_card_h0_dual_trivZMod`), and **local Tate duality for `ℤ/n` and `μ_n` in all
+  degrees for every `n`** (`PadicField.tateDualityFor_trivZMod_all`, `PadicField.tateDualityFor_mu_all`).
+  Conversely, Euler for `A, B, C` implies `H²(B) → H²(C)` onto (`PadicField.h2Hom_surjective_of_euler`).
+* `H³` in cocycle form (`Duality/H3Vanishing.lean`): `ContH2.H3Trivial G A` (locally constant
+  `3`-cocycles are coboundaries) implies `H²(B) → H²(C)` onto
+  (`Brauer.GShortExact.h2Hom_surjective_of_h3Trivial`); the statement
+  **`PadicField.LocalH3Vanishing K Ω`** (`cd(G_K) = 2` in this form) is **not proved**; given it, the
+  Euler characteristic formula is closed under all extensions
+  (`PadicField.eulerCharacteristicFor_of_shortExact_of_localH3Vanishing`).
 * Tate–Nakayama: degree `0`, `ℤ/[L:K] ≃ Br(L/K)`, `k ↦ u_{L/K}^k`, for every finite Galois `L/K`
   (`PadicField.fundClassPowEquiv`, `inv = k/[L:K]`: `PadicField.invEquiv_infl_fundClassPowEquiv`);
   degree `-2` for abelian `L/K` (`PadicField.bijective_relNak_fundClass`).
@@ -188,9 +204,10 @@ formalised), proved by reduction to the cyclic extension `L/L^{⟨g⟩}`. `H²(K
 Not done (outside the scope of this repository's goals, possible future work): local Tate
 duality and the Euler characteristic formula for general finite Galois modules (stated as
 `PadicField.LocalTateDuality`, `PadicField.LocalEulerCharacteristic`; missing: surjectivity of
-`H²(K, B) → H²(K, C)` along non-split extensions, i.e. `cd(G_K) = 2`, and the compatibility of cup
-products with the connecting maps), in particular `H²(K, ℤ/ℓ^e) ≅ Hom(μ_{ℓ^e}(K), ℤ/ℓ^e)` for
-`e ≥ 2` when `μ_{ℓ^e} ⊄ K`; Tate–Nakayama in degree `-2` for non-abelian
+`H²(K, B) → H²(K, C)` along non-split extensions with non-trivial action, reduced to
+`PadicField.LocalH3Vanishing` (`cd(G_K) = 2`), the Euler formula for simple `𝔽_ℓ[G_K]`-modules
+not reached by dévissage (Brauer characters), and the compatibility of cup products with the
+connecting maps); Tate–Nakayama in degree `-2` for non-abelian
 `L/K` and in positive degrees; higher ramification groups (upper numbering) and the
 conductor–ramification correspondence, Lubin–Tate theory (explicit `K^ab = K^ur · K_π`), local
 class field theory in positive characteristic.

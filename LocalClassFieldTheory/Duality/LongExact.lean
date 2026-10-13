@@ -27,7 +27,8 @@ cohomology of an equivariant homomorphism `f` are `Brauer.h0Hom`, `Brauer.h1Hom`
 The sequence does not continue to `H³` here (no `H³` is defined), so the map `H²(B) → H²(C)` is
 not surjective in general; for a finite discrete module over a `p`-adic field this surjectivity
 is equivalent to the vanishing of `H³(K, A) → H³(K, B)`, i.e. a consequence of `cd(G_K) = 2`,
-which is not formalised.
+which is not formalised (see `LocalClassFieldTheory.Duality.H3Vanishing` for the reduction to
+`H³ = 0` in cocycle form).
 -/
 
 open ContH2 groupCohomology

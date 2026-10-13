@@ -447,7 +447,8 @@ Absolute Brauer group (`Brauer/Absolute.lean`, `Brauer/Unramified.lean`), `Ω/K`
   `Brauer.isLocallyConstant_dx` needs `B` smooth); exactness `ker = range` at all nine terms
   `H⁰(A) ↪ H⁰(B) → H⁰(C) → H¹(A) → H¹(B) → H¹(C) → H²(A) → H²(B) → H²(C)`:
   `h0Hom_injective`, `exact_h0B`, `exact_h0C`, `exact_h1A`, `exact_h1B`, `exact_h1C`, `exact_h2A`,
-  `exact_h2B`. Not available: `H²(B) → H²(C)` surjective (would follow from `H³`/`cd = 2`).
+  `exact_h2B`. `H²(B) → H²(C)` surjective: not in general (follows from `H³`/`cd = 2`, see H29;
+  proved for trivial `ℤ/ℓ^e`-extensions in H30 and whenever Euler holds for `A, B, C`, H31).
 * H26 **done** Euler characteristic dévissage (`Duality/Devissage.lean`).
   `Brauer.card_identity_of_exact` (alternating product of cardinals along a 9-term exact sequence
   surjective at the end, in `ℕ`), `Brauer.finite_of_exact`, `Brauer.GShortExact.card_identity`
@@ -483,13 +484,45 @@ Absolute Brauer group (`Brauer/Absolute.lean`, `Brauer/Unramified.lean`), `Ω/K`
   **`PadicField.tateDualityFor_of_equiv`**, `PadicField.tateDualityFor_of_subsingleton`,
   `PadicField.tateDualityFor_pi`, **`PadicField.tateDualityFor_of_trivial_prime`**
   (`M ≃ (ℤ/ℓ)^r`).
+* H29 **done** `H³` in cocycle form (`Duality/H3Vanishing.lean`). `ContH2.dc2` (coboundary of a
+  `2`-cochain), `ContH2.IsMulCocycle₃`, `ContH2.isMulCocycle₃_dc2` (`d ∘ d = 0`),
+  `ContH2.isMulCocycle₂_iff_dc2`, **`ContH2.H3Trivial G A`** (every locally constant `3`-cocycle is a
+  coboundary of a locally constant `2`-cochain), `Brauer.isLocallyConstant_dc2`,
+  **`Brauer.GShortExact.h2Hom_surjective_of_h3Trivial`** (`H3Trivial G A` ⇒ `H²(B) → H²(C)` onto),
+  `Brauer.GShortExact.h2_subsingleton`, **`PadicField.LocalH3Vanishing K Ω`** (statement only:
+  `H3Trivial G_K A` for all finite discrete `A`; consequence of `cd(G_K) = 2`, **not proved**),
+  `PadicField.eulerCharacteristicFor_of_shortExact_of_h3Trivial`,
+  **`PadicField.eulerCharacteristicFor_of_shortExact_of_localH3Vanishing`** (Euler closed under
+  extensions given `LocalH3Vanishing`), `PadicField.eulerCharacteristicFor_of_shortExact_of_h2_subsingleton`.
+* H30 **done** trivial modules without `H³` (`Duality/TrivialModules.lean`).
+  **`Brauer.GShortExact.delta1_natural`** (naturality of `δ¹`), `Brauer.castMulHom`,
+  `Brauer.trivZModSES a b` (`0 → ℤ/a → ℤ/ab → ℤ/b → 0`), `PadicField.card_rootsOfUnity_dvd`,
+  `PadicField.card_rootsOfUnity_succ`, **`PadicField.exists_delta1_ne_one`** (if `μ_{ℓ^f} ⊆ K`,
+  `μ_{ℓ^{f+1}} ⊄ K`, `f ≥ 1`: `H¹(ℤ/ℓ^{f+1}) → H¹(ℤ/ℓ^f)` is not onto by counting with
+  `PadicField.card_h1_trivZMod`, so the Bockstein `δ¹` is nonzero), **`PadicField.h2_castMulHom_surjective`**
+  (`H²(K, ℤ/N) → H²(K, ℤ/ℓ)` onto for `ℓ ∣ N`: `δ¹(χ)` generates `H²(K, ℤ/ℓ)` of prime order and lies in
+  the image by naturality), **`PadicField.eulerCharacteristicFor_trivZMod_primePow`**,
+  **`PadicField.eulerCharacteristicFor_trivZMod_all`**, **`PadicField.card_h2_trivZMod`**
+  (`#H²(K, ℤ/n) = #μ_n(K)`), **`PadicField.eulerCharacteristicFor_of_trivial_all`** (every finite
+  trivial module; no condition on `K`).
+* H31 **done** duality for `ℤ/n`, `μ_n` (`Duality/TrivialDuality.lean`).
+  **`PadicField.h2Hom_surjective_of_euler`** (Euler for `A, B, C` ⇒ `H²(B) → H²(C)` onto),
+  `PadicField.h2_castMulHom_surjective'`, `PadicField.h2_castMulHom_bijective`,
+  `PadicField.card_rootsOfUnity_card`, `PadicField.cup20_powPairing_muIncl`,
+  `PadicField.h2MuIncl_injective`, **`PadicField.perfectDeg2_trivZMod_all`**,
+  **`PadicField.perfectDeg0_mu_all`**, **`PadicField.tateDualityFor_trivZMod_all`**,
+  **`PadicField.tateDualityFor_mu_all`** (all degrees, all `n`, all `K`),
+  `PadicField.card_h2_eq_card_h0_dual_trivZMod`.
 * Not done: `PadicField.LocalTateDuality` and `PadicField.LocalEulerCharacteristic` for general
   finite `M`. Precisely missing: (1) surjectivity of `H²(K, B) → H²(K, C)` for non-split
-  `0 → A → B → C → 0` (equivalently `cd(G_K) = 2`; no `H³` here), which blocks dévissage along
-  non-split filtrations, in particular `#H²(K, ℤ/ℓ^e) = #μ_{ℓ^e}(K)` for `e ≥ 2` when
-  `μ_{ℓ^e} ⊄ K` (the restriction to `K(μ_{ℓ^e})` used for `e = 1` need not have degree prime
-  to `ℓ`); (2) naturality of the cup products with `δ⁰, δ¹` (five lemma for duality along
-  extensions); (3) the reduction of an `ℓ`-primary `M` to `K' = K(M, μ_ℓ)`-split modules needs,
+  `0 → A → B → C → 0` with non-trivial action; it is reduced to **`PadicField.LocalH3Vanishing`**
+  (`H³(K, A) = 0` for locally constant cocycles, i.e. `cd(G_K) = 2`), which is not proved
+  (for trivial modules it is circumvented by the Bockstein argument of H30); (2) even with (1),
+  `LocalEulerCharacteristic` needs the Euler formula for the simple `𝔽_ℓ[G_K]`-modules, which is
+  not reached by dévissage from `ℤ/ℓ`, `μ_ℓ` (Tate's proof uses Brauer characters / induced
+  modules and the behaviour of `χ` under restriction–corestriction); (3) naturality of the cup
+  products with `δ⁰, δ¹` (five lemma for duality along extensions); (4) the reduction of an
+  `ℓ`-primary `M` to `K' = K(M, μ_ℓ)`-split modules needs,
   besides `PadicField.h2_res_injective_of_coprime` (available), the analogous statements in
   degrees `0, 1` and the Galois-invariants description of the image (`Hochschild–Serre`),
   which are not formalised. Also not done: unramified `M`; finite-level (`Gal(L/K)`) duality;
