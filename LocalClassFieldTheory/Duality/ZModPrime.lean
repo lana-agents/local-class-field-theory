@@ -164,6 +164,16 @@ variable {Ω : Type*} [Field Ω] [Algebra K Ω] [Algebra ℚ_[p] Ω] [IsScalarTo
   [IsAlgClosed Ω] [IsGalois K Ω]
 variable (ℓ : ℕ) [hℓ : Fact ℓ.Prime]
 
+/-- **Restriction to a finite extension of degree prime to `n` is injective** on `H²(K, M)` for
+`M` killed by `n` (`cor ∘ res = [K' : K]`). This reduces statements about `ℓ`-primary modules to
+extensions of degree prime to `ℓ`, e.g. to `K(μ_ℓ)` (degree dividing `ℓ - 1`). -/
+theorem h2_res_injective_of_coprime (K' : IntermediateField K Ω) [FiniteDimensional K K']
+    {M : Type*} [CommGroup M] [MulDistribMulAction (Ω ≃ₐ[K] Ω) M] {n : ℕ}
+    (hM : ∀ m : M, m ^ n = 1) (hcop : n.Coprime (Module.finrank K K')) :
+    Function.Injective (ContH2.res (M := M) K'.fixingSubgroup) :=
+  ContH2.res_injective_of_coprime _ K'.fixingSubgroup_isOpen hM
+    (by rw [card_quotient_fixingSubgroup]; exact hcop)
+
 section Zeta
 
 variable (p Ω) in

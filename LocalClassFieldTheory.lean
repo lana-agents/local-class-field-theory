@@ -33,6 +33,7 @@ import LocalClassFieldTheory.Duality.CupProduct
 import LocalClassFieldTheory.Duality.Devissage
 import LocalClassFieldTheory.Duality.LongExact
 import LocalClassFieldTheory.Duality.MuN
+import LocalClassFieldTheory.Duality.Products
 import LocalClassFieldTheory.Duality.Statements
 import LocalClassFieldTheory.Duality.Transport
 import LocalClassFieldTheory.Duality.ZModPrime
