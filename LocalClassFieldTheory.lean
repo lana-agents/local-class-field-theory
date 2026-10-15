@@ -41,7 +41,10 @@ import LocalClassFieldTheory.Duality.H3Vanishing
 import LocalClassFieldTheory.Duality.LongExact
 import LocalClassFieldTheory.Duality.MuN
 import LocalClassFieldTheory.Duality.Products
+import LocalClassFieldTheory.Duality.Shapiro
 import LocalClassFieldTheory.Duality.Statements
+import LocalClassFieldTheory.Duality.TateH3
+import LocalClassFieldTheory.Duality.TateH3Local
 import LocalClassFieldTheory.Duality.Transport
 import LocalClassFieldTheory.Duality.TrivialDuality
 import LocalClassFieldTheory.Duality.TrivialModules
