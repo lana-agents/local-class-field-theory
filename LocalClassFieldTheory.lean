@@ -1,5 +1,6 @@
 import LocalClassFieldTheory.Brauer.Absolute
 import LocalClassFieldTheory.Brauer.ArtinPairing
+import LocalClassFieldTheory.Brauer.ArtinTransfer
 import LocalClassFieldTheory.Brauer.ContH2
 import LocalClassFieldTheory.Brauer.CorBr
 import LocalClassFieldTheory.Brauer.Corestriction
