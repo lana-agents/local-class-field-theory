@@ -16,8 +16,9 @@ Let `K` be finite over `ℚ_p` and `Ω` an algebraic closure. We isolate the sta
 
 This is a classical theorem for local fields (by inflation it amounts to
 `H³(Gal(L/K), Lˣ) ≅ Ĥ¹(Gal(L/K), ℤ) = 0` for finite Galois `L/K`, i.e. Tate's theorem /
-Tate–Nakayama in degree three, Serre, *Local fields* IX, Cassels–Fröhlich VI.1); it is **not**
-proved in this repository (only degrees `≤ 2` of Galois cohomology are formalised).
+Tate–Nakayama in degree three, Serre, *Local fields* IX, Cassels–Fröhlich VI.1); it is proved for
+finite extensions of `ℚ_p` in `LocalClassFieldTheory.Duality.TateH3Local`
+(`PadicField.h3UnitsVanishing`).
 
 From it and the divisibility of `Br(K) ≃ ℚ/ℤ` we deduce, via the Kummer sequence
 `1 → μ_n → Ωˣ → Ωˣ → 1`:
@@ -54,7 +55,7 @@ namespace Brauer
 
 /-- **`H³(K, Ωˣ) = 0` in cocycle form** (statement only): every locally constant `3`-cocycle of
 `Gal(Ω/K)` with values in `Ωˣ` is the coboundary of a locally constant `2`-cochain. True for
-local fields (Tate); not proved in this repository. -/
+local fields (Tate; `PadicField.h3UnitsVanishing`). -/
 def H3UnitsVanishing (K Ω : Type*) [Field K] [Field Ω] [Algebra K Ω] : Prop :=
   H3Trivial (Ω ≃ₐ[K] Ω) Ωˣ
 

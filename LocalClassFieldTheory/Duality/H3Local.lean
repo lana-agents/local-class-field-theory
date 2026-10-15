@@ -29,7 +29,8 @@ Proof (Serre, *Galois cohomology* I.3.3 and II.4.3, in cocycle form):
 * `H = Gal(Ω/K')` for a finite `K' ⊆ Ω` (`PadicField.exists_fixingSubgroup_eq`), and
   `H³(K', μ_ℓ) = 0` by the Kummer sequence (`PadicField.h3Trivial_fixingSubgroup_mu`).
 
-The remaining input `H³(K', Ωˣ) = 0` (Tate) is not proved in this repository.
+The remaining input `H³(K', Ωˣ) = 0` (Tate) is proved in
+`LocalClassFieldTheory.Duality.TateH3Local`.
 -/
 
 open ContH2 groupCohomology KummerTheory

@@ -24,7 +24,8 @@ the descended cocycle of `Gal(L/K)` with values in `Lˣ` is a coboundary, so is 
 
 `H³(Gal(L/K'), Lˣ) ≅ Ĥ¹(Gal(L/K'), ℤ) = 0` is Tate's theorem (cup product with the fundamental
 class, Tate–Nakayama in degree three; Serre, *Local fields* IX.8, Cassels–Fröhlich IV.10); it is
-**not** proved in this repository, which formalises Galois cohomology of `Lˣ` in degrees `≤ 2`.
+proved in `LocalClassFieldTheory.Duality.TateH3Local` (`PadicField.h3FiniteLevelVanishing`) by
+Shapiro's lemma and induction on `[L : K']`, without cup products.
 -/
 
 open ContH2 IntermediateField groupCohomology
@@ -180,10 +181,10 @@ variable {Ω : Type*} [Field Ω] [Algebra K Ω] [Algebra ℚ_[p] Ω] [IsScalarTo
   [IsAlgClosed Ω] [IsGalois K Ω]
 
 variable (K Ω) in
-/-- **`H³(Gal(L/K'), Lˣ) = 0` for all finite Galois levels** (statement only): for every finite
+/-- **`H³(Gal(L/K'), Lˣ) = 0` for all finite Galois levels**: for every finite
 `K' ⊆ Ω` over `K` and every finite Galois `L/K'` inside `Ω`, every `3`-cocycle of `Gal(L/K')`
-with values in `Lˣ` is a coboundary. This is Tate's theorem (`H³(G, Lˣ) ≅ Ĥ¹(G, ℤ) = 0`), not
-proved in this repository. -/
+with values in `Lˣ` is a coboundary. This is Tate's theorem (`H³(G, Lˣ) ≅ Ĥ¹(G, ℤ) = 0`), proved
+as `PadicField.h3FiniteLevelVanishing`. -/
 def H3FiniteLevelVanishing : Prop :=
   ∀ K' : IntermediateField K Ω, FiniteDimensional K K' →
     ∀ L : IntermediateField K' Ω, FiniteDimensional K' L → IsGalois K' L →

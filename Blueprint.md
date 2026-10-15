@@ -530,16 +530,38 @@ Absolute Brauer group (`Brauer/Absolute.lean`, `Brauer/Unramified.lean`), `Ω/K`
   `PadicField.h3Trivial_of_exponent`, **`PadicField.localH3Vanishing_of_h3UnitsVanishing`**.
   Inflation: `exists_openSubgroup_triple_invariant`, **`Brauer.h3UnitsVanishing_of_finite`**,
   **`PadicField.H3FiniteLevelVanishing K Ω`** (statement: `H³(Gal(L/K'), Lˣ) = 0` for all finite
-  Galois levels; Tate's theorem, **not proved**), **`PadicField.localH3Vanishing_of_finiteLevel`**.
+  Galois levels; Tate's theorem, proved in H33), **`PadicField.localH3Vanishing_of_finiteLevel`**.
   Euler: **`PadicField.localEulerCharacteristic_of_simple`** (`LocalH3Vanishing` + Euler for simple
   modules ⇒ `LocalEulerCharacteristic`), `PadicField.localEulerCharacteristic_of_h3UnitsVanishing`,
   **`PadicField.localEulerCharacteristic_of_finiteLevel`**.
+* H33 **done** Tate's theorem `H³(Gal(E/F), Eˣ) = 0` and `cd(G_K) ≤ 2` (`Duality/Shapiro.lean`,
+  `Duality/TateH3.lean`, `Duality/TateH3Local.lean`). Shapiro: the coinduced module
+  `ContH2.CoInd H A = Map(G/H, A)`, `(g f)(c) = g f(g⁻¹c)`, homogeneous forms `CoInd.hom₂`,
+  `CoInd.hom₃`, the retraction `CoInd.retr` (`r(hx) = h r(x)`), lifts `CoInd.lift₂/lift₃`, the
+  prism homotopy `CoInd.prism₃`; **`CoInd.exists_dx_of_ev`**, **`CoInd.shapiro_injective`**
+  (`H²(G, CoInd H A) ↪ H²(H, A)`), **`CoInd.h3Trivial`** (`H³(H, A) = 0` ⇒
+  `H³(G, CoInd H A) = 0`). Finite groups: `ContH2.h3Trivial_of_subsingleton_group`,
+  `ContH2.exists_dc2_eq_pow_index`, **`ContH2.h3Trivial_of_forall_prime`** (Sylow reduction,
+  indices generate `ℤ`), the trace `CoInd.trace`, the diagonal `CoInd.diag`, the difference
+  operator `CoInd.dif` (`ker = diag`, `CoInd.eq_diag_of_dif`; `image = ker trace`,
+  `CoInd.exists_dif_eq`), **`ContH2.h3Trivial_of_index_prime`** (the `ℓ`-step: the trace on
+  `H²(G, CoInd H A)` is injective by counting, so `H²(G, ker trace) = 0` by Hilbert 90, and
+  `H³(G, A) ↪ H³(G, CoInd H A) = 0`). Local fields: `PadicField.relBrCongr`,
+  **`PadicField.isCyclic_relBr_and_card`**, `ContH2.h3Trivial_of_mulEquiv_group`,
+  `PadicField.h3Trivial_subgroup_of_fixedField`, **`PadicField.h3Trivial_units`**,
+  **`PadicField.h3FiniteLevelVanishing`**, **`PadicField.h3UnitsVanishing`**,
+  **`PadicField.localH3Vanishing`**, `PadicField.h2Hom_surjective`,
+  `PadicField.eulerCharacteristicFor_of_shortExact'`,
+  **`PadicField.localEulerCharacteristic_of_simple'`**.
+* H34 **done** transfer compatibility of the Artin map (`Brauer/ArtinTransfer.lean`).
+  `ContH2.transfer_eq_prod_kappa` (Mathlib's transfer is `g ↦ ∏_c κ(c, g)`),
+  `PadicField.corChar` (`χ ∘ Ver`), `PadicField.uSum`, `PadicField.carry_exponent_eq`,
+  **`PadicField.corFun_carryFun`**, **`PadicField.corBr_carryClass`** (projection formula),
+  **`PadicField.pairing_corLocChar`** (`⟨χ ∘ Ver, a⟩_K = ⟨χ, a⟩_{K'}`),
+  `PadicField.eq_of_forall_char`, `PadicField.ver`, **`PadicField.artin_transfer`**.
 * Not done: `PadicField.LocalTateDuality` and `PadicField.LocalEulerCharacteristic` for general
-  finite `M`. Precisely missing: (1) surjectivity of `H²(K, B) → H²(K, C)` for non-split
-  `0 → A → B → C → 0` with non-trivial action; it is reduced to **`PadicField.LocalH3Vanishing`**
-  (`H³(K, A) = 0` for locally constant cocycles, i.e. `cd(G_K) = 2`), which is proved (H32) from
-  `PadicField.H3FiniteLevelVanishing` (`H³(Gal(L/K'), Lˣ) = 0`, Tate's theorem), not proved
-  (for trivial modules it is circumvented by the Bockstein argument of H30); (2) even with (1),
+  finite `M`. Precisely missing: (1) [done in H33: `H²(K, B) → H²(K, C)` is surjective for every
+  extension, `PadicField.h2Hom_surjective`, from `PadicField.localH3Vanishing`]; (2) with (1),
   `LocalEulerCharacteristic` needs the Euler formula for the simple `𝔽_ℓ[G_K]`-modules (exactly
   this input: `PadicField.localEulerCharacteristic_of_simple`), which is
   not reached by dévissage from `ℤ/ℓ`, `μ_ℓ` (Tate's proof uses Brauer characters / induced

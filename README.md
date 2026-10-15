@@ -207,18 +207,43 @@ formalised), proved by reduction to the cyclic extension `L/L^{⟨g⟩}`. `H²(K
   (`PadicField.h3Trivial_mu`, from `Brauer.H3UnitsVanishing`: `H³(K', Ωˣ) = 0`) and inflation
   (`Brauer.h3UnitsVanishing_of_finite`). Moreover **`PadicField.localEulerCharacteristic_of_simple`**:
   `LocalH3Vanishing` and the Euler formula for simple modules imply `LocalEulerCharacteristic`.
+* **Tate's theorem `H³(Gal(E/F), Eˣ) = 0` and `cd(G_K) ≤ 2`** (`Duality/Shapiro.lean`,
+  `Duality/TateH3.lean`, `Duality/TateH3Local.lean`): Shapiro's lemma in degrees two and three for
+  the coinduced module `Map(G/H, A)` (`ContH2.CoInd.shapiro_injective`, `ContH2.CoInd.h3Trivial`;
+  cocycle form, via the prism homotopy for the retraction `G → H`); for a finite group `G` and a
+  `G`-module `A`: Sylow reduction (`ContH2.h3Trivial_of_forall_prime`) and the `ℓ`-step
+  (`ContH2.h3Trivial_of_index_prime`: `H ⊴ G` of prime index, `H¹(G, A) = 0`, `H²(G, A)`
+  cyclic of order `|G|`, `|H²(H, A)| ≤ |H|`, `H³(H, A) = 0` ⇒ `H³(G, A) = 0`, using the trace and the
+  difference operator on `Map(G/H, A)`); `Br(E/F)` is cyclic of order `[E:F]`
+  (`PadicField.isCyclic_relBr_and_card`). Hence **`PadicField.h3Trivial_units`**
+  (`H³(Gal(E/F), Eˣ) = 0` for every finite Galois extension of finite extensions of `ℚ_p`),
+  **`PadicField.h3FiniteLevelVanishing`**, **`PadicField.h3UnitsVanishing`** (`H³(K, Ωˣ) = 0`),
+  **`PadicField.localH3Vanishing`** (`cd(G_K) ≤ 2` in cocycle form), the surjectivity of
+  `H²(K, B) → H²(K, C)` for every extension with finite kernel (`PadicField.h2Hom_surjective`),
+  the Euler characteristic formula closed under all extensions
+  (`PadicField.eulerCharacteristicFor_of_shortExact'`) and reduced to simple modules
+  (`PadicField.localEulerCharacteristic_of_simple'`).
+* **The Artin map commutes with the transfer** (`Brauer/ArtinTransfer.lean`): for a finite
+  `K'/K` inside `Ω`, `a ∈ Kˣ` and any lift `g ∈ Gal(Ω/K)` of `artin_K(a)`,
+  **`PadicField.artin_transfer`**: `artin_{K'}(a) = Ver(g)` in `Gal(K'^ab/K')`, where
+  `PadicField.ver` is Mathlib's `MonoidHom.transfer` to `Gal(Ω/K')` followed by restriction
+  (`ContH2.transfer_eq_prod_kappa`: `Ver(g) = ∏_c κ(c, g)`). Proof: the projection formula
+  `cor(χ ∪ κ(a)) = (χ ∘ Ver) ∪ κ(a)` for carry cocycles (`PadicField.corBr_carryClass`),
+  `inv ∘ cor = inv` and `⟨χ, a⟩ = χ(artin a)` give
+  `⟨χ ∘ Ver, a⟩_K = ⟨χ, a⟩_{K'}`
+  (`PadicField.pairing_corLocChar`); characters of finite abelian quotients separate points.
 * Tate–Nakayama: degree `0`, `ℤ/[L:K] ≃ Br(L/K)`, `k ↦ u_{L/K}^k`, for every finite Galois `L/K`
   (`PadicField.fundClassPowEquiv`, `inv = k/[L:K]`: `PadicField.invEquiv_infl_fundClassPowEquiv`);
   degree `-2` for abelian `L/K` (`PadicField.bijective_relNak_fundClass`).
 
 Not done (outside the scope of this repository's goals, possible future work): local Tate
 duality and the Euler characteristic formula for general finite Galois modules (stated as
-`PadicField.LocalTateDuality`, `PadicField.LocalEulerCharacteristic`; missing: surjectivity of
-`H²(K, B) → H²(K, C)` along non-split extensions with non-trivial action, reduced to
-`PadicField.LocalH3Vanishing` (`cd(G_K) ≤ 2`) and from there to `H³(Gal(L/K'), Lˣ) = 0`
-(`PadicField.H3FiniteLevelVanishing`), the Euler formula for simple `𝔽_ℓ[G_K]`-modules
-not reached by dévissage (Brauer characters), and the compatibility of cup products with the
-connecting maps); Tate–Nakayama in degree `-2` for non-abelian
+`PadicField.LocalTateDuality`, `PadicField.LocalEulerCharacteristic`; with `cd(G_K) ≤ 2` now
+proved, what is missing is the Euler formula for simple `𝔽_ℓ[G_K]`-modules not reached by
+dévissage (Brauer characters / the Galois-module structure of `Lˣ/(Lˣ)^ℓ`), Shapiro's lemma for
+`G_K` and open subgroups as an isomorphism in degrees `0, 1, 2`, and the compatibility of cup
+products with the connecting maps and with corestriction); Tate–Nakayama in degree `-2` for
+non-abelian
 `L/K` and in positive degrees; higher ramification groups (upper numbering) and the
 conductor–ramification correspondence, Lubin–Tate theory (explicit `K^ab = K^ur · K_π`), local
 class field theory in positive characteristic.

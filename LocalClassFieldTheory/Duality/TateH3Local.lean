@@ -65,7 +65,7 @@ variable {p : ℕ} [hp : Fact p.Prime]
 
 section Abstract
 
-variable {F E : Type u} [Field F] [Field E] [Algebra ℚ_[p] F] [Algebra ℚ_[p] E] [Algebra F E]
+variable {F E : Type*} [Field F] [Field E] [Algebra ℚ_[p] F] [Algebra ℚ_[p] E] [Algebra F E]
   [IsScalarTower ℚ_[p] F E] [FiniteDimensional ℚ_[p] F] [FiniteDimensional ℚ_[p] E]
 
 /-- Transport of the relative Brauer group along an `F`-isomorphism `E ≃ₐ[F] E'`. -/
@@ -201,9 +201,17 @@ variable (p) in
 include hp in
 /-- **Tate's theorem `H³(Gal(E/F), Eˣ) = 0`** (cocycle form) for every finite Galois extension
 `E/F` of finite extensions of `ℚ_p`. -/
-theorem h3Trivial_units (F : Type u) [Field F] [Algebra ℚ_[p] F] [FiniteDimensional ℚ_[p] F]
-    [Algebra F E] [IsScalarTower ℚ_[p] F E] [IsGalois F E] : H3Trivial (E ≃ₐ[F] E) Eˣ :=
-  h3Trivial_units_aux p _ F rfl
+theorem h3Trivial_units (F : Type*) [Field F] [Algebra ℚ_[p] F] [FiniteDimensional ℚ_[p] F]
+    [Algebra F E] [IsScalarTower ℚ_[p] F E] [IsGalois F E] : H3Trivial (E ≃ₐ[F] E) Eˣ := by
+  haveI : FiniteDimensional F E := Module.Finite.of_restrictScalars_finite ℚ_[p] F E
+  -- pass to the copy `E^{Gal(E/F)}` of `F` inside `E` (in the universe of `E`)
+  let S : Subgroup (E ≃ₐ[F] E) := ⊤
+  haveI : FiniteDimensional ℚ_[p] (IntermediateField.fixedField S) :=
+    Module.Finite.of_injective (IsScalarTower.toAlgHom ℚ_[p] (IntermediateField.fixedField S)
+      E).toLinearMap (RingHom.injective _)
+  have h := h3Trivial_subgroup_of_fixedField S
+    (h3Trivial_units_aux p _ (IntermediateField.fixedField S) rfl)
+  exact h3Trivial_of_mulEquiv_group Subgroup.topEquiv.symm (fun _ _ => rfl) h
 
 end Main
 
@@ -224,10 +232,52 @@ theorem h3FiniteLevelVanishing : H3FiniteLevelVanishing K Ω := by
 
 variable (p K Ω) in
 include hp in
+/-- **`H³(K, Ωˣ) = 0`** (cocycle form): Tate's theorem at the level of `Gal(Ω/K)`. -/
+theorem h3UnitsVanishing : H3UnitsVanishing K Ω :=
+  h3UnitsVanishing_of_finite fun _ _ _ => h3Trivial_units p K
+
+universe v
+
+variable (p K Ω) in
+include hp in
 /-- **`cd(G_K) ≤ 2`** in cocycle form: every locally constant `3`-cocycle of `Gal(Ω/K)` with
 values in a finite discrete module is a coboundary. -/
-theorem localH3Vanishing : LocalH3Vanishing.{u} K Ω :=
+theorem localH3Vanishing : LocalH3Vanishing.{v} K Ω :=
   localH3Vanishing_of_finiteLevel p (h3FiniteLevelVanishing p K Ω)
+
+include hp in
+/-- **`H²(K, B) → H²(K, C)` is surjective** for every short exact sequence `0 → A → B → C → 0` of
+discrete modules with `A` finite. -/
+theorem h2Hom_surjective {A B C : Type v} [CommGroup A] [CommGroup B] [CommGroup C]
+    [Finite A] [TopologicalSpace A] [DiscreteTopology A] [MulDistribMulAction (Ω ≃ₐ[K] Ω) A]
+    [SmoothAction (Ω ≃ₐ[K] Ω) A] [MulDistribMulAction (Ω ≃ₐ[K] Ω) B]
+    [MulDistribMulAction (Ω ≃ₐ[K] Ω) C] [SmoothAction (Ω ≃ₐ[K] Ω) B]
+    (S : GShortExact (Ω ≃ₐ[K] Ω) A B C) :
+    Function.Surjective (h2Hom (G := Ω ≃ₐ[K] Ω) S.π S.map_smul_π) :=
+  S.h2Hom_surjective_of_h3Trivial (localH3Vanishing p K Ω A)
+
+include hp in
+/-- **The Euler characteristic formula is closed under extensions** (unconditionally). -/
+theorem eulerCharacteristicFor_of_shortExact' {A B C : Type v} [CommGroup A] [CommGroup B]
+    [CommGroup C] [Finite A] [Finite B] [Finite C] [TopologicalSpace A] [DiscreteTopology A]
+    [IsTopologicalGroup A] [TopologicalSpace B] [DiscreteTopology B] [IsTopologicalGroup B]
+    [TopologicalSpace C] [DiscreteTopology C] [IsTopologicalGroup C]
+    [MulDistribMulAction (Ω ≃ₐ[K] Ω) A] [SmoothAction (Ω ≃ₐ[K] Ω) A]
+    [MulDistribMulAction (Ω ≃ₐ[K] Ω) B] [MulDistribMulAction (Ω ≃ₐ[K] Ω) C]
+    [SmoothAction (Ω ≃ₐ[K] Ω) B] (S : GShortExact (Ω ≃ₐ[K] Ω) A B C)
+    (hA : EulerCharacteristicFor p K Ω A) (hC : EulerCharacteristicFor p K Ω C) :
+    EulerCharacteristicFor p K Ω B :=
+  eulerCharacteristicFor_of_shortExact_of_localH3Vanishing (localH3Vanishing p K Ω) S hA hC
+
+variable (p K Ω) in
+include hp in
+/-- **The local Euler characteristic formula reduces to simple modules** (unconditionally). -/
+theorem localEulerCharacteristic_of_simple'
+    (hs : ∀ (A : Type v) [CommGroup A] [Finite A] [TopologicalSpace A] [DiscreteTopology A]
+      [MulDistribMulAction (Ω ≃ₐ[K] Ω) A] [SmoothAction (Ω ≃ₐ[K] Ω) A],
+      IsSimpleGModule (Ω ≃ₐ[K] Ω) A → EulerCharacteristicFor p K Ω A) :
+    LocalEulerCharacteristic.{v} p K Ω :=
+  localEulerCharacteristic_of_simple p (localH3Vanishing p K Ω) hs
 
 end Omega
 

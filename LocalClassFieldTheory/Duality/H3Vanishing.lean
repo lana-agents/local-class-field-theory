@@ -200,14 +200,15 @@ variable (K : Type*) [Field K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
 variable (Ω : Type*) [Field Ω] [Algebra K Ω] [Algebra ℚ_[p] Ω] [IsScalarTower ℚ_[p] K Ω]
   [IsAlgClosed Ω] [IsGalois K Ω]
 
-/-- **`H³(K, A) = 0` for finite discrete modules, in cocycle form** (statement only): for every
+/-- **`H³(K, A) = 0` for finite discrete modules, in cocycle form**: for every
 finite discrete `Gal(Ω/K)`-module `A` (in universe `u`), every locally constant `3`-cocycle with
 values in `A` is a coboundary. This is the consequence `H³(K, A) = 0` of `cd(G_K) = 2` (Serre,
 *Galois cohomology*, II.4.3). It is derived from `H³(Gal(L/K'), Lˣ) = 0` at the finite levels
-(Tate's theorem, not proved here) in `PadicField.localH3Vanishing_of_finiteLevel`
-(`LocalClassFieldTheory.Duality.H3Inflation`); it is the only input
-missing for the surjectivity of `H²(K, B) → H²(K, C)` in the dévissage of the Euler
-characteristic (`PadicField.eulerCharacteristicFor_of_shortExact_of_localH3Vanishing`). -/
+(Tate's theorem) in `PadicField.localH3Vanishing_of_finiteLevel`
+(`LocalClassFieldTheory.Duality.H3Inflation`) and **proved** as `PadicField.localH3Vanishing`
+(`LocalClassFieldTheory.Duality.TateH3Local`); it gives the surjectivity of `H²(K, B) → H²(K, C)`
+in the dévissage of the Euler characteristic
+(`PadicField.eulerCharacteristicFor_of_shortExact_of_localH3Vanishing`). -/
 def LocalH3Vanishing : Prop :=
   ∀ (A : Type u) [CommGroup A] [Finite A] [TopologicalSpace A] [DiscreteTopology A]
     [MulDistribMulAction (Ω ≃ₐ[K] Ω) A] [SmoothAction (Ω ≃ₐ[K] Ω) A],
