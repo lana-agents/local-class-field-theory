@@ -43,6 +43,8 @@ import LocalClassFieldTheory.Duality.LongExact
 import LocalClassFieldTheory.Duality.MuN
 import LocalClassFieldTheory.Duality.Products
 import LocalClassFieldTheory.Duality.Shapiro
+import LocalClassFieldTheory.Duality.ShapiroEuler
+import LocalClassFieldTheory.Duality.ShapiroOpen
 import LocalClassFieldTheory.Duality.Statements
 import LocalClassFieldTheory.Duality.TateH3
 import LocalClassFieldTheory.Duality.TateH3Local
