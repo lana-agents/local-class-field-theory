@@ -145,6 +145,33 @@ abbrev ResCompat (K' : IntermediateField K Ω) (A : Type*) [CommGroup A]
     [MulDistribMulAction (Ω ≃ₐ[K] Ω) A] [MulDistribMulAction (Ω ≃ₐ[K'] Ω) A] : Prop :=
   ∀ (σ : K'.fixingSubgroup) (a : A), IntermediateField.fixingSubgroupEquiv K' σ • a = σ • a
 
+/-- Restriction `Gal(Ω/K') → Gal(Ω/K)`, an isomorphism onto `H = Gal(Ω/K)_{K'}`. -/
+noncomputable def galRes (K' : IntermediateField K Ω) : (Ω ≃ₐ[K'] Ω) →* (Ω ≃ₐ[K] Ω) :=
+  K'.fixingSubgroup.subtype.comp (IntermediateField.fixingSubgroupEquiv K').symm.toMonoidHom
+
+theorem continuous_galRes (K' : IntermediateField K Ω) : Continuous (galRes K') :=
+  continuous_subtype_val.comp (continuous_fixingSubgroupEquiv_symm K')
+
+/-- The action of `Gal(Ω/K')` on a `G_K`-module by restriction. -/
+@[reducible]
+noncomputable def resAction (K' : IntermediateField K Ω) (B : Type*) [CommGroup B]
+    [MulDistribMulAction (Ω ≃ₐ[K] Ω) B] : MulDistribMulAction (Ω ≃ₐ[K'] Ω) B :=
+  MulDistribMulAction.compHom B (galRes K')
+
+theorem resCompat_resAction (K' : IntermediateField K Ω) (B : Type*) [CommGroup B]
+    [MulDistribMulAction (Ω ≃ₐ[K] Ω) B] :
+    letI := resAction K' B
+    ResCompat K' B := by
+  intro σ a
+  change galRes K' _ • a = (σ : Ω ≃ₐ[K] Ω) • a
+  simp [galRes]
+
+theorem smoothAction_resAction (K' : IntermediateField K Ω) (B : Type*) [CommGroup B]
+    [MulDistribMulAction (Ω ≃ₐ[K] Ω) B] [SmoothAction (Ω ≃ₐ[K] Ω) B] :
+    @SmoothAction (Ω ≃ₐ[K'] Ω) B _ (resAction K' B).toSMul :=
+  @SmoothAction.mk (Ω ≃ₐ[K'] Ω) B _ (resAction K' B).toSMul fun b =>
+    (SmoothAction.isLocallyConstant_smul (G := Ω ≃ₐ[K] Ω) b).comp_continuous (continuous_galRes K')
+
 variable (hA : ResCompat K' A)
 
 include hA in
