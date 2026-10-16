@@ -38,6 +38,12 @@ sources:
     location: "Chapter VI"
     note: "Reference (README, Established sources)."
 
+  - title: "Cohomology of Number Fields"
+    authors: ["Jürgen Neukirch", "Alexander Schmidt", "Kay Wingberg"]
+    type: "book"
+    location: "Proposition 1.6.7"
+    note: "Five-term inflation-restriction-transgression exact sequence (Cohomology/FiveTerm.lean)."
+
 related_formalizations:
   - id: "https://github.com/lana-agents/continuous-kummer-theory"
     relationship: "builds-on"
@@ -53,6 +59,8 @@ status:
   sorry_in_definitions: 0
   axioms: []
   main_results:
+    - "FiveTerm.exists_tg_eq_of_inf₂_eq_one: five-term exact sequence, exactness at H²(G/N, A^N) (with inf₁_injective, exists_inf₁_eq_of_res₁_eq_one, tg_res₁, exists_res₁_eq_of_tg_eq_one, inf₂_tg)"
+    - "FiveTerm.tgCentral_eq_of_section: transgression of a central extension via a section"
     - "PadicField.e_mul_f: e(L/K) * f(L/K) = [L : K]"
     - "PadicField.v_norm: v_K (N_{L/K} x) = f(L/K) * v_L x"
     - "PadicField.isGalois_of_isUnramified: unramified extensions are Galois"

@@ -140,6 +140,29 @@ formalised), proved by reduction to the cyclic extension `L/L^{⟨g⟩}`. `H²(K
 (`PadicField.h2ZHatOneEquiv_res`). The comparison with Mathlib's `groupCohomology.H2` is stated for
 `G M : Type` because Mathlib's group cohomology requires the ring, group and module in one universe.
 
+**Five-term exact sequence and transgression (`LocalClassFieldTheory/Cohomology/`).** For a
+profinite group `G`, a closed normal subgroup `N` and a discrete `G`-module `A` (discrete
+topology, continuous action), with `H¹` the continuous cocycle model `ContH1` of
+`continuous-kummer-theory` and `H²` the locally constant model `ContH2`:
+* `FiveTerm.inf₁`, `res₁`, `inf₂`, the action `conj₁` of `G` on `H¹(N, A)`, the invariants
+  `FiveTerm.invariants`, and the **transgression** `FiveTerm.tg : H¹(N, A)^{G/N} → H²(G/N, A^N)`:
+  a continuous extension `F` of a cocycle `f` on `N` with `F(σn) = F(σ)·σf(n)`,
+  `F(nσ) = f(n)·nF(σ)` (`FiveTerm.Admissible`) exists by compactness
+  (`FiveTerm.exists_admissible`, no section of `G → G/N` needed), and `dF` descends to a 2-cocycle
+  of `G/N` with values in `A^N`; `tg_spec` computes `tg` from any such `F`.
+* Exactness of `0 → H¹(G/N, A^N) → H¹(G, A) → H¹(N, A)^{G/N} → H²(G/N, A^N) → H²(G, A)`:
+  `inf₁_injective`, `res₁_inf₁`, `exists_inf₁_eq_of_res₁_eq_one`, `res₁_mem_invariants`,
+  `tg_res₁`, `exists_res₁_eq_of_tg_eq_one`, `inf₂_tg`, `exists_tg_eq_of_inf₂_eq_one`
+  (Neukirch–Schmidt–Wingberg, Prop. 1.6.7).
+* Central extensions `1 → I → E → Δ → 1`, `A` with trivial action
+  (`Cohomology/CentralTransgression.lean`): `FiveTerm.tgCentral : Hom_cont(I, A) → H²(Δ, A)`;
+  `tgCentral_eq_of_section` (for a continuous section `s`, `tgCentral φ` is the class of
+  `(x, y) ↦ φ(s(xy)⁻¹ s(x) s(y))⁻¹`), `tgCentral_eq_one_iff` (`φ` extends to `E`),
+  `inf₂_tgCentral`, `exists_tgCentral_eq_of_inf₂_eq_one`, and naturality in `A`
+  (`tgCentral_comp`). This is the cohomological input of the synchronisation `I_x ≅ M_X` of
+  Mochizuki's [AbsTopIII] Prop. 1.4(ii) (the differential `d₂` of the cuspidally central
+  extension at each finite level); the surface-group input `H²(Δ_X, Ẑ) ≅ Ẑ` is not here.
+
 **Local duality, Tate–Nakayama, Euler characteristic (`LocalClassFieldTheory/Duality/`,
 `Brauer/TateNakayamaDegrees.lean`, `PadicField/PowIndex*.lean`).**
 * The index of `n`-th powers: `[Kˣ : (Kˣ)ⁿ] = n · #μ_n(K) · p^{v_p(n) [K:ℚ_p]}`

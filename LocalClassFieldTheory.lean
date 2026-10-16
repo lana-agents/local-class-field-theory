@@ -29,6 +29,8 @@ import LocalClassFieldTheory.ClassFieldAxiom.Hilbert90
 import LocalClassFieldTheory.ClassFieldAxiom.Lattice
 import LocalClassFieldTheory.ClassFieldAxiom.Units
 import LocalClassFieldTheory.ClassFieldAxiom.Vanishing
+import LocalClassFieldTheory.Cohomology.CentralTransgression
+import LocalClassFieldTheory.Cohomology.FiveTerm
 import LocalClassFieldTheory.Duality.Cartier
 import LocalClassFieldTheory.Duality.CupProduct
 import LocalClassFieldTheory.Duality.Devissage
