@@ -253,9 +253,11 @@ formalised), proved by reduction to the cyclic extension `L/L^{⟨g⟩}`. `H²(K
 Not done (outside the scope of this repository's goals, possible future work): the Euler
 characteristic formula for general finite Galois modules (stated as
 `PadicField.LocalEulerCharacteristic`; with `cd(G_K) ≤ 2` and local duality proved, what is
-missing is the Euler formula for simple `𝔽_ℓ[G_K]`-modules not reached by dévissage: Brauer
-characters / induction from cyclic subgroups of order prime to `ℓ` and the Galois-module
-structure of `Lˣ/(Lˣ)^ℓ`); Tate–Nakayama in degree `-2` for
+missing is the Euler formula for simple `𝔽_ℓ[G_K]`-modules not reached by dévissage: an
+induction theorem reducing to cyclic Galois groups and the Galois-module structure of
+`Lˣ/(Lˣ)^ℓ` for extensions of degree prime to `ℓ`; the descent along cyclic `ℓ`-extensions is
+done, `PadicField.eulerCharacteristicFor_of_cyclic_descent`, see the plan in `Blueprint.md`);
+Tate–Nakayama in degree `-2` for
 non-abelian
 `L/K` and in positive degrees; higher ramification groups (upper numbering) and the
 conductor–ramification correspondence, Lubin–Tate theory (explicit `K^ab = K^ur · K_π`), local

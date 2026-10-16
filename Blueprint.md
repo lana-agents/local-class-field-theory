@@ -576,6 +576,27 @@ Absolute Brauer group (`Brauer/Absolute.lean`, `Brauer/Unramified.lean`), `Ω/K`
   `PadicField.h1Hom_diag_eq_one`, **`PadicField.exists_coInd_kill_h1`**, `PadicField.dualH1`,
   **`PadicField.injective_dualH1`**, **`PadicField.perfectDeg1_all`**. Conclusion:
   **`PadicField.localTateDuality`**.
+* H36 **done** descent of the Euler formula along cyclic extensions of degree `ℓ`
+  (`Duality/EulerDescent.lean`): `PadicField.kerFilt`, `PadicField.filtMap`,
+  `PadicField.ratioSub_ses`, **`PadicField.eulerRatio_eq_pow_of_aut`** (`ρ(X) = ρ(X^R)^ℓ`),
+  `PadicField.eulerRatio_coInd` (`ρ_K(CoInd M) = ρ_{K'}(M)`), `PadicField.coIndShift`,
+  **`PadicField.eulerRatio_res_eq_pow`**, **`PadicField.eulerCharacteristicFor_of_cyclic_descent`**.
+* Plan for `PadicField.LocalEulerCharacteristic` (not done). With duality,
+  `#H²(K, M) = #H⁰(K, M')`, so only `#H¹(K, M)` is needed, for `M` killed by a prime `ℓ`.
+  (a) *Arithmetic input*: for `L/K` Galois with `Γ = Gal(L/K)` of order prime to `ℓ` and `M`
+  trivial over `L`: `H¹(K, M)` is the `Γ`-invariant part of `H¹(K, CoInd_L M) = H¹(L, M)` (the
+  idempotent `|Γ|⁻¹ Σ_γ R_γ`, `R_γ` translations as in `PadicField.coIndShift`), equal to
+  `Hom_Γ(Lˣ/ℓ, M)` by reciprocity (`PadicField.abRec_conj`); in the Grothendieck group of
+  `𝔽_ℓ[Γ]`-modules `[Lˣ/ℓ] = [ℤ/ℓ] + [μ_ℓ(L)] + δ_{ℓ = p} [K : ℚ_p] [𝔽_ℓ[Γ]]` (valuation,
+  `μ_{q-1}`, `U¹` uniquely `ℓ`-divisible for `ℓ ≠ p`; for `ℓ = p` compare `U^{(n)}/p` with
+  `𝔭ⁿ/p𝔭ⁿ` layer by layer and `𝒪_L/p` with a normal-basis lattice `𝒪_K[Γ]θ`, Mathlib
+  `FieldTheory/Galois/NormalBasis`); count with Maschke. (b) *Group theory*: strong induction on
+  `[K' : K]`; for cyclic `Gal(K'/K)` the `ℓ`-part is H36 and the `ℓ'`-part is (a); for non-cyclic
+  groups use Artin's induction theorem (the trivial character is a `ℚ`-combination of permutation
+  characters of cyclic subgroups), realised as an embedding of permutation lattices with finite
+  cokernel, and the invariance of `ρ_K(M ⊗ Λ/ℓ)` under such embeddings (snake lemma and
+  `ρ(M ⊗ Q[ℓ]) = ρ(M ⊗ Q/ℓ)` for finite `Q`). Neither the representation theory of (b) nor (a) is
+  in Mathlib.
 * Not done: `PadicField.LocalEulerCharacteristic` for general finite `M` (local duality is
   H35). Precisely missing: (1) [done in H33: `H²(K, B) → H²(K, C)` is surjective for every
   extension, `PadicField.h2Hom_surjective`, from `PadicField.localH3Vanishing`]; (2) with (1),
