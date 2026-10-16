@@ -20,8 +20,9 @@ by evaluation (`Brauer.evalPairing`), and the cup products land in `H²(K, μ_n)
   `x ↦ (y ↦ χ(x ∪ y))`, is bijective.
 * `PadicField.TateDualityFor p K Ω M n`: perfectness of `M × M^∨ → μ_n` in degrees `0, 1, 2`.
 * **`PadicField.LocalTateDuality p K Ω`**: `TateDualityFor` for **every** finite discrete
-  `G_K`-module (statement only: Tate–Poitou local duality, Serre, *Galois cohomology* II.5.2,
-  Neukirch–Schmidt–Wingberg 7.2.6).
+  `G_K`-module (Tate–Poitou local duality, Serre, *Galois cohomology* II.5.2,
+  Neukirch–Schmidt–Wingberg 7.2.6; **proved** as `PadicField.localTateDuality` in
+  `LocalClassFieldTheory.Duality.General`).
 * `PadicField.EulerCharacteristicFor p K Ω M`: `H¹` and `H²` are finite and
   `#H¹ = #H⁰ · #H² · p^{v_p(#M) [K : ℚ_p]}`, i.e. `#H⁰ · #H² / #H¹ = |#M|_K`.
 * **`PadicField.LocalEulerCharacteristic p K Ω`**: `EulerCharacteristicFor` for every finite
@@ -201,11 +202,10 @@ def TateDualityFor (M : Type*) [CommGroup M] [Finite M] [TopologicalSpace M] [Di
 
 /-- **Local Tate duality** (Tate–Poitou), as a statement: for every finite discrete
 `Gal(Ω/K)`-module `M` (in a universe `u`) and every `n` killing `M`, the cup product pairings
-with the Cartier dual into `H²(K, μ_n) ≃ ℤ/n` are perfect in degrees `0, 1, 2`. Proved here for
-`M = μ_n` and `M = ℤ/n` in the degrees listed in `LocalClassFieldTheory.Duality.Cartier`; the
-general case is open in this repository (further cases: `PadicField.tateDualityFor_trivZMod_all`,
-`PadicField.tateDualityFor_mu_all` (all `n`, all degrees), `PadicField.tateDualityFor_prod`,
-`PadicField.tateDualityFor_of_trivial_prime`). -/
+with the Cartier dual into `H²(K, μ_n) ≃ ℤ/n` are perfect in degrees `0, 1, 2`. **Proved** in
+`LocalClassFieldTheory.Duality.General` (`PadicField.localTateDuality`); special cases proved
+earlier: `PadicField.tateDualityFor_trivZMod_all`, `PadicField.tateDualityFor_mu_all`,
+`PadicField.tateDualityFor_prod`, `PadicField.tateDualityFor_of_trivial_prime`. -/
 def LocalTateDuality : Prop :=
   ∀ (M : Type u) [CommGroup M] [Finite M] [TopologicalSpace M] [DiscreteTopology M]
     [MulDistribMulAction (Ω ≃ₐ[K] Ω) M] [SmoothAction (Ω ≃ₐ[K] Ω) M] (n : ℕ) [NeZero n],

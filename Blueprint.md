@@ -559,14 +559,31 @@ Absolute Brauer group (`Brauer/Absolute.lean`, `Brauer/Unramified.lean`), `Ω/K`
   **`PadicField.corFun_carryFun`**, **`PadicField.corBr_carryClass`** (projection formula),
   **`PadicField.pairing_corLocChar`** (`⟨χ ∘ Ver, a⟩_K = ⟨χ, a⟩_{K'}`),
   `PadicField.eq_of_forall_char`, `PadicField.ver`, **`PadicField.artin_transfer`**.
-* Not done: `PadicField.LocalTateDuality` and `PadicField.LocalEulerCharacteristic` for general
-  finite `M`. Precisely missing: (1) [done in H33: `H²(K, B) → H²(K, C)` is surjective for every
+* H35 **done** local Tate duality for every finite module (`Duality/FiniteDual.lean`,
+  `Duality/DualityDeg0.lean`, `Duality/DualityDeg2.lean`, `Duality/General.lean`, with
+  `Duality/ShapiroOpen.lean`, `Duality/ShapiroEuler.lean`, `Duality/EulerFinite.lean`). Finite
+  groups: `Brauer.card_hom_mu`, `Brauer.exists_hom_mu_ne_one`, `Brauer.exists_extend_mu`,
+  `Brauer.card_hom_zmod`, **`Brauer.surjective_of_transpose_injective`**,
+  **`Brauer.exists_factor_zmod`**. Degree `0`: **`PadicField.exists_cup02_ne_one`**,
+  **`PadicField.injective_perfectDeg0`**. Degree `2`: `Brauer.CartierDual.comap`,
+  **`PadicField.dualSES`**, `PadicField.dualH2`, `PadicField.dualH0`,
+  **`PadicField.surjective_dualH2`**, **`PadicField.injective_dualH2_of_ses`**,
+  `PadicField.card_h2_le_of_trivial`, `PadicField.card_le_card_h0_coInd_dual`,
+  `PadicField.injective_dualH2_coInd`, `PadicField.coIndProd`, **`PadicField.injective_dualH2`**,
+  **`PadicField.perfectDeg2_all`**, `PadicField.evDual_bijective`,
+  **`PadicField.perfectDeg0_all`**. Degree `1`:
+  **`Brauer.GShortExact.cup11_delta0_mul_cup02_delta1`**, `PadicField.cocycleKer`,
+  `PadicField.h1Hom_diag_eq_one`, **`PadicField.exists_coInd_kill_h1`**, `PadicField.dualH1`,
+  **`PadicField.injective_dualH1`**, **`PadicField.perfectDeg1_all`**. Conclusion:
+  **`PadicField.localTateDuality`**.
+* Not done: `PadicField.LocalEulerCharacteristic` for general finite `M` (local duality is
+  H35). Precisely missing: (1) [done in H33: `H²(K, B) → H²(K, C)` is surjective for every
   extension, `PadicField.h2Hom_surjective`, from `PadicField.localH3Vanishing`]; (2) with (1),
   `LocalEulerCharacteristic` needs the Euler formula for the simple `𝔽_ℓ[G_K]`-modules (exactly
   this input: `PadicField.localEulerCharacteristic_of_simple`), which is
   not reached by dévissage from `ℤ/ℓ`, `μ_ℓ` (Tate's proof uses Brauer characters / induced
-  modules and the behaviour of `χ` under restriction–corestriction); (3) naturality of the cup
-  products with `δ⁰, δ¹` (five lemma for duality along extensions); (4) the reduction of an
+  modules and the behaviour of `χ` under restriction–corestriction); (3) [done in H35: compatibility
+  of cup products with `δ⁰, δ¹`]; (4) the reduction of an
   `ℓ`-primary `M` to `K' = K(M, μ_ℓ)`-split modules needs,
   besides `PadicField.h2_res_injective_of_coprime` (available), the analogous statements in
   degrees `0, 1` and the Galois-invariants description of the image (`Hochschild–Serre`),

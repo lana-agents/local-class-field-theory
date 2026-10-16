@@ -150,8 +150,22 @@ formalised), proved by reduction to the cyclic extension `L/L^{⟨g⟩}`. `H²(K
   Cartier dual `M^∨ = Hom(M, μ_n)` (`Brauer.CartierDual`, smooth for finite smooth `M`) and the
   precise statements **`PadicField.LocalTateDuality`** (perfectness of
   `H^i(K, M) × H^{2-i}(K, M^∨) → H²(K, μ_n) ≃ ℤ/n` for all finite `M`, `i = 0, 1, 2`) and
-  **`PadicField.LocalEulerCharacteristic`** (`#H⁰ · #H² / #H¹ = |#M|_K`) — these general
-  statements are **not proved**.
+  **`PadicField.LocalEulerCharacteristic`** (`#H⁰ · #H² / #H¹ = |#M|_K`). The first is
+  **proved** (`PadicField.localTateDuality`, see below); the second is not proved in general.
+* **Local Tate duality for every finite module** (`Duality/FiniteDual.lean`,
+  `Duality/DualityDeg0.lean`, `Duality/DualityDeg2.lean`, `Duality/General.lean`):
+  **`PadicField.localTateDuality : LocalTateDuality p K Ω`**. Degree `0`, injectivity
+  (`PadicField.injective_perfectDeg0`: `x ∪ -` factors through `H²(K, μ_d) ≃ ℤ/d ↪ H²(K, μ_n)`
+  and `H²(K, Y) → H²(K, μ_d)` is onto by `cd(G_K) ≤ 2`); degree `2`, surjectivity by
+  transposition (`Brauer.surjective_of_transpose_injective`), injectivity for
+  `B = CoInd_{G_{K'}} M` by counting (`#H²(K, B) = #H²(K', M) ≤ #M ≤ #H⁰(K, B')`) and for all `M`
+  by a four-lemma chase along `0 → N → B → M → 0` and its Cartier dual
+  (`PadicField.dualSES`, `PadicField.injective_dualH2_of_ses`); degree `1` from the compatibility
+  `δ⁰x ∪ y = -(x ∪ δ¹y)` (`Brauer.GShortExact.cup11_delta0_mul_cup02_delta1`), the vanishing of
+  `H¹(K, M) → H¹(K, CoInd M)` for `K'` large (`PadicField.exists_coInd_kill_h1`) and the
+  double duality `M ≃ M''` (`PadicField.evDual_bijective`). Also: `H¹(K, M)`, `H²(K, M)` are
+  finite for every finite `M` (`PadicField.finite_h1`, `PadicField.finite_h2`), and the Euler
+  ratio is multiplicative (`PadicField.eulerRatio_shortExact`).
 * Proved cases: for `M = ℤ/n` (trivial action) duality in degrees `0, 1`
   (`PadicField.perfectDeg0_eval_trivZMod`, `PadicField.perfectDeg1_eval_trivZMod`), for
   `M = μ_n` in degrees `1, 2` (`PadicField.perfectDeg1_eval_mu`, `PadicField.perfectDeg2_eval_mu`),
@@ -236,13 +250,12 @@ formalised), proved by reduction to the cyclic extension `L/L^{⟨g⟩}`. `H²(K
   (`PadicField.fundClassPowEquiv`, `inv = k/[L:K]`: `PadicField.invEquiv_infl_fundClassPowEquiv`);
   degree `-2` for abelian `L/K` (`PadicField.bijective_relNak_fundClass`).
 
-Not done (outside the scope of this repository's goals, possible future work): local Tate
-duality and the Euler characteristic formula for general finite Galois modules (stated as
-`PadicField.LocalTateDuality`, `PadicField.LocalEulerCharacteristic`; with `cd(G_K) ≤ 2` now
-proved, what is missing is the Euler formula for simple `𝔽_ℓ[G_K]`-modules not reached by
-dévissage (Brauer characters / the Galois-module structure of `Lˣ/(Lˣ)^ℓ`), Shapiro's lemma for
-`G_K` and open subgroups as an isomorphism in degrees `0, 1, 2`, and the compatibility of cup
-products with the connecting maps and with corestriction); Tate–Nakayama in degree `-2` for
+Not done (outside the scope of this repository's goals, possible future work): the Euler
+characteristic formula for general finite Galois modules (stated as
+`PadicField.LocalEulerCharacteristic`; with `cd(G_K) ≤ 2` and local duality proved, what is
+missing is the Euler formula for simple `𝔽_ℓ[G_K]`-modules not reached by dévissage: Brauer
+characters / induction from cyclic subgroups of order prime to `ℓ` and the Galois-module
+structure of `Lˣ/(Lˣ)^ℓ`); Tate–Nakayama in degree `-2` for
 non-abelian
 `L/K` and in positive degrees; higher ramification groups (upper numbering) and the
 conductor–ramification correspondence, Lubin–Tate theory (explicit `K^ab = K^ur · K_π`), local

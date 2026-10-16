@@ -27,7 +27,7 @@ If moreover `μ_n ⊆ K` (`#μ_n(K) = n`), then `ℤ/n ≃ μ_n` as Galois modul
 * **`PadicField.eulerCharacteristicFor_trivZMod`**: the Euler characteristic formula for `ℤ/n`.
 
 Without `μ_n ⊆ K` the missing statements (`H²(K, ℤ/n)` dual to `μ_n(K)`) are instances of the
-general `PadicField.LocalTateDuality`, which is not proved here.
+general `PadicField.LocalTateDuality`, proved in `LocalClassFieldTheory.Duality.General`.
 -/
 
 open ContH2 groupCohomology KummerTheory

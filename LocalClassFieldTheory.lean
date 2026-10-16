@@ -38,6 +38,7 @@ import LocalClassFieldTheory.Duality.EulerDescent
 import LocalClassFieldTheory.Duality.EulerFinite
 import LocalClassFieldTheory.Duality.EulerReduction
 import LocalClassFieldTheory.Duality.FiniteDual
+import LocalClassFieldTheory.Duality.General
 import LocalClassFieldTheory.Duality.H3Cores
 import LocalClassFieldTheory.Duality.H3Devissage
 import LocalClassFieldTheory.Duality.H3Inflation
