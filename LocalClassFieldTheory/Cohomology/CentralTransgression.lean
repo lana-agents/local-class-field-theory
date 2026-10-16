@@ -140,7 +140,7 @@ theorem tgCentral_eq_of_section (φ : ContinuousMonoidHom I A) (s : E ⧸ I → 
   rw [hz]
   -- evaluate `dF` at the representatives `s σ̄, s τ̄`
   have hrel : ∀ a : E, (s (a : E ⧸ I))⁻¹ * a ∈ I := fun a => QuotientGroup.eq.mp (hs _)
-  show ContH2.dx E A (fun σ : E => φ ⟨(s σ)⁻¹ * σ, QuotientGroup.eq.mp (hs _)⟩) (σ, τ) = _
+  change ContH2.dx E A (fun σ : E => φ ⟨(s σ)⁻¹ * σ, QuotientGroup.eq.mp (hs _)⟩) (σ, τ) = _
   rw [hF.dx_eq_of_rel (σ' := s σ) (τ' := s τ)
     (by rw [← QuotientGroup.eq, hs]) (by rw [← QuotientGroup.eq, hs])]
   simp only [ContH2.dx_apply, htriv, hs]
