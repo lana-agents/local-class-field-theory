@@ -87,6 +87,7 @@ import LocalClassFieldTheory.Reciprocity.Abelian
 import LocalClassFieldTheory.Reciprocity.Artin
 import LocalClassFieldTheory.Reciprocity.ArtinContinuous
 import LocalClassFieldTheory.Reciprocity.ArtinInertia
+import LocalClassFieldTheory.Reciprocity.ArtinNaturality
 import LocalClassFieldTheory.Reciprocity.ArtinUnique
 import LocalClassFieldTheory.Reciprocity.BaseChange
 import LocalClassFieldTheory.Reciprocity.Conjugation
