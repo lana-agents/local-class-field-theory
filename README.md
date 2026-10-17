@@ -286,6 +286,14 @@ non-abelian
 conductor–ramification correspondence, Lubin–Tate theory (explicit `K^ab = K^ur · K_π`), local
 class field theory in positive characteristic.
 
+Global input (number fields), `LocalClassFieldTheory/NumberField/`:
+`KroneckerDensity/` (Euler product of `ζ_K`, Kronecker density of degree-one primes, Bauer's
+theorem `NumberField.le_of_splitsCompletely`, infinitely many completely split primes; moved from
+`iut`, FRD64) and `GaloisSlim.lean`: **the absolute Galois group of a number field is slim**
+(`NumberField.centralizer_eq_bot_of_isOpen`, [AbsTopI] Thm 1.7 (iii)), by a quadratic Kummer
+argument showing that an element centralising an open subgroup fixes all primes of every finite
+Galois extension, plus a completely split prime.
+
 Downstream: `iut` requires this repository (`lakefile.toml` of `iut`, pinned at a commit of
 `main`).
 

@@ -65,6 +65,7 @@ import LocalClassFieldTheory.Galois.ZHat
 import LocalClassFieldTheory.Herbrand.Basic
 import LocalClassFieldTheory.Herbrand.Exact
 import LocalClassFieldTheory.Herbrand.Examples
+import LocalClassFieldTheory.NumberField.GaloisSlim
 import LocalClassFieldTheory.NumberField.KroneckerDensity.Basic
 import LocalClassFieldTheory.NumberField.KroneckerDensity.Bauer
 import LocalClassFieldTheory.NumberField.KroneckerDensity.EulerProduct
