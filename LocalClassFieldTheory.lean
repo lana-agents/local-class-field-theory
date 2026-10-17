@@ -65,6 +65,10 @@ import LocalClassFieldTheory.Galois.ZHat
 import LocalClassFieldTheory.Herbrand.Basic
 import LocalClassFieldTheory.Herbrand.Exact
 import LocalClassFieldTheory.Herbrand.Examples
+import LocalClassFieldTheory.NumberField.KroneckerDensity.Basic
+import LocalClassFieldTheory.NumberField.KroneckerDensity.Bauer
+import LocalClassFieldTheory.NumberField.KroneckerDensity.EulerProduct
+import LocalClassFieldTheory.NumberField.KroneckerDensity.Splitting
 import LocalClassFieldTheory.PadicField.AbsoluteInertia
 import LocalClassFieldTheory.PadicField.Complete
 import LocalClassFieldTheory.PadicField.Extension
